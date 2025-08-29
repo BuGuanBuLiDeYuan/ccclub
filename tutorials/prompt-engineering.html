@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="提示词工程实战教程 - 掌握高效的Claude AI提示词编写技巧，提升AI交互效果">
+    <meta name="keywords" content="提示词工程, Prompt Engineering, Claude AI, AI交互, 提示词技巧">
+    <title>提示词工程实战 - Claude Code Club</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="canonical" href="https://ccclub.club/tutorials/prompt-engineering.html">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="../" class="logo">
+                    <h1>Claude Code Club</h1>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../#home">首页</a></li>
+                    <li><a href="../#tutorials">教程</a></li>
+                    <li><a href="../#examples">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article class="tutorial-article">
+                <header class="tutorial-header">
+                    <h1>提示词工程实战</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty">中级</span>
+                        <span class="duration">45分钟</span>
+                        <span class="updated">更新时间: 2024年8月</span>
+                    </div>
+                </header>
+
+                <div class="tutorial-toc">
+                    <h3>目录</h3>
+                    <ul>
+                        <li><a href="#what-is-prompt-engineering">什么是提示词工程</a></li>
+                        <li><a href="#basic-principles">基本原则</a></li>
+                        <li><a href="#advanced-techniques">高级技巧</a></li>
+                        <li><a href="#practical-examples">实战示例</a></li>
+                        <li><a href="#common-patterns">常用模式</a></li>
+                    </ul>
+                </div>
+
+                <section id="what-is-prompt-engineering">
+                    <h2>什么是提示词工程</h2>
+                    <p>提示词工程是设计和优化与AI模型交互的输入文本的艺术和科学。通过精心设计的提示词，我们可以：</p>
+                    <ul>
+                        <li><strong>提高准确性</strong>：获得更精确的回答</li>
+                        <li><strong>控制输出格式</strong>：指定特定的输出结构</li>
+                        <li><strong>引导思维过程</strong>：让AI按照特定的逻辑思考</li>
+                        <li><strong>减少歧义</strong>：避免模糊不清的回答</li>
+                    </ul>
+                </section>
+
+                <section id="basic-principles">
+                    <h2>基本原则</h2>
+
+                    <h3>1. 清晰明确</h3>
+                    <div class="example-box">
+                        <h4>❌ 不好的提示词</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>写个函数
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>✅ 好的提示词</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>请用Python写一个函数，接收一个整数列表作为参数，返回列表中所有偶数的平方和。函数名为calculate_even_squares_sum。
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>2. 提供上下文</h3>
+                    <div class="example-box">
+                        <h4>✅ 包含上下文的提示词</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>我正在开发一个电商网站的后端API。请帮我设计一个用户认证系统的数据库表结构，需要支持邮箱登录、密码重置和会话管理功能。使用MySQL数据库。
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>3. 指定输出格式</h3>
+                    <div class="example-box">
+                        <h4>✅ 指定格式的提示词</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>分析以下代码的时间复杂度，请按照以下格式回答：
+                                <br><br>
+                                **算法分析：**<br>
+                                - 最佳情况：O(?)<br>
+                                - 平均情况：O(?)<br>
+                                - 最坏情况：O(?)<br>
+                                **解释：**<br>
+                                [详细解释]
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="advanced-techniques">
+                    <h2>高级技巧</h2>
+
+                    <h3>1. 角色扮演</h3>
+                    <div class="example-box">
+                        <h4>示例：专家角色</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>你是一位有10年经验的Python高级工程师。请审查以下代码并提供优化建议，重点关注性能、可读性和最佳实践。
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>2. 分步思考</h3>
+                    <div class="example-box">
+                        <h4>示例：引导逐步分析</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>请帮我设计一个缓存系统。请按照以下步骤思考：
+                                <br>1. 首先分析需求和使用场景
+                                <br>2. 然后选择合适的缓存策略
+                                <br>3. 设计数据结构
+                                <br>4. 考虑并发安全
+                                <br>5. 最后提供实现代码
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>3. 示例驱动</h3>
+                    <div class="example-box">
+                        <h4>示例：提供参考样例</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>请为我的API编写单元测试。参考以下格式：
+                                <pre><code>def test_user_creation():
+    # Arrange
+    user_data = {"name": "张三", "email": "test@example.com"}
+    
+    # Act
+    response = client.post("/users", json=user_data)
+    
+    # Assert
+    assert response.status_code == 201
+    assert response.json()["name"] == "张三"</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="practical-examples">
+                    <h2>实战示例</h2>
+
+                    <h3>代码审查提示词模板</h3>
+                    <div class="code-block">
+                        <pre><code>请作为资深代码审查员，审查以下[编程语言]代码：
+
+[代码内容]
+
+请从以下方面进行评估：
+1. 代码质量和可读性
+2. 性能优化机会
+3. 安全性问题
+4. 最佳实践遵循情况
+5. 潜在的bug或边界情况
+
+请提供具体的改进建议和修改后的代码示例。</code></pre>
+                    </div>
+
+                    <h3>技术文档生成提示词</h3>
+                    <div class="code-block">
+                        <pre><code>请为以下API接口生成完整的技术文档：
+
+[API代码]
+
+文档应包括：
+- 接口描述和用途
+- 请求参数说明（类型、是否必需、默认值）
+- 响应格式和状态码
+- 使用示例（curl命令和响应）
+- 错误处理说明
+- 注意事项
+
+请使用Markdown格式输出。</code></pre>
+                    </div>
+                </section>
+
+                <section id="common-patterns">
+                    <h2>常用模式</h2>
+
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h4>🎯 任务分解</h4>
+                            <p>将复杂任务分解为多个简单步骤，逐步完成</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🔄 迭代优化</h4>
+                            <p>基于初始结果进行进一步的优化和改进</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>📋 模板化</h4>
+                            <p>创建可重用的提示词模板，提高效率</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🎭 角色设定</h4>
+                            <p>让AI扮演特定角色，获得专业视角</p>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>⚠️ 注意事项</h4>
+                        <ul>
+                            <li><strong>避免过度复杂</strong>：提示词不是越长越好</li>
+                            <li><strong>测试和验证</strong>：不同的提示词可能产生不同结果</li>
+                            <li><strong>保持一致性</strong>：在同一项目中使用一致的提示词风格</li>
+                            <li><strong>考虑上下文限制</strong>：注意模型的上下文长度限制</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <div class="tutorial-navigation">
+                    <a href="claude-basics.html" class="btn btn-secondary">上一课：Claude基础</a>
+                    <a href="code-generation.html" class="btn btn-primary">下一课：代码生成技巧</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

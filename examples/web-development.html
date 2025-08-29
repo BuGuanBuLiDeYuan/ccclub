@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Web开发项目示例 - 使用Claude AI构建现代化Web应用程序的完整示例">
+  <meta name="keywords" content="Web开发, React, Node.js, 全栈开发, Claude AI">
+  <title>Web开发项目示例 - Claude Code Club</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/tutorial.css">
+  <link rel="canonical" href="https://ccclub.club/examples/web-development.html">
+</head>
+
+<body>
+  <header class="header">
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="../" class="logo">
+          <h1>Claude Code Club</h1>
+        </a>
+        <ul class="nav-menu">
+          <li><a href="../#home">首页</a></li>
+          <li><a href="../#tutorials">教程</a></li>
+          <li><a href="../#examples">示例</a></li>
+          <li><a href="../community.html">社区</a></li>
+          <li><a href="../about.html">关于</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="tutorial-content">
+    <div class="container">
+      <article class="tutorial-article">
+        <header class="tutorial-header">
+          <h1>Web开发项目示例</h1>
+          <div class="tutorial-meta">
+            <span class="difficulty">高级</span>
+            <span class="duration">120分钟</span>
+            <span class="updated">更新时间: 2024年8月</span>
+          </div>
+        </header>
+
+        <div class="tutorial-toc">
+          <h3>项目内容</h3>
+          <ul>
+            <li><a href="#project-overview">项目概述</a></li>
+            <li><a href="#backend-api">后端API开发</a></li>
+            <li><a href="#frontend-react">前端React应用</a></li>
+            <li><a href="#database-design">数据库设计</a></li>
+            <li><a href="#authentication">用户认证</a></li>
+            <li><a href="#deployment">部署配置</a></li>
+          </ul>
+        </div>
+
+        <section id="project-overview">
+          <h2>项目概述</h2>
+          <p>本示例展示如何使用Claude AI辅助开发一个完整的任务管理Web应用，包括用户认证、任务CRUD操作、实时更新等功能。</p>
+
+          <h3>技术栈</h3>
+          <ul>
+            <li><strong>后端</strong>：Node.js + Express + MongoDB</li>
+            <li><strong>前端</strong>：React + TypeScript + Tailwind CSS</li>
+            <li><strong>认证</strong>：JWT + bcrypt</li>
+            <li><strong>实时通信</strong>：Socket.io</li>
+            <li><strong>部署</strong>：Docker + Nginx</li>
+          </ul>
+
+          <h3>功能特性</h3>
+          <ul>
+            <li>用户注册和登录</li>
+            <li>任务的增删改查</li>
+            <li>任务状态管理</li>
+            <li>实时协作功能</li>
+            <li>响应式设计</li>
+          </ul>
+        </section>
+
+        <section id="backend-api">
+          <h2>后端API开发</h2>
+
+          <h3>项目初始化</h3>
+          <div class="code-block">
+            <pre><code># 创建项目目录
+mkdir task-manager-app
+cd task-manager-app
+
+# 初始化后端
+mkdir backend
+cd backend
+npm init -y
+
+# 安装依赖
+npm install express mongoose bcryptjs jsonwebtoken cors dotenv
+npm install -D nodemon @types/node typescript
+
+# 创建基本目录结构
+mkdir src
+mkdir src/models src/routes src/middleware src/controllers</code></pre>
+          </div>
+
+          <h3>Express服务器配置</h3>
+          <div class="code-block">
+            <pre><code>// src/app.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
+const authRoutes = require('./routes/auth');
+const taskRoutes = require('./routes/tasks');
+const authMiddleware = require('./middleware/auth');
+
+const app = express();
+
+// 中间件
+app.use(cors());
+app.use(express.json());
+
+// 数据库连接
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/taskmanager', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+// 路由
+app.use('/api/auth', authRoutes);
+app.use('/api/tasks', authMiddleware, taskRoutes);
+
+// 错误处理中间件
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: '服务器内部错误' });
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`服务器运行在端口 ${PORT}`);
+});
+
+module.exports = app;</code></pre>
+          </div>
+
+          <h3>数据模型定义</h3>
+          <div class="code-block">
+            <pre><code>// src/models/User.js
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        minlength: 3,
+        maxlength: 30
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, '请输入有效的邮箱地址']
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6
+    },
+    avatar: {
+        type: String,
+        default: ''
+    }
+}, {
+    timestamps: true
+});
+
+// 密码加密中间件
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next();
+    
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+// 密码验证方法
+userSchema.methods.comparePassword = async function(candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
+};
+
+module.exports = mongoose.model('User', userSchema);</code></pre>
+          </div>
+
+          <div class="code-block">
+            <pre><code>// src/models/Task.js
+const mongoose = require('mongoose');
+
+const taskSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        trim: true,
+        maxlength: 100
+    },
+    description: {
+        type: String,
+        trim: true,
+        maxlength: 500
+    },
+    status: {
+        type: String,
+        enum: ['待办', '进行中', '已完成'],
+        default: '待办'
+    },
+    priority: {
+        type: String,
+        enum: ['低', '中', '高'],
+        default: '中'
+    },
+    dueDate: {
+        type: Date
+    },
+    assignedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    tags: [{
+        type: String,
+        trim: true
+    }]
+}, {
+    timestamps: true
+});
+
+// 索引优化
+taskSchema.index({ assignedTo: 1, status: 1 });
+taskSchema.index({ createdBy: 1 });
+taskSchema.index({ dueDate: 1 });
+
+module.exports = mongoose.model('Task', taskSchema);</code></pre>
+          </div>
+
+          <h3>认证控制器</h3>
+          <div class="code-block">
+            <pre><code>// src/controllers/authController.js
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const generateToken = (userId) => {
+    return jwt.sign({ userId }, process.env.JWT_SECRET || 'your-secret-key', {
+        expiresIn: '7d'
+    });
+};
+
+const register = async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        // 检查用户是否已存在
+        const existingUser = await User.findOne({
+            $or: [{ email }, { username }]
+        });
+
+        if (existingUser) {
+            return res.status(400).json({
+                message: '用户名或邮箱已存在'
+            });
+        }
+
+        // 创建新用户
+        const user = new User({ username, email, password });
+        await user.save();
+
+        // 生成token
+        const token = generateToken(user._id);
+
+        res.status(201).json({
+            message: '注册成功',
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                avatar: user.avatar
+            }
+        });
+    } catch (error) {
+        console.error('注册错误:', error);
+        res.status(500).json({ message: '注册失败，请稍后重试' });
+    }
+};
+
+const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // 查找用户
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: '邮箱或密码错误' });
+        }
+
+        // 验证密码
+        const isPasswordValid = await user.comparePassword(password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: '邮箱或密码错误' });
+        }
+
+        // 生成token
+        const token = generateToken(user._id);
+
+        res.json({
+            message: '登录成功',
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                avatar: user.avatar
+            }
+        });
+    } catch (error) {
+        console.error('登录错误:', error);
+        res.status(500).json({ message: '登录失败，请稍后重试' });
+    }
+};
+
+module.exports = { register, login };</code></pre>
+          </div>
+        </section>
+
+        <section id="frontend-react">
+          <h2>前端React应用</h2>
+
+          <h3>项目初始化</h3>
+          <div class="code-block">
+            <pre><code># 创建React应用
+cd .. # 回到项目根目录
+npx create-react-app frontend --template typescript
+cd frontend
+
+# 安装额外依赖
+npm install axios react-router-dom @types/react-router-dom
+npm install tailwindcss @tailwindcss/forms
+npm install react-hot-toast lucide-react
+
+# 配置Tailwind CSS
+npx tailwindcss init -p</code></pre>
+          </div>
+
+          <h3>应用入口组件</h3>
+          <div class="code-block">
+            <pre><code>// src/App.tsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import Dashboard from './components/Dashboard/Dashboard';
+import TaskList from './components/Tasks/TaskList';
+import './App.css';
+
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+    </div>;
+  }
+  
+  return user ? <>{children}</> : <Navigate to="/login" />;
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-50">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/tasks" element={
+              <ProtectedRoute>
+                <TaskList />
+              </ProtectedRoute>
+            } />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
+          </Routes>
+          <Toaster position="top-right" />
+        </div>
+      </Router>
+    </AuthProvider>
+  );
+};
+
+export default App;</code></pre>
+          </div>
+
+          <h3>认证上下文</h3>
+          <div class="code-block">
+            <pre><code>// src/contexts/AuthContext.tsx
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  avatar: string;
+}
+
+interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  register: (username: string, email: string, password: string) => Promise<void>;
+  logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // 配置axios默认设置
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // 验证token有效性
+      verifyToken();
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  const verifyToken = async () => {
+    try {
+      const response = await axios.get('/api/auth/verify');
+      setUser(response.data.user);
+    } catch (error) {
+      localStorage.removeItem('token');
+      delete axios.defaults.headers.common['Authorization'];
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await axios.post('/api/auth/login', { email, password });
+      const { token, user } = response.data;
+      
+      localStorage.setItem('token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      setUser(user);
+      
+      toast.success('登录成功！');
+    } catch (error: any) {
+      const message = error.response?.data?.message || '登录失败';
+      toast.error(message);
+      throw error;
+    }
+  };
+
+  const register = async (username: string, email: string, password: string) => {
+    try {
+      const response = await axios.post('/api/auth/register', {
+        username,
+        email,
+        password
+      });
+      const { token, user } = response.data;
+      
+      localStorage.setItem('token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      setUser(user);
+      
+      toast.success('注册成功！');
+    } catch (error: any) {
+      const message = error.response?.data?.message || '注册失败';
+      toast.error(message);
+      throw error;
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization'];
+    setUser(null);
+    toast.success('已退出登录');
+  };
+
+  const value = {
+    user,
+    loading,
+    login,
+    register,
+    logout
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+};</code></pre>
+          </div>
+
+          <h3>任务列表组件</h3>
+          <div class="code-block">
+            <pre><code>// src/components/Tasks/TaskList.tsx
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Plus, Search, Filter } from 'lucide-react';
+import TaskCard from './TaskCard';
+import TaskModal from './TaskModal';
+import toast from 'react-hot-toast';
+
+interface Task {
+  _id: string;
+  title: string;
+  description: string;
+  status: '待办' | '进行中' | '已完成';
+  priority: '低' | '中' | '高';
+  dueDate?: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+const TaskList: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get('/api/tasks');
+      setTasks(response.data);
+    } catch (error) {
+      toast.error('获取任务列表失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateTask = async (taskData: Partial<Task>) => {
+    try {
+      const response = await axios.post('/api/tasks', taskData);
+      setTasks([response.data, ...tasks]);
+      toast.success('任务创建成功');
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error('创建任务失败');
+    }
+  };
+
+  const handleUpdateTask = async (taskId: string, taskData: Partial<Task>) => {
+    try {
+      const response = await axios.put(`/api/tasks/${taskId}`, taskData);
+      setTasks(tasks.map(task => 
+        task._id === taskId ? response.data : task
+      ));
+      toast.success('任务更新成功');
+      setEditingTask(null);
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error('更新任务失败');
+    }
+  };
+
+  const handleDeleteTask = async (taskId: string) => {
+    if (!window.confirm('确定要删除这个任务吗？')) return;
+    
+    try {
+      await axios.delete(`/api/tasks/${taskId}`);
+      setTasks(tasks.filter(task => task._id !== taskId));
+      toast.success('任务删除成功');
+    } catch (error) {
+      toast.error('删除任务失败');
+    }
+  };
+
+  const filteredTasks = tasks.filter(task => {
+    const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         task.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || task.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-64">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+    </div>;
+  }
+
+  return (
+    <div className="max-w-6xl mx-auto p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">任务管理</h1>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+        >
+          <Plus size={20} />
+          新建任务
+        </button>
+      </div>
+
+      {/* 搜索和过滤 */}
+      <div className="flex gap-4 mb-6">
+        <div className="flex-1 relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <input
+            type="text"
+            placeholder="搜索任务..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        >
+          <option value="all">所有状态</option>
+          <option value="待办">待办</option>
+          <option value="进行中">进行中</option>
+          <option value="已完成">已完成</option>
+        </select>
+      </div>
+
+      {/* 任务列表 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredTasks.map(task => (
+          <TaskCard
+            key={task._id}
+            task={task}
+            onEdit={(task) => {
+              setEditingTask(task);
+              setIsModalOpen(true);
+            }}
+            onDelete={handleDeleteTask}
+          />
+        ))}
+      </div>
+
+      {filteredTasks.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">没有找到匹配的任务</p>
+        </div>
+      )}
+
+      {/* 任务模态框 */}
+      {isModalOpen && (
+        <TaskModal
+          task={editingTask}
+          onSave={editingTask ? 
+            (data) => handleUpdateTask(editingTask._id, data) : 
+            handleCreateTask
+          }
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditingTask(null);
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default TaskList;</code></pre>
+          </div>
+        </section>
+
+        <section id="database-design">
+          <h2>数据库设计</h2>
+
+          <h3>MongoDB集合结构</h3>
+          <div class="example-box">
+            <h4>用户集合 (users)</h4>
+            <div class="code-block">
+              <pre><code>{
+  "_id": ObjectId("..."),
+  "username": "张三",
+  "email": "zhangsan@example.com",
+  "password": "$2a$10$...", // 加密后的密码
+  "avatar": "https://example.com/avatar.jpg",
+  "createdAt": ISODate("2024-01-01T00:00:00Z"),
+  "updatedAt": ISODate("2024-01-01T00:00:00Z")
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="example-box">
+            <h4>任务集合 (tasks)</h4>
+            <div class="code-block">
+              <pre><code>{
+  "_id": ObjectId("..."),
+  "title": "完成项目文档",
+  "description": "编写项目的技术文档和用户手册",
+  "status": "进行中",
+  "priority": "高",
+  "dueDate": ISODate("2024-09-15T00:00:00Z"),
+  "assignedTo": ObjectId("..."), // 用户ID
+  "createdBy": ObjectId("..."),  // 创建者ID
+  "tags": ["文档", "项目"],
+  "createdAt": ISODate("2024-08-01T00:00:00Z"),
+  "updatedAt": ISODate("2024-08-15T00:00:00Z")
+}</code></pre>
+            </div>
+          </div>
+
+          <h3>数据库索引优化</h3>
+          <div class="code-block">
+            <pre><code>// MongoDB索引创建脚本
+db.users.createIndex({ "email": 1 }, { unique: true });
+db.users.createIndex({ "username": 1 }, { unique: true });
+
+db.tasks.createIndex({ "assignedTo": 1, "status": 1 });
+db.tasks.createIndex({ "createdBy": 1 });
+db.tasks.createIndex({ "dueDate": 1 });
+db.tasks.createIndex({ "createdAt": -1 });
+
+// 文本搜索索引
+db.tasks.createIndex({ 
+  "title": "text", 
+  "description": "text" 
+});</code></pre>
+          </div>
+        </section>
+
+        <section id="authentication">
+          <h2>用户认证</h2>
+
+          <h3>JWT中间件</h3>
+          <div class="code-block">
+            <pre><code>// src/middleware/auth.js
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const authMiddleware = async (req, res, next) => {
+    try {
+        const token = req.header('Authorization')?.replace('Bearer ', '');
+        
+        if (!token) {
+            return res.status(401).json({ message: '访问被拒绝，请提供有效的token' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+        const user = await User.findById(decoded.userId).select('-password');
+        
+        if (!user) {
+            return res.status(401).json({ message: '用户不存在' });
+        }
+
+        req.user = user;
+        next();
+    } catch (error) {
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: '无效的token' });
+        }
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ message: 'token已过期' });
+        }
+        res.status(500).json({ message: '服务器错误' });
+    }
+};
+
+module.exports = authMiddleware;</code></pre>
+          </div>
+
+          <h3>密码安全策略</h3>
+          <div class="tips-grid">
+            <div class="tip-card">
+              <h4>🔐 密码加密</h4>
+              <p>使用bcrypt进行密码哈希，盐值轮数设置为10</p>
+            </div>
+            <div class="tip-card">
+              <h4>🎫 JWT配置</h4>
+              <p>设置合理的过期时间，使用强密钥签名</p>
+            </div>
+            <div class="tip-card">
+              <h4>🛡️ 输入验证</h4>
+              <p>对所有用户输入进行严格的验证和清理</p>
+            </div>
+            <div class="tip-card">
+              <h4>🚫 防护措施</h4>
+              <p>实施速率限制和CORS策略</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="deployment">
+          <h2>部署配置</h2>
+
+          <h3>Docker配置</h3>
+          <div class="code-block">
+            <pre><code># Dockerfile (后端)
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["npm", "start"]</code></pre>
+          </div>
+
+          <div class="code-block">
+            <pre><code># docker-compose.yml
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: task-manager-db
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: task-manager-api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/taskmanager?authSource=admin
+      - JWT_SECRET=your-super-secret-jwt-key
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    container_name: task-manager-web
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: task-manager-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  mongodb_data:</code></pre>
+          </div>
+
+          <h3>Nginx配置</h3>
+          <div class="code-block">
+            <pre><code># nginx.conf
+events {
+    worker_connections 1024;
+}
+
+http {
+    upstream backend {
+        server backend:5000;
+    }
+
+    upstream frontend {
+        server frontend:80;
+    }
+
+    server {
+        listen 80;
+        server_name ccclub.club www.ccclub.club;
+
+        # API代理
+        location /api/ {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        # 前端应用
+        location / {
+            proxy_pass http://frontend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        # 静态文件缓存
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+    }
+}</code></pre>
+          </div>
+
+          <div class="warning-box">
+            <h4>🚀 部署检查清单</h4>
+            <ul>
+              <li><strong>环境变量</strong>：确保所有敏感信息使用环境变量</li>
+              <li><strong>HTTPS配置</strong>：生产环境必须启用SSL/TLS</li>
+              <li><strong>数据库备份</strong>：设置定期数据备份策略</li>
+              <li><strong>监控日志</strong>：配置应用和错误日志监控</li>
+              <li><strong>性能优化</strong>：启用gzip压缩和静态文件缓存</li>
+              <li><strong>安全头部</strong>：配置安全相关的HTTP头部</li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="tutorial-navigation">
+          <a href="python-data-analysis.html" class="btn btn-secondary">上一个示例：数据分析</a>
+          <a href="../#examples" class="btn btn-primary">返回示例列表</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+    </div>
+  </footer>
+
+  <script src="../scripts/main.js"></script>
+</body>
+
+</html>

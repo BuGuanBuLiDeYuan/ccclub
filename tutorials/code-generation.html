@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI代码生成技巧教程 - 学习如何使用Claude AI生成高质量的代码，提升开发效率">
+    <meta name="keywords" content="AI代码生成, Claude编程, 自动化编程, 代码助手, 编程效率">
+    <title>AI代码生成技巧 - Claude Code Club</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="canonical" href="https://ccclub.club/tutorials/code-generation.html">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="../" class="logo">
+                    <h1>Claude Code Club</h1>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../#home">首页</a></li>
+                    <li><a href="../#tutorials">教程</a></li>
+                    <li><a href="../#examples">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article class="tutorial-article">
+                <header class="tutorial-header">
+                    <h1>AI代码生成技巧</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty">中级</span>
+                        <span class="duration">60分钟</span>
+                        <span class="updated">更新时间: 2024年8月</span>
+                    </div>
+                </header>
+
+                <div class="tutorial-toc">
+                    <h3>目录</h3>
+                    <ul>
+                        <li><a href="#code-generation-basics">代码生成基础</a></li>
+                        <li><a href="#effective-prompts">有效的代码提示词</a></li>
+                        <li><a href="#code-patterns">常见代码模式</a></li>
+                        <li><a href="#testing-debugging">测试与调试</a></li>
+                        <li><a href="#best-practices">最佳实践</a></li>
+                    </ul>
+                </div>
+
+                <section id="code-generation-basics">
+                    <h2>代码生成基础</h2>
+                    <p>Claude可以帮助你生成各种类型的代码，从简单的函数到复杂的系统架构。关键是要提供清晰的需求和上下文。</p>
+
+                    <h3>支持的编程语言</h3>
+                    <ul>
+                        <li><strong>Web开发</strong>：JavaScript, TypeScript, HTML, CSS</li>
+                        <li><strong>后端开发</strong>：Python, Java, C#, Go, Rust</li>
+                        <li><strong>移动开发</strong>：Swift, Kotlin, Dart (Flutter)</li>
+                        <li><strong>数据科学</strong>：Python, R, SQL</li>
+                        <li><strong>系统编程</strong>：C, C++, Rust</li>
+                    </ul>
+                </section>
+
+                <section id="effective-prompts">
+                    <h2>有效的代码提示词</h2>
+
+                    <h3>1. 函数生成</h3>
+                    <div class="example-box">
+                        <h4>示例：生成数据处理函数</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>请用Python写一个函数，功能如下：
+                                <br>- 函数名：process_user_data
+                                <br>- 参数：用户数据列表（每个用户是字典，包含name, age, email字段）
+                                <br>- 功能：过滤出年龄大于18岁的用户，并按年龄排序
+                                <br>- 返回：处理后的用户列表
+                                <br>- 要求：包含类型注解和文档字符串
+                            </div>
+                            <div class="claude-message">
+                                <strong>Claude：</strong>
+                                <pre><code>from typing import List, Dict, Any
+
+def process_user_data(users: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    处理用户数据，过滤成年用户并按年龄排序
+    
+    Args:
+        users: 用户数据列表，每个用户包含name, age, email字段
+        
+    Returns:
+        过滤并排序后的用户列表
+        
+    Example:
+        >>> users = [
+        ...     {"name": "张三", "age": 25, "email": "zhang@example.com"},
+        ...     {"name": "李四", "age": 17, "email": "li@example.com"},
+        ...     {"name": "王五", "age": 30, "email": "wang@example.com"}
+        ... ]
+        >>> result = process_user_data(users)
+        >>> len(result)
+        2
+    """
+    # 过滤年龄大于18岁的用户
+    adult_users = [user for user in users if user.get('age', 0) > 18]
+    
+    # 按年龄排序
+    sorted_users = sorted(adult_users, key=lambda x: x.get('age', 0))
+    
+    return sorted_users</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>2. 类设计</h3>
+                    <div class="example-box">
+                        <h4>示例：设计数据模型类</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>设计一个Python类来表示电商系统中的商品，要求：
+                                <br>- 属性：id, name, price, category, stock_quantity
+                                <br>- 方法：更新库存、检查是否有库存、应用折扣
+                                <br>- 使用数据类装饰器
+                                <br>- 包含输入验证
+                            </div>
+                            <div class="claude-message">
+                                <strong>Claude：</strong>
+                                <pre><code>from dataclasses import dataclass, field
+from typing import Optional
+from decimal import Decimal
+
+@dataclass
+class Product:
+    """电商系统商品类"""
+    id: str
+    name: str
+    price: Decimal
+    category: str
+    stock_quantity: int = 0
+    
+    def __post_init__(self):
+        """数据验证"""
+        if not self.id:
+            raise ValueError("商品ID不能为空")
+        if not self.name:
+            raise ValueError("商品名称不能为空")
+        if self.price <= 0:
+            raise ValueError("商品价格必须大于0")
+        if self.stock_quantity < 0:
+            raise ValueError("库存数量不能为负数")
+    
+    def update_stock(self, quantity: int) -> bool:
+        """
+        更新库存数量
+        
+        Args:
+            quantity: 库存变化量（正数增加，负数减少）
+            
+        Returns:
+            是否更新成功
+        """
+        new_quantity = self.stock_quantity + quantity
+        if new_quantity < 0:
+            return False
+        
+        self.stock_quantity = new_quantity
+        return True
+    
+    def is_in_stock(self, required_quantity: int = 1) -> bool:
+        """
+        检查是否有足够库存
+        
+        Args:
+            required_quantity: 需要的数量
+            
+        Returns:
+            是否有足够库存
+        """
+        return self.stock_quantity >= required_quantity
+    
+    def apply_discount(self, discount_percent: float) -> Decimal:
+        """
+        应用折扣并返回折扣后价格
+        
+        Args:
+            discount_percent: 折扣百分比 (0-100)
+            
+        Returns:
+            折扣后的价格
+        """
+        if not 0 <= discount_percent <= 100:
+            raise ValueError("折扣百分比必须在0-100之间")
+        
+        discount_multiplier = Decimal(1 - discount_percent / 100)
+        return self.price * discount_multiplier</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="code-patterns">
+                    <h2>常见代码模式</h2>
+
+                    <h3>1. API接口设计</h3>
+                    <div class="code-block">
+                        <h4>FastAPI REST接口模板</h4>
+                        <pre><code>请用FastAPI创建一个用户管理的REST API，包含以下接口：
+- GET /users - 获取用户列表（支持分页）
+- GET /users/{user_id} - 获取单个用户
+- POST /users - 创建用户
+- PUT /users/{user_id} - 更新用户
+- DELETE /users/{user_id} - 删除用户
+
+要求：
+- 使用Pydantic模型进行数据验证
+- 包含适当的HTTP状态码
+- 添加API文档注释
+- 包含错误处理</code></pre>
+                    </div>
+
+                    <h3>2. 数据库操作</h3>
+                    <div class="code-block">
+                        <h4>SQLAlchemy模型和CRUD操作</h4>
+                        <pre><code>请创建一个博客系统的数据库模型和CRUD操作：
+
+模型要求：
+- User模型：id, username, email, created_at
+- Post模型：id, title, content, user_id, created_at, updated_at
+- 用户和文章是一对多关系
+
+CRUD操作要求：
+- 使用SQLAlchemy ORM
+- 包含异步操作支持
+- 添加适当的索引和约束
+- 包含错误处理和事务管理</code></pre>
+                    </div>
+
+                    <h3>3. 前端组件</h3>
+                    <div class="code-block">
+                        <h4>React组件生成</h4>
+                        <pre><code>请创建一个React用户卡片组件，要求：
+- 显示用户头像、姓名、邮箱、角色
+- 支持编辑和删除操作
+- 使用TypeScript
+- 包含加载状态和错误处理
+- 使用现代React Hooks
+- 包含CSS模块样式</code></pre>
+                    </div>
+                </section>
+
+                <section id="testing-debugging">
+                    <h2>测试与调试</h2>
+
+                    <h3>单元测试生成</h3>
+                    <div class="example-box">
+                        <h4>示例：为函数生成测试</h4>
+                        <div class="chat-example">
+                            <div class="user-message">
+                                <strong>用户：</strong>为以下函数编写完整的单元测试：
+                                <pre><code>def calculate_discount(price, discount_percent, min_price=0):
+    if price < min_price:
+        return price
+    if discount_percent < 0 or discount_percent > 100:
+        raise ValueError("折扣百分比必须在0-100之间")
+    return price * (1 - discount_percent / 100)</code></pre>
+                                使用pytest框架，包含边界情况测试。
+                            </div>
+                            <div class="claude-message">
+                                <strong>Claude：</strong>
+                                <pre><code>import pytest
+from decimal import Decimal
+
+def test_calculate_discount_normal_case():
+    """测试正常情况下的折扣计算"""
+    result = calculate_discount(100, 20)
+    assert result == 80.0
+
+def test_calculate_discount_no_discount():
+    """测试无折扣情况"""
+    result = calculate_discount(100, 0)
+    assert result == 100.0
+
+def test_calculate_discount_full_discount():
+    """测试全额折扣"""
+    result = calculate_discount(100, 100)
+    assert result == 0.0
+
+def test_calculate_discount_with_min_price():
+    """测试最低价格限制"""
+    result = calculate_discount(50, 20, min_price=60)
+    assert result == 50  # 价格低于最低价格，不应用折扣
+
+def test_calculate_discount_invalid_percent_negative():
+    """测试负数折扣百分比"""
+    with pytest.raises(ValueError, match="折扣百分比必须在0-100之间"):
+        calculate_discount(100, -10)
+
+def test_calculate_discount_invalid_percent_over_100():
+    """测试超过100%的折扣百分比"""
+    with pytest.raises(ValueError, match="折扣百分比必须在0-100之间"):
+        calculate_discount(100, 150)
+
+@pytest.mark.parametrize("price,discount,expected", [
+    (100, 10, 90),
+    (200, 25, 150),
+    (50, 50, 25),
+    (0, 20, 0),
+])
+def test_calculate_discount_parametrized(price, discount, expected):
+    """参数化测试多种情况"""
+    result = calculate_discount(price, discount)
+    assert result == expected</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>调试技巧</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h4>🐛 日志添加</h4>
+                            <p>要求Claude为代码添加适当的日志记录</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🔍 错误分析</h4>
+                            <p>提供错误信息，让Claude分析可能的原因</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>⚡ 性能优化</h4>
+                            <p>请求代码性能分析和优化建议</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🛡️ 安全检查</h4>
+                            <p>要求检查代码中的安全漏洞</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="best-practices">
+                    <h2>最佳实践</h2>
+
+                    <div class="warning-box">
+                        <h4>💡 代码生成最佳实践</h4>
+                        <ul>
+                            <li><strong>明确需求</strong>：详细描述功能要求和约束条件</li>
+                            <li><strong>指定标准</strong>：说明编码规范和最佳实践要求</li>
+                            <li><strong>包含示例</strong>：提供输入输出示例帮助理解</li>
+                            <li><strong>逐步构建</strong>：从简单功能开始，逐步增加复杂性</li>
+                            <li><strong>测试验证</strong>：始终测试生成的代码</li>
+                            <li><strong>代码审查</strong>：人工审查生成的代码质量</li>
+                        </ul>
+                    </div>
+
+                    <h3>代码质量检查清单</h3>
+                    <div class="code-block">
+                        <pre><code>在使用AI生成的代码前，请检查：
+
+✅ 功能正确性
+- 代码是否实现了预期功能
+- 边界情况是否处理正确
+- 错误处理是否完善
+
+✅ 代码质量
+- 变量和函数命名是否清晰
+- 代码结构是否合理
+- 是否遵循编码规范
+
+✅ 性能考虑
+- 算法复杂度是否合理
+- 是否存在性能瓶颈
+- 内存使用是否优化
+
+✅ 安全性
+- 输入验证是否充分
+- 是否存在安全漏洞
+- 敏感信息是否妥善处理</code></pre>
+                    </div>
+                </section>
+
+                <div class="tutorial-navigation">
+                    <a href="prompt-engineering.html" class="btn btn-secondary">上一课：提示词工程</a>
+                    <a href="../#tutorials" class="btn btn-primary">返回教程列表</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

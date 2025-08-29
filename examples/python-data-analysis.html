@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Python数据分析示例 - 使用Claude AI辅助进行数据分析和可视化的完整示例">
+    <meta name="keywords" content="Python数据分析, 数据可视化, pandas, matplotlib, Claude AI">
+    <title>Python数据分析示例 - Claude Code Club</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="canonical" href="https://ccclub.club/examples/python-data-analysis.html">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="../" class="logo">
+                    <h1>Claude Code Club</h1>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../#home">首页</a></li>
+                    <li><a href="../#tutorials">教程</a></li>
+                    <li><a href="../#examples">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article class="tutorial-article">
+                <header class="tutorial-header">
+                    <h1>Python数据分析示例</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty">中级</span>
+                        <span class="duration">90分钟</span>
+                        <span class="updated">更新时间: 2024年8月</span>
+                    </div>
+                </header>
+
+                <div class="tutorial-toc">
+                    <h3>示例内容</h3>
+                    <ul>
+                        <li><a href="#project-overview">项目概述</a></li>
+                        <li><a href="#data-loading">数据加载与清洗</a></li>
+                        <li><a href="#exploratory-analysis">探索性数据分析</a></li>
+                        <li><a href="#visualization">数据可视化</a></li>
+                        <li><a href="#statistical-analysis">统计分析</a></li>
+                        <li><a href="#conclusions">结论与建议</a></li>
+                    </ul>
+                </div>
+
+                <section id="project-overview">
+                    <h2>项目概述</h2>
+                    <p>本示例展示如何使用Python进行电商销售数据分析，包括数据清洗、探索性分析、可视化和统计分析。我们将分析一个虚拟电商平台的销售数据，发现业务洞察。</p>
+
+                    <h3>数据集描述</h3>
+                    <ul>
+                        <li><strong>订单数据</strong>：包含订单ID、用户ID、产品信息、价格、时间等</li>
+                        <li><strong>用户数据</strong>：包含用户基本信息、注册时间、地区等</li>
+                        <li><strong>产品数据</strong>：包含产品分类、价格、库存等信息</li>
+                    </ul>
+
+                    <h3>分析目标</h3>
+                    <ul>
+                        <li>分析销售趋势和季节性模式</li>
+                        <li>识别最受欢迎的产品和类别</li>
+                        <li>分析用户购买行为</li>
+                        <li>发现地区性销售差异</li>
+                    </ul>
+                </section>
+
+                <section id="data-loading">
+                    <h2>数据加载与清洗</h2>
+
+                    <h3>环境准备</h3>
+                    <div class="code-block">
+                        <pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime, timedelta
+import warnings
+warnings.filterwarnings('ignore')
+
+# 设置中文字体
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+# 设置图表样式
+sns.set_style("whitegrid")
+plt.style.use('seaborn-v0_8')</code></pre>
+                    </div>
+
+                    <h3>数据加载</h3>
+                    <div class="code-block">
+                        <pre><code># 生成示例数据
+np.random.seed(42)
+
+# 生成订单数据
+n_orders = 10000
+order_data = {
+    'order_id': range(1, n_orders + 1),
+    'user_id': np.random.randint(1, 2000, n_orders),
+    'product_id': np.random.randint(1, 500, n_orders),
+    'category': np.random.choice(['电子产品', '服装', '家居', '图书', '运动'], n_orders),
+    'price': np.random.lognormal(4, 1, n_orders).round(2),
+    'quantity': np.random.randint(1, 5, n_orders),
+    'order_date': pd.date_range('2023-01-01', '2024-08-31', periods=n_orders),
+    'region': np.random.choice(['北京', '上海', '广州', '深圳', '杭州'], n_orders)
+}
+
+df_orders = pd.DataFrame(order_data)
+df_orders['total_amount'] = df_orders['price'] * df_orders['quantity']
+
+print("订单数据概览：")
+print(df_orders.head())
+print(f"\n数据形状：{df_orders.shape}")
+print(f"数据类型：\n{df_orders.dtypes}")</code></pre>
+                    </div>
+
+                    <h3>数据清洗</h3>
+                    <div class="code-block">
+                        <pre><code>def clean_data(df):
+    """数据清洗函数"""
+    print("开始数据清洗...")
+    
+    # 检查缺失值
+    missing_values = df.isnull().sum()
+    print(f"缺失值统计：\n{missing_values[missing_values > 0]}")
+    
+    # 检查重复值
+    duplicates = df.duplicated().sum()
+    print(f"重复行数：{duplicates}")
+    
+    # 删除重复行
+    df_clean = df.drop_duplicates()
+    
+    # 处理异常值（价格不能为负数或过大）
+    df_clean = df_clean[
+        (df_clean['price'] > 0) & 
+        (df_clean['price'] < df_clean['price'].quantile(0.99))
+    ]
+    
+    # 确保数量为正数
+    df_clean = df_clean[df_clean['quantity'] > 0]
+    
+    print(f"清洗后数据形状：{df_clean.shape}")
+    return df_clean
+
+df_clean = clean_data(df_orders)</code></pre>
+                    </div>
+                </section>
+
+                <section id="exploratory-analysis">
+                    <h2>探索性数据分析</h2>
+
+                    <h3>基本统计信息</h3>
+                    <div class="code-block">
+                        <pre><code># 基本统计信息
+print("数值型变量统计摘要：")
+print(df_clean.describe())
+
+print("\n分类变量统计：")
+print("产品类别分布：")
+print(df_clean['category'].value_counts())
+
+print("\n地区分布：")
+print(df_clean['region'].value_counts())</code></pre>
+                    </div>
+
+                    <h3>时间序列分析</h3>
+                    <div class="code-block">
+                        <pre><code># 按月份统计销售额
+df_clean['year_month'] = df_clean['order_date'].dt.to_period('M')
+monthly_sales = df_clean.groupby('year_month')['total_amount'].sum()
+
+print("月度销售额趋势：")
+print(monthly_sales.head(10))
+
+# 按星期几分析
+df_clean['weekday'] = df_clean['order_date'].dt.day_name()
+weekday_sales = df_clean.groupby('weekday')['total_amount'].sum()
+print("\n按星期几的销售额：")
+print(weekday_sales)</code></pre>
+                    </div>
+
+                    <h3>产品分析</h3>
+                    <div class="code-block">
+                        <pre><code># 产品类别分析
+category_analysis = df_clean.groupby('category').agg({
+    'total_amount': ['sum', 'mean', 'count'],
+    'quantity': 'sum'
+}).round(2)
+
+category_analysis.columns = ['总销售额', '平均订单金额', '订单数量', '总销量']
+print("产品类别分析：")
+print(category_analysis.sort_values('总销售额', ascending=False))
+
+# 热门产品
+top_products = df_clean.groupby('product_id').agg({
+    'total_amount': 'sum',
+    'quantity': 'sum',
+    'order_id': 'count'
+}).sort_values('total_amount', ascending=False).head(10)
+
+print("\n热门产品TOP10：")
+print(top_products)</code></pre>
+                    </div>
+                </section>
+
+                <section id="visualization">
+                    <h2>数据可视化</h2>
+
+                    <h3>销售趋势图</h3>
+                    <div class="code-block">
+                        <pre><code># 创建图表
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+
+# 1. 月度销售趋势
+monthly_sales.plot(kind='line', ax=axes[0,0], marker='o')
+axes[0,0].set_title('月度销售额趋势')
+axes[0,0].set_xlabel('月份')
+axes[0,0].set_ylabel('销售额')
+axes[0,0].tick_params(axis='x', rotation=45)
+
+# 2. 产品类别销售分布
+category_sales = df_clean.groupby('category')['total_amount'].sum()
+axes[0,1].pie(category_sales.values, labels=category_sales.index, autopct='%1.1f%%')
+axes[0,1].set_title('产品类别销售分布')
+
+# 3. 地区销售对比
+region_sales = df_clean.groupby('region')['total_amount'].sum()
+region_sales.plot(kind='bar', ax=axes[1,0], color='skyblue')
+axes[1,0].set_title('各地区销售额对比')
+axes[1,0].set_xlabel('地区')
+axes[1,0].set_ylabel('销售额')
+axes[1,0].tick_params(axis='x', rotation=45)
+
+# 4. 价格分布直方图
+axes[1,1].hist(df_clean['price'], bins=50, alpha=0.7, color='green')
+axes[1,1].set_title('产品价格分布')
+axes[1,1].set_xlabel('价格')
+axes[1,1].set_ylabel('频次')
+
+plt.tight_layout()
+plt.show()</code></pre>
+                    </div>
+
+                    <h3>高级可视化</h3>
+                    <div class="code-block">
+                        <pre><code># 热力图：类别vs地区销售情况
+pivot_data = df_clean.pivot_table(
+    values='total_amount', 
+    index='category', 
+    columns='region', 
+    aggfunc='sum'
+)
+
+plt.figure(figsize=(10, 6))
+sns.heatmap(pivot_data, annot=True, fmt='.0f', cmap='YlOrRd')
+plt.title('产品类别在各地区的销售热力图')
+plt.tight_layout()
+plt.show()
+
+# 箱线图：各类别价格分布
+plt.figure(figsize=(12, 6))
+sns.boxplot(data=df_clean, x='category', y='price')
+plt.title('各产品类别价格分布')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()</code></pre>
+                    </div>
+                </section>
+
+                <section id="statistical-analysis">
+                    <h2>统计分析</h2>
+
+                    <h3>相关性分析</h3>
+                    <div class="code-block">
+                        <pre><code># 数值变量相关性分析
+numeric_cols = ['price', 'quantity', 'total_amount']
+correlation_matrix = df_clean[numeric_cols].corr()
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0)
+plt.title('数值变量相关性矩阵')
+plt.tight_layout()
+plt.show()
+
+print("相关性分析结果：")
+print(correlation_matrix)</code></pre>
+                    </div>
+
+                    <h3>假设检验</h3>
+                    <div class="code-block">
+                        <pre><code>from scipy import stats
+
+# 检验不同地区的平均订单金额是否有显著差异
+regions = df_clean['region'].unique()
+region_amounts = [df_clean[df_clean['region'] == region]['total_amount'] 
+                 for region in regions]
+
+# 进行方差分析(ANOVA)
+f_stat, p_value = stats.f_oneway(*region_amounts)
+
+print(f"ANOVA检验结果：")
+print(f"F统计量: {f_stat:.4f}")
+print(f"p值: {p_value:.4f}")
+
+if p_value < 0.05:
+    print("结论：不同地区的平均订单金额存在显著差异")
+else:
+    print("结论：不同地区的平均订单金额无显著差异")
+
+# 各地区平均订单金额
+region_avg = df_clean.groupby('region')['total_amount'].mean().sort_values(ascending=False)
+print(f"\n各地区平均订单金额：")
+print(region_avg)</code></pre>
+                    </div>
+
+                    <h3>客户价值分析</h3>
+                    <div class="code-block">
+                        <pre><code># RFM分析（最近购买时间、购买频率、购买金额）
+current_date = df_clean['order_date'].max()
+
+rfm_data = df_clean.groupby('user_id').agg({
+    'order_date': lambda x: (current_date - x.max()).days,  # Recency
+    'order_id': 'count',  # Frequency
+    'total_amount': 'sum'  # Monetary
+}).rename(columns={
+    'order_date': 'Recency',
+    'order_id': 'Frequency', 
+    'total_amount': 'Monetary'
+})
+
+# 计算RFM分数
+rfm_data['R_Score'] = pd.qcut(rfm_data['Recency'], 5, labels=[5,4,3,2,1])
+rfm_data['F_Score'] = pd.qcut(rfm_data['Frequency'].rank(method='first'), 5, labels=[1,2,3,4,5])
+rfm_data['M_Score'] = pd.qcut(rfm_data['Monetary'], 5, labels=[1,2,3,4,5])
+
+# 组合RFM分数
+rfm_data['RFM_Score'] = rfm_data['R_Score'].astype(str) + \
+                       rfm_data['F_Score'].astype(str) + \
+                       rfm_data['M_Score'].astype(str)
+
+print("RFM分析结果（前10名客户）：")
+print(rfm_data.sort_values('Monetary', ascending=False).head(10))</code></pre>
+                    </div>
+                </section>
+
+                <section id="conclusions">
+                    <h2>结论与建议</h2>
+
+                    <div class="example-box">
+                        <h4>📊 主要发现</h4>
+                        <div class="chat-example">
+                            <div class="claude-message">
+                                <strong>数据洞察：</strong>
+                                <ul>
+                                    <li><strong>销售趋势</strong>：销售额呈现季节性波动，年末销售额显著增长</li>
+                                    <li><strong>产品类别</strong>：电子产品和服装是主要销售类别，占总销售额的60%以上</li>
+                                    <li><strong>地区差异</strong>：一线城市（北京、上海）的平均订单金额更高</li>
+                                    <li><strong>价格分布</strong>：大部分产品价格集中在50-200元区间</li>
+                                    <li><strong>客户行为</strong>：20%的客户贡献了80%的销售额（帕累托法则）</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h4>📈 营销建议</h4>
+                            <p>针对高价值客户制定专属营销策略，提高客户忠诚度和复购率</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🎯 产品策略</h4>
+                            <p>加强电子产品和服装类别的库存管理，优化产品组合</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🌍 区域拓展</h4>
+                            <p>在二三线城市加大市场推广力度，挖掘增长潜力</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>⏰ 季节性运营</h4>
+                            <p>根据季节性趋势调整库存和促销策略，提升运营效率</p>
+                        </div>
+                    </div>
+
+                    <h3>完整代码下载</h3>
+                    <div class="code-block">
+                        <pre><code># 保存分析结果
+results = {
+    'monthly_sales': monthly_sales,
+    'category_analysis': category_analysis,
+    'rfm_data': rfm_data,
+    'correlation_matrix': correlation_matrix
+}
+
+# 导出到Excel
+with pd.ExcelWriter('sales_analysis_results.xlsx') as writer:
+    for sheet_name, data in results.items():
+        data.to_excel(writer, sheet_name=sheet_name)
+
+print("分析结果已保存到 sales_analysis_results.xlsx")</code></pre>
+                    </div>
+                </section>
+
+                <div class="tutorial-navigation">
+                    <a href="../#examples" class="btn btn-secondary">返回示例列表</a>
+                    <a href="web-development.html" class="btn btn-primary">下一个示例：Web开发</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

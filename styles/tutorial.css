@@ -1,0 +1,280 @@
+/* Tutorial Specific Styles */
+.tutorial-content {
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+.tutorial-article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.tutorial-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.tutorial-header h1 {
+    font-size: 2.5rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.tutorial-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.tutorial-meta span {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.difficulty {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.duration {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.updated {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* Table of Contents */
+.tutorial-toc {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid #2563eb;
+}
+
+.tutorial-toc h3 {
+    margin-bottom: 1rem;
+    color: #1e293b;
+}
+
+.tutorial-toc ul {
+    list-style: none;
+}
+
+.tutorial-toc li {
+    margin-bottom: 0.5rem;
+}
+
+.tutorial-toc a {
+    color: #2563eb;
+    text-decoration: none;
+    padding: 0.25rem 0;
+    display: block;
+}
+
+.tutorial-toc a:hover {
+    text-decoration: underline;
+}
+
+/* Content Sections */
+.tutorial-article section {
+    margin-bottom: 3rem;
+}
+
+.tutorial-article h2 {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tutorial-article h3 {
+    font-size: 1.4rem;
+    color: #374151;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.tutorial-article h4 {
+    font-size: 1.2rem;
+    color: #4b5563;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.tutorial-article p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    color: #374151;
+}
+
+.tutorial-article ul,
+.tutorial-article ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.tutorial-article li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+/* Code Blocks */
+.code-block {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    overflow-x: auto;
+}
+
+.code-block h4 {
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+pre {
+    background: #0f172a;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+code {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+}
+
+/* Example Boxes */
+.example-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+}
+
+.example-box h4 {
+    background: #f8fafc;
+    padding: 1rem;
+    margin: 0;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+}
+
+.chat-example {
+    padding: 1rem;
+}
+
+.user-message,
+.claude-message {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+.user-message {
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+}
+
+.claude-message {
+    background: #f0fdf4;
+    border-left: 4px solid #16a34a;
+}
+
+/* Tips Grid */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.tip-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tip-card h4 {
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.tip-card p {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Warning Box */
+.warning-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.warning-box h4 {
+    color: #dc2626;
+    margin-bottom: 1rem;
+}
+
+.warning-box ul {
+    margin: 0;
+}
+
+.warning-box li {
+    color: #7f1d1d;
+}
+
+/* Navigation */
+.tutorial-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tutorial-article {
+        padding: 1rem;
+    }
+
+    .tutorial-header h1 {
+        font-size: 2rem;
+    }
+
+    .tutorial-meta {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tutorial-navigation {
+        flex-direction: column;
+        text-align: center;
+    }
+}
