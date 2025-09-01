@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Claude Code 最佳实践指南 - 掌握Claude Code的高级技巧、工作流程优化和团队协作最佳实践">
+    <meta name="keywords" content="Claude Code, 最佳实践, 高级技巧, 工作流程, 团队协作">
+    <title>Claude Code 最佳实践 - Claude Code Club</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="canonical" href="https://ccclub.club/tutorials/claude-code-best-practices.html">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="../" class="logo">
+                    <img src="../assets/logo-simple.png" alt="Claude Code Club" class="logo-img">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../#home">首页</a></li>
+                    <li><a href="../#tutorials">教程</a></li>
+                    <li><a href="../#examples">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article class="tutorial-article">
+                <header class="tutorial-header">
+                    <h1>Claude Code 最佳实践</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty">中级</span>
+                        <span class="duration">45分钟</span>
+                        <span class="updated">更新时间: 2025年9月</span>
+                    </div>
+                </header>
+
+                <div class="tutorial-toc">
+                    <h3>目录</h3>
+                    <ul>
+                        <li><a href="#session-management">会话管理策略</a></li>
+                        <li><a href="#context-optimization">上下文优化</a></li>
+                        <li><a href="#advanced-workflows">高级工作流程</a></li>
+                        <li><a href="#team-collaboration">团队协作</a></li>
+                        <li><a href="#performance-tips">性能优化技巧</a></li>
+                        <li><a href="#security-practices">安全实践</a></li>
+                    </ul>
+                </div>
+
+                <section id="session-management">
+                    <h2>会话管理策略</h2>
+                    
+                    <h3>智能使用 /clear 命令</h3>
+                    <div class="best-practice-box">
+                        <h4>🔥 核心原则</h4>
+                        <p>每次开始新任务时使用 <code>/clear</code> 清理聊天记录，避免上下文污染和token浪费。</p>
+                    </div>
+
+                    <div class="do-dont-grid">
+                        <div class="do-card">
+                            <h4>✅ 推荐做法</h4>
+                            <ul>
+                                <li>开始新功能开发前清理会话</li>
+                                <li>切换到不同项目时清理会话</li>
+                                <li>完成一个完整任务后清理会话</li>
+                                <li>感觉响应变慢时立即清理</li>
+                            </ul>
+                        </div>
+                        <div class="dont-card">
+                            <h4>❌ 避免做法</h4>
+                            <ul>
+                                <li>在一个会话中处理多个不相关任务</li>
+                                <li>让上下文累积过多无关信息</li>
+                                <li>忽略Claude的上下文限制警告</li>
+                                <li>在调试中途清理重要的错误信息</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>会话范围控制</h3>
+                    <div class="example-box">
+                        <h4>理想的会话范围</h4>
+                        <ul>
+                            <li><strong>单一功能</strong>：一个会话专注于一个完整功能的开发</li>
+                            <li><strong>相关任务组</strong>：将密切相关的小任务组合在一个会话中</li>
+                            <li><strong>调试会话</strong>：针对特定问题的深度调试和修复</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="context-optimization">
+                    <h2>上下文优化</h2>
+                    
+                    <h3>CLAUDE.md 文件优化</h3>
+                    <div class="code-block">
+                        <h4>高质量 CLAUDE.md 示例</h4>
+                        <pre><code># 电商项目
+
+## 核心功能
+用户管理、商品展示、购物车、订单处理
+
+## 技术架构
+- 前端：Next.js 14 + TypeScript + Tailwind CSS
+- 后端：Node.js + Express + Prisma ORM
+- 数据库：PostgreSQL
+- 认证：NextAuth.js
+- 支付：Stripe API
+
+## 重要约定
+- 所有API路由在 /pages/api/
+- 组件使用 TypeScript 严格模式
+- 数据库操作必须包含错误处理
+- 用户输入需要验证和清理
+
+## 当前优先级
+1. 完善用户认证流程
+2. 优化商品搜索性能
+3. 添加订单状态追踪</code></pre>
+                    </div>
+
+                    <h3>自定义命令和模板</h3>
+                    <div class="info-box">
+                        <h4>🛠️ 创建重复使用的命令</h4>
+                        <p>在 <code>.claude/commands/</code> 目录下存储Markdown格式的提示模板，这些将成为可用的斜杠命令。</p>
+                    </div>
+                </section>
+
+                <section id="advanced-workflows">
+                    <h2>高级工作流程</h2>
+                    
+                    <h3>Git 集成工作流</h3>
+                    <div class="workflow-steps">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <div class="step-content">
+                                <h4>功能开发</h4>
+                                <pre><code>创建新功能分支并实现用户故事 #123</code></pre>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <div class="step-content">
+                                <h4>自动提交</h4>
+                                <pre><code>运行测试，修复问题，然后创建提交</code></pre>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <div class="step-content">
+                                <h4>PR创建</h4>
+                                <pre><code>创建pull request并生成描述</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>代码审查自动化</h3>
+                    <div class="code-block">
+                        <h4>设置GitHub集成</h4>
+                        <pre><code>/install-github-app</code></pre>
+                        <p>安装后，Claude会自动审查您的Pull Request，提供代码质量反馈和改进建议。</p>
+                    </div>
+                </section>
+
+                <section id="team-collaboration">
+                    <h2>团队协作</h2>
+                    
+                    <h3>项目标准化</h3>
+                    <div class="best-practice-box">
+                        <h4>📋 团队规范</h4>
+                        <ul>
+                            <li>统一的 CLAUDE.md 模板格式</li>
+                            <li>标准化的提示词和命令</li>
+                            <li>共享的代码风格指南</li>
+                            <li>一致的Git工作流程</li>
+                        </ul>
+                    </div>
+
+                    <h3>知识共享</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h4>📚 文档化提示</h4>
+                            <p>将有效的提示词保存为团队模板，提高复用性</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🔄 经验分享</h4>
+                            <p>定期分享Claude Code使用心得和解决方案</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🎯 最佳实践库</h4>
+                            <p>建立团队的Claude Code最佳实践知识库</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="performance-tips">
+                    <h2>性能优化技巧</h2>
+                    
+                    <h3>模型选择策略</h3>
+                    <div class="model-comparison">
+                        <div class="model-card">
+                            <h4>Sonnet 4</h4>
+                            <p><strong>适用场景：</strong>日常开发、代码重构、快速原型</p>
+                            <p><strong>特点：</strong>平衡的性能和速度</p>
+                        </div>
+                        <div class="model-card">
+                            <h4>Opus 4.1</h4>
+                            <p><strong>适用场景：</strong>复杂架构设计、关键功能开发</p>
+                            <p><strong>特点：</strong>更强的推理能力，适合复杂任务</p>
+                        </div>
+                    </div>
+
+                    <h3>上下文管理</h3>
+                    <div class="code-block">
+                        <h4>优化上下文使用</h4>
+                        <pre><code># 切换模型
+/model sonnet-4
+
+# 聚焦特定文件
+请只关注 src/components/ 目录下的React组件
+
+# 限制分析范围
+分析这个函数的性能问题，忽略其他模块</code></pre>
+                    </div>
+                </section>
+
+                <section id="security-practices">
+                    <h2>安全实践</h2>
+                    
+                    <div class="security-grid">
+                        <div class="security-card">
+                            <h4>🔐 敏感信息保护</h4>
+                            <ul>
+                                <li>避免在提示中包含API密钥</li>
+                                <li>使用环境变量存储敏感配置</li>
+                                <li>定期审查生成的代码中的安全漏洞</li>
+                            </ul>
+                        </div>
+                        <div class="security-card">
+                            <h4>🛡️ 代码审查</h4>
+                            <ul>
+                                <li>始终人工审查Claude生成的代码</li>
+                                <li>验证依赖项和第三方库的安全性</li>
+                                <li>确保遵循项目的安全标准</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="advanced-tips">
+                    <h3>💡 高级技巧汇总</h3>
+                    <div class="tips-list">
+                        <div class="tip-item">
+                            <h4>1. 批量操作</h4>
+                            <p>一次性描述多个相关的小改动，让Claude批量处理提高效率。</p>
+                        </div>
+                        <div class="tip-item">
+                            <h4>2. 渐进式开发</h4>
+                            <p>从最小可行产品开始，逐步迭代添加功能和优化。</p>
+                        </div>
+                        <div class="tip-item">
+                            <h4>3. 测试驱动</h4>
+                            <p>要求Claude先编写测试用例，然后实现功能，确保代码质量。</p>
+                        </div>
+                        <div class="tip-item">
+                            <h4>4. 文档同步</h4>
+                            <p>让Claude在修改代码的同时更新相关文档和注释。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ 重要注意事项</h4>
+                    <ul>
+                        <li>Claude Code目前处于Beta阶段，功能可能会发生变化</li>
+                        <li>始终备份重要代码，特别是在大规模重构前</li>
+                        <li>定期检查和更新Claude Code到最新版本</li>
+                        <li>建立适合团队的使用规范和工作流程</li>
+                    </ul>
+                </div>
+
+                <div class="source-attribution">
+                    <h4>📚 参考资料</h4>
+                    <p>本教程基于以下权威资源编写：</p>
+                    <ul>
+                        <li><a href="https://www.anthropic.com/engineering/claude-code-best-practices" target="_blank">Anthropic 官方最佳实践指南</a></li>
+                        <li><a href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank">Awesome Claude Code 社区资源</a></li>
+                        <li><a href="https://www.datacamp.com/tutorial/claude-code" target="_blank">DataCamp Claude Code 教程</a></li>
+                        <li>企业级使用案例和经验总结</li>
+                    </ul>
+                </div>
+
+                <div class="tutorial-navigation">
+                    <a href="claude-code-quickstart.html" class="btn btn-secondary">上一课：快速入门</a>
+                    <a href="../#tutorials" class="btn btn-primary">返回教程列表</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/logo-simple.png" alt="Claude Code Club" class="footer-logo-img">
+                    <p>专业的AI编程学习社区</p>
+                </div>
+                <div class="footer-info">
+                    <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>
