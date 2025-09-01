@@ -1,0 +1,41 @@
+<svg width="320" height="80" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Clean dark color for the logo -->
+    <style>
+      .logo-dark { fill: #2c3e50; }
+      .logo-white { fill: #ffffff; }
+    </style>
+  </defs>
+  
+  <!-- Main rounded square container -->
+  <rect x="10" y="10" width="60" height="60" rx="12" ry="12" class="logo-dark"/>
+  
+  <!-- Head/profile shape in top area -->
+  <g transform="translate(25, 18)">
+    <!-- Head outline -->
+    <path d="M15 8 C20 8, 25 12, 25 18 C25 20, 24 22, 22 23 L22 25 C22 26, 21 27, 20 27 L10 27 C9 27, 8 26, 8 25 L8 23 C6 22, 5 20, 5 18 C5 12, 10 8, 15 8 Z" class="logo-white"/>
+    <!-- Hair/head detail -->
+    <path d="M15 8 C18 8, 21 10, 23 13 C22 11, 19 9, 15 9 C13 9, 11 10, 10 12 C11 9, 13 8, 15 8 Z" class="logo-dark"/>
+  </g>
+  
+  <!-- Large CC letters in bottom area -->
+  <g transform="translate(20, 45)">
+    <!-- First C -->
+    <path d="M5 8 C2 8, 0 10, 0 13 L0 17 C0 20, 2 22, 5 22 C7 22, 8 21, 8 20 L6 20 C6 20, 5 20, 5 20 C4 20, 3 19, 3 17 L3 13 C3 11, 4 10, 5 10 C5 10, 6 10, 6 10 L8 10 C8 9, 7 8, 5 8 Z" class="logo-white"/>
+    
+    <!-- Second C -->
+    <path d="M20 8 C17 8, 15 10, 15 13 L15 17 C15 20, 17 22, 20 22 C22 22, 23 21, 23 20 L21 20 C21 20, 20 20, 20 20 C19 20, 18 19, 18 17 L18 13 C18 11, 19 10, 20 10 C20 10, 21 10, 21 10 L23 10 C23 9, 22 8, 20 8 Z" class="logo-white"/>
+  </g>
+  
+  <!-- Text: CLAUDE CODE CLUB -->
+  <g transform="translate(85, 25)">
+    <!-- CLAUDE -->
+    <text x="0" y="0" font-family="'Arial Black', Arial, sans-serif" font-size="16" font-weight="900" class="logo-dark">CLAUDE</text>
+    
+    <!-- CODE -->
+    <text x="0" y="20" font-family="'Arial Black', Arial, sans-serif" font-size="16" font-weight="900" class="logo-dark">CODE</text>
+    
+    <!-- CLUB -->
+    <text x="0" y="40" font-family="'Arial Black', Arial, sans-serif" font-size="16" font-weight="900" class="logo-dark">CLUB</text>
+  </g>
+</svg>
