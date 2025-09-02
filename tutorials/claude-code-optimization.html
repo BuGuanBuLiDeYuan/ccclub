@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 深度配置与优化指南 - Claude Code Club</title>
+    <meta name="description" content="深入了解Claude Code的核心配置技巧，包括CLAUDE.md配置、权限管理、记忆系统等，让你的开发效率翻倍">
+    <meta name="keywords" content="Claude Code, 配置优化, CLAUDE.md, 开发效率, AI编程">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ccclub.club/tutorials/claude-code-optimization.html">
+    <meta property="og:title" content="Claude Code 深度配置与优化指南">
+    <meta property="og:description" content="深入了解Claude Code的核心配置技巧，让你的开发效率翻倍">
+    <meta property="og:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ccclub.club/tutorials/claude-code-optimization.html">
+    <meta property="twitter:title" content="Claude Code 深度配置与优化指南">
+    <meta property="twitter:description" content="深入了解Claude Code的核心配置技巧，让你的开发效率翻倍">
+    <meta property="twitter:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <!-- WeChat -->
+    <meta name="wechat:title" content="Claude Code 深度配置与优化指南">
+    <meta name="wechat:description" content="深入了解Claude Code的核心配置技巧，让你的开发效率翻倍">
+    <meta name="wechat:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-icon.svg">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../tutorials/claude-basics.html">教程</a></li>
+                    <li><a href="../examples/python-data-analysis.html">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article>
+                <header class="tutorial-header">
+                    <h1>Claude Code 深度配置与优化指南</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty advanced">高级</span>
+                        <span class="duration">阅读时间: 15分钟</span>
+                        <span class="category">配置优化</span>
+                    </div>
+                    <p class="tutorial-description">
+                        市面上99%的Claude Code教程都在讲表面功能，真正的性能优化技巧几乎没人提。
+                        本文将深入探讨那些"专家"们不告诉你的Claude Code核心配置，让你的开发效率翻倍。
+                    </p>
+                </header>
+
+                <div class="tutorial-body">
+                    <section class="tutorial-section">
+                        <h2>前言：大部分人都在"裸奔"</h2>
+                        <p>前几天刷技术博客，看到一篇Claude
+                            Code教程有3万+阅读，点进去一看我就傻眼了。整篇文章洋洋洒洒5000字，各种"高级技巧"、"效率提升"，结果连个CLAUDE.md配置文件都没提到。</p>
+
+                        <div class="alert alert-warning">
+                            <strong>现实问题：</strong>90%的Claude Code用户都在"裸奔" - 没有正确配置，导致每次启动要等半分钟，每个项目都要重新解释一遍结构。
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>CLAUDE.md：被严重低估的神器</h2>
+                        <p>网上那些教程最大的问题就是只讲怎么用，不讲怎么配。CLAUDE.md就像给Claude装了个大脑，你的项目规范、常用命令、核心逻辑都可以写进去。</p>
+
+                        <h3>配置前后对比</h3>
+                        <div class="code-comparison">
+                            <div class="before">
+                                <h4>❌ 配置前（每次都要重复）</h4>
+                                <blockquote>
+                                    "我这个项目是用Python写的，用的是FastAPI框架，数据库是PostgreSQL，测试用pytest，部署用Docker..."
+                                </blockquote>
+                            </div>
+
+                            <div class="after">
+                                <h4>✅ 配置后（写在CLAUDE.md里）</h4>
+                                <pre><code># 项目架构
+- 后端：FastAPI + Python 3.11
+- 数据库：PostgreSQL 14 + SQLAlchemy
+- 测试：pytest，覆盖率必须>90%
+- 部署：Docker + nginx
+
+# 重要规范
+- 所有API必须有异常处理
+- 数据库操作必须用事务
+- 新功能必须先写测试
+
+# 常用命令
+- 启动：uvicorn main:app --reload
+- 测试：pytest --cov=src tests/
+- 构建：docker build -t myapp .</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="performance-metrics">
+                            <h4>效果对比</h4>
+                            <ul>
+                                <li>启动时间：从15秒降到3秒</li>
+                                <li>项目理解：从5分钟变成0等待</li>
+                                <li>重复解释：完全消除</li>
+                            </ul>
+                        </div>
+
+                        <h3>动态更新功能</h3>
+                        <p>对话中按<code>#</code>键，可以让Claude自动把重要信息合并到CLAUDE.md。比如"# 把这个部署命令加到CLAUDE.md"，它就自动更新配置。</p>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>权限管理：告别无脑点确认</h2>
+                        <p>Claude Code默认每次写文件、跑命令都要手动确认，美其名曰"安全"，实际上严重影响开发体验。</p>
+
+                        <h3>分类策略</h3>
+                        <div class="permission-strategy">
+                            <div class="permission-level green">
+                                <h4>🟢 绿灯区（直接白名单）</h4>
+                                <ul>
+                                    <li>Git操作</li>
+                                    <li>文件读写</li>
+                                    <li>pytest</li>
+                                    <li>npm install</li>
+                                </ul>
+                            </div>
+
+                            <div class="permission-level yellow">
+                                <h4>🟡 黄灯区（保留确认）</h4>
+                                <ul>
+                                    <li>系统命令</li>
+                                    <li>网络请求</li>
+                                </ul>
+                            </div>
+
+                            <div class="permission-level red">
+                                <h4>🔴 红灯区（永远手动确认）</h4>
+                                <ul>
+                                    <li>删除操作</li>
+                                    <li>系统配置</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>激进配置（开发环境）</h3>
+                        <pre><code># 设置alias，直接启动
+alias claude='claude --dangerously-skip-permissions'</code></pre>
+
+                        <div class="alert alert-info">
+                            <strong>注意：</strong>dangerously名字听起来吓人，但在开发环境下完全没问题。使用2个月，没遇到任何安全问题。
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>记忆管理：让Claude变成你的专属助手</h2>
+                        <p>这个是最被低估的功能。Claude Code有完整的记忆管理系统，但99%的教程都不提这个。</p>
+
+                        <h3>三层记忆系统</h3>
+                        <div class="memory-system">
+                            <div class="memory-layer">
+                                <h4>1. 会话记忆</h4>
+                                <p>当前对话，关了就没了</p>
+                            </div>
+
+                            <div class="memory-layer">
+                                <h4>2. 项目记忆</h4>
+                                <p><code>./CLAUDE.md</code>，整个项目共享</p>
+                            </div>
+
+                            <div class="memory-layer">
+                                <h4>3. 全局记忆</h4>
+                                <p><code>~/.claude/CLAUDE.md</code>，跨项目使用</p>
+                            </div>
+                        </div>
+
+                        <h3>全局配置示例</h3>
+                        <pre><code># 个人全局配置
+- 技术问题优先用中文回复
+- 代码注释要详细，新人能看懂
+- 优先使用成熟开源方案，避免重复造轮子
+- 性能优化必须有benchmark数据
+- 数据库操作必须考虑并发安全</code></pre>
+
+                        <h3>会话恢复功能</h3>
+                        <div class="session-commands">
+                            <ul>
+                                <li><code>claude --continue</code> - 继续上次会话</li>
+                                <li><code>claude -r</code> - 选择历史会话</li>
+                                <li><code>/resume</code> - 交互模式下恢复</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>真实效果对比</h2>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>指标</th>
+                                        <th>配置前（99%的人）</th>
+                                        <th>配置后（1%高手）</th>
+                                        <th>提升</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>项目启动</td>
+                                        <td>15-25秒</td>
+                                        <td>3-5秒</td>
+                                        <td>5倍+</td>
+                                    </tr>
+                                    <tr>
+                                        <td>重复解释</td>
+                                        <td>每次5-15分钟</td>
+                                        <td>0次，自动加载</td>
+                                        <td>100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>权限打断</td>
+                                        <td>每小时3-8次</td>
+                                        <td>几乎为0</td>
+                                        <td>95%+</td>
+                                    </tr>
+                                    <tr>
+                                        <td>上下文保持</td>
+                                        <td>每次关闭重来</td>
+                                        <td>跨会话记忆</td>
+                                        <td>无限</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-success">
+                            <strong>整体效率提升超过300%</strong>，更重要的是思路不会被打断。
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>踩坑经验分享</h2>
+                        <div class="pitfalls">
+                            <div class="pitfall">
+                                <h4>1. CLAUDE.md写太长</h4>
+                                <p>一开始恨不得把所有东西都写进去，结果Claude理解起来反而慢了。现在控制在1000行以内。</p>
+                            </div>
+
+                            <div class="pitfall">
+                                <h4>2. 权限设置太激进</h4>
+                                <p>曾经把所有操作都跳过确认，结果一个<code>rm -rf</code>差点删掉整个项目。现在至少保留删除操作的确认。</p>
+                            </div>
+
+                            <div class="pitfall">
+                                <h4>3. 配置不同步</h4>
+                                <p>团队协作时忘记把CLAUDE.md提交到Git，导致每个人的配置不一致，协作混乱。</p>
+                            </div>
+
+                            <div class="pitfall">
+                                <h4>4. 忘记定期清理</h4>
+                                <p>项目演进过程中，一些旧的配置和规范要及时清理，不然会产生冲突。</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>总结</h2>
+                        <p>Claude Code本来是个很强大的开发工具，结果大部分人因为没有正确配置，用起来体验很糟糕。如果你也在用Claude Code，强烈建议花10-20分钟配置一下这些基础设置。</p>
+
+                        <div class="key-takeaways">
+                            <h4>关键要点：</h4>
+                            <ul>
+                                <li>✅ 配置CLAUDE.md文件，包含项目架构、规范和常用命令</li>
+                                <li>✅ 设置合理的权限管理策略</li>
+                                <li>✅ 利用三层记忆系统提升效率</li>
+                                <li>✅ 使用会话恢复功能保持上下文</li>
+                                <li>✅ 定期清理和更新配置</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <strong>记住：</strong>真正的高手都在用这些"基础"功能，而不是追求那些花里胡哨的"高级技巧"。基础打牢了，后面的路才会更顺。
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="tutorial-footer">
+                    <div class="tutorial-navigation">
+                        <a href="advanced-claude-techniques.html" class="nav-link prev">
+                            ← 上一篇：Claude高级技巧
+                        </a>
+                        <a href="claude-basics.html" class="nav-link next">
+                            下一篇：Claude基础入门 →
+                        </a>
+                    </div>
+
+                    <div class="tutorial-tags">
+                        <span class="tag">Claude Code</span>
+                        <span class="tag">配置优化</span>
+                        <span class="tag">开发效率</span>
+                        <span class="tag">CLAUDE.md</span>
+                        <span class="tag">权限管理</span>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
+                        <span>Claude Code Club</span>
+                    </div>
+                    <p>探索AI编程的无限可能</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
+                        <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
+                        <li><a href="../community.html">加入社区</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>友情链接</h4>
+                    <ul>
+                        <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
+                        <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

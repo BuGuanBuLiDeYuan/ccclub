@@ -278,3 +278,281 @@ code {
         text-align: center;
     }
 }
+
+/ * Claude Code Optimization Tutorial Styles */ .alert {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    border-left: 4px solid;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border-left-color: #ffc107;
+    color: #856404;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border-left-color: #17a2b8;
+    color: #0c5460;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-left-color: #28a745;
+    color: #155724;
+}
+
+.code-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.code-comparison .before,
+.code-comparison .after {
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.code-comparison .before {
+    background-color: #fff5f5;
+    border: 1px solid #fed7d7;
+}
+
+.code-comparison .after {
+    background-color: #f0fff4;
+    border: 1px solid #c6f6d5;
+}
+
+.code-comparison h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.code-comparison blockquote {
+    margin: 0;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    font-style: italic;
+}
+
+.code-comparison pre {
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.performance-metrics {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.performance-metrics h4 {
+    margin-top: 0;
+    color: #28a745;
+}
+
+.performance-metrics ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.performance-metrics li {
+    margin-bottom: 0.5rem;
+}
+
+.permission-strategy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.permission-level {
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid;
+}
+
+.permission-level.green {
+    background-color: #f0fff4;
+    border-color: #68d391;
+}
+
+.permission-level.yellow {
+    background-color: #fffbeb;
+    border-color: #f6e05e;
+}
+
+.permission-level.red {
+    background-color: #fff5f5;
+    border-color: #fc8181;
+}
+
+.permission-level h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.permission-level ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.memory-system {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.memory-layer {
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.memory-layer h4 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.session-commands {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.session-commands ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.session-commands code {
+    background-color: #e9ecef;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.comparison-table {
+    overflow-x: auto;
+    margin: 2rem 0;
+}
+
+.comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.comparison-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+}
+
+.comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+.comparison-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.pitfalls {
+    display: grid;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.pitfall {
+    padding: 1.5rem;
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 8px;
+}
+
+.pitfall h4 {
+    margin-top: 0;
+    color: #856404;
+}
+
+.pitfall code {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.key-takeaways {
+    background-color: #e8f5e8;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+    margin: 2rem 0;
+}
+
+.key-takeaways h4 {
+    margin-top: 0;
+    color: #155724;
+}
+
+.key-takeaways ul {
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.key-takeaways li {
+    margin-bottom: 0.5rem;
+}
+
+/* Advanced tutorial meta styles */
+.tutorial-meta .advanced {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* Mobile responsive for new elements */
+@media (max-width: 768px) {
+    .code-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .permission-strategy {
+        grid-template-columns: 1fr;
+    }
+
+    .memory-system {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-table {
+        font-size: 0.9rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
