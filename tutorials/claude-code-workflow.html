@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code 工作流优化指南 - Claude Code Club</title>
+  <meta name="description" content="掌握Claude Code的高效工作流，包括项目初始化、开发流程、团队协作等最佳实践">
+  <meta name="keywords" content="Claude Code, 工作流, 开发流程, 团队协作, 最佳实践">
+
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/tutorial.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logo-icon.svg">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="nav-container">
+        <div class="logo">
+          <a href="../index.html">
+            <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
+          </a>
+        </div>
+        <ul class="nav-links">
+          <li><a href="../index.html">首页</a></li>
+          <li><a href="../tutorials/claude-basics.html">教程</a></li>
+          <li><a href="../examples/python-data-analysis.html">示例</a></li>
+          <li><a href="../community.html">社区</a></li>
+          <li><a href="../about.html">关于</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="tutorial-content">
+    <div class="container">
+      <article>
+        <header class="tutorial-header">
+          <h1>Claude Code 工作流优化指南</h1>
+          <div class="tutorial-meta">
+            <span class="difficulty intermediate">中级</span>
+            <span class="duration">阅读时间: 18分钟</span>
+            <span class="category">工作流</span>
+          </div>
+          <p class="tutorial-description">
+            建立高效的Claude Code工作流，从项目初始化到部署上线，让AI成为你最得力的编程助手。
+          </p>
+        </header>
+
+        <div class="tutorial-body">
+          <section class="tutorial-section">
+            <h2>完整的开发工作流概览</h2>
+
+            <div class="workflow-diagram">
+              <div class="workflow-step">
+                <div class="step-number">1</div>
+                <h3>项目初始化</h3>
+                <p>设置项目结构和配置</p>
+              </div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-step">
+                <div class="step-number">2</div>
+                <h3>需求分析</h3>
+                <p>与Claude协作理解需求</p>
+              </div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-step">
+                <div class="step-number">3</div>
+                <h3>架构设计</h3>
+                <p>设计系统架构和API</p>
+              </div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-step">
+                <div class="step-number">4</div>
+                <h3>编码实现</h3>
+                <p>迭代开发和测试</p>
+              </div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-step">
+                <div class="step-number">5</div>
+                <h3>部署上线</h3>
+                <p>自动化部署和监控</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>阶段一：项目初始化最佳实践</h2>
+
+            <h3>智能项目脚手架</h3>
+            <pre><code># 使用Claude Code初始化项目
+claude init my-project --template=fullstack
+
+# 生成的项目结构
+my-project/
+├── CLAUDE.md              # 项目配置文件
+├── src/
+│   ├── components/        # 组件目录
+│   ├── services/         # 服务层
+│   ├── utils/            # 工具函数
+│   └── types/            # 类型定义
+├── tests/                # 测试文件
+├── docs/                 # 文档目录
+└── .claude/              # Claude配置</code></pre>
+
+            <h3>CLAUDE.md 配置模板</h3>
+            <pre><code># 项目配置模板
+## 项目信息
+- 名称: My Awesome Project
+- 技术栈: React + Node.js + TypeScript
+- 数据库: PostgreSQL
+- 部署: Docker + AWS
+
+## 开发规范
+- 使用 ESLint + Prettier 进行代码格式化
+- 提交信息遵循 Conventional Commits 规范
+- 所有功能必须有对应的测试用例
+- API 接口必须有完整的文档
+
+## 常用命令
+- 启动开发服务器: `npm run dev`
+- 运行测试: `npm test`
+- 构建生产版本: `npm run build`
+- 代码检查: `npm run lint`
+
+## 架构说明
+- 前端采用组件化开发
+- 后端使用分层架构 (Controller -> Service -> Repository)
+- 数据库使用 Prisma ORM
+- 认证使用 JWT + Refresh Token</code></pre>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>阶段二：需求分析与设计</h2>
+
+            <h3>与Claude协作进行需求分析</h3>
+            <div class="example-box">
+              <h4>需求分析对话示例</h4>
+              <div class="chat-example">
+                <div class="user-message">
+                  <strong>开发者：</strong>我需要开发一个任务管理系统，用户可以创建、编辑、删除任务，还要支持团队协作。
+                </div>
+                <div class="claude-message">
+                  <strong>Claude：</strong>
+                  <p>我来帮你分析这个任务管理系统的需求：</p>
+
+                  <h5>核心功能模块：</h5>
+                  <ul>
+                    <li><strong>用户管理</strong>：注册、登录、权限控制</li>
+                    <li><strong>任务管理</strong>：CRUD操作、状态管理、优先级</li>
+                    <li><strong>团队协作</strong>：成员邀请、任务分配、评论</li>
+                    <li><strong>通知系统</strong>：实时通知、邮件提醒</li>
+                  </ul>
+
+                  <h5>技术架构建议：</h5>
+                  <pre><code>// 数据模型设计
+interface User {
+    id: string;
+    email: string;
+    name: string;
+    teams: Team[];
+}
+
+interface Task {
+    id: string;
+    title: string;
+    description: string;
+    status: 'todo' | 'in-progress' | 'done';
+    priority: 'low' | 'medium' | 'high';
+    assigneeId: string;
+    teamId: string;
+    dueDate: Date;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+interface Team {
+    id: string;
+    name: string;
+    members: User[];
+    tasks: Task[];
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>阶段三：迭代开发流程</h2>
+
+            <h3>TDD + Claude 的完美结合</h3>
+            <div class="development-cycle">
+              <div class="cycle-step">
+                <h4>1. 编写测试</h4>
+                <pre><code>// 先写测试用例
+describe('TaskService', () => {
+    it('should create a new task', async () => {
+        const taskData = {
+            title: 'Test Task',
+            description: 'Test Description',
+            assigneeId: 'user-1',
+            teamId: 'team-1'
+        };
+        
+        const task = await taskService.createTask(taskData);
+        
+        expect(task.id).toBeDefined();
+        expect(task.title).toBe(taskData.title);
+        expect(task.status).toBe('todo');
+    });
+});</code></pre>
+              </div>
+
+              <div class="cycle-step">
+                <h4>2. Claude生成实现</h4>
+                <pre><code>// Claude根据测试生成的实现
+class TaskService {
+    constructor(private taskRepository: TaskRepository) {}
+    
+    async createTask(taskData: CreateTaskDto): Promise<Task> {
+        const task = new Task({
+            id: generateId(),
+            ...taskData,
+            status: 'todo',
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        
+        return await this.taskRepository.save(task);
+    }
+}</code></pre>
+              </div>
+
+              <div class="cycle-step">
+                <h4>3. 重构优化</h4>
+                <pre><code>// 重构后的优化版本
+class TaskService {
+    constructor(
+        private taskRepository: TaskRepository,
+        private userService: UserService,
+        private notificationService: NotificationService
+    ) {}
+    
+    async createTask(taskData: CreateTaskDto): Promise<Task> {
+        // 验证用户权限
+        await this.userService.validateTeamMembership(
+            taskData.assigneeId, 
+            taskData.teamId
+        );
+        
+        const task = await this.taskRepository.create({
+            ...taskData,
+            status: TaskStatus.TODO,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        
+        // 发送通知
+        await this.notificationService.notifyTaskAssigned(task);
+        
+        return task;
+    }
+}</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>团队协作工作流</h2>
+
+            <h3>Git + Claude 协作模式</h3>
+            <pre><code># 功能分支开发流程
+git checkout -b feature/task-management
+claude chat "帮我实现任务创建功能"
+
+# 代码审查
+git add .
+git commit -m "feat: implement task creation with validation"
+claude review --files="src/services/task.service.ts"
+
+# 合并前检查
+claude test --coverage
+claude lint --fix</code></pre>
+
+            <h3>团队配置同步</h3>
+            <pre><code># .claude/team-config.md
+## 团队开发规范
+- 代码风格: Airbnb ESLint 配置
+- 提交规范: Conventional Commits
+- 分支策略: Git Flow
+- 代码审查: 至少2人审查
+
+## 共享提示词
+### 代码审查提示词
+请审查以下代码，重点关注：
+1. 代码逻辑是否正确
+2. 是否遵循项目规范
+3. 性能和安全性问题
+4. 测试覆盖率
+
+### 重构提示词
+请帮我重构这段代码，要求：
+1. 提高代码可读性
+2. 减少重复代码
+3. 优化性能
+4. 保持向后兼容</code></pre>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>自动化工作流</h2>
+
+            <h3>CI/CD 集成</h3>
+            <pre><code># .github/workflows/claude-review.yml
+name: Claude Code Review
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Claude Code Review
+        run: |
+          claude review --pr=${{ github.event.number }} \
+            --format=github-comment \
+            --focus=security,performance,bugs
+            
+      - name: Generate Test Cases
+        run: |
+          claude generate-tests --coverage-target=80% \
+            --output=tests/generated/</code></pre>
+
+            <h3>部署自动化</h3>
+            <pre><code># 部署脚本生成
+claude deploy --target=production --platform=aws
+
+# 生成的部署配置
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3</code></pre>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>性能监控与优化</h2>
+
+            <div class="monitoring-dashboard">
+              <div class="metric-card">
+                <h4>📊 代码质量指标</h4>
+                <ul>
+                  <li>测试覆盖率: 85%+</li>
+                  <li>代码重复率: <5%< /li>
+                  <li>圈复杂度: <10< /li>
+                </ul>
+              </div>
+
+              <div class="metric-card">
+                <h4>⚡ 性能指标</h4>
+                <ul>
+                  <li>构建时间: <2分钟< /li>
+                  <li>测试执行: <30秒< /li>
+                  <li>部署时间: <5分钟< /li>
+                </ul>
+              </div>
+
+              <div class="metric-card">
+                <h4>🚀 开发效率</h4>
+                <ul>
+                  <li>功能交付: +40%</li>
+                  <li>Bug修复: +60%</li>
+                  <li>代码审查: +50%</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>工作流优化建议</h2>
+
+            <div class="key-takeaways">
+              <h4>高效工作流的关键要素：</h4>
+              <ul>
+                <li>✅ 建立标准化的项目模板和配置</li>
+                <li>✅ 使用Claude进行需求分析和架构设计</li>
+                <li>✅ 实施TDD + AI辅助的开发模式</li>
+                <li>✅ 建立团队共享的提示词库</li>
+                <li>✅ 集成自动化测试和部署流程</li>
+                <li>✅ 持续监控和优化开发效率</li>
+              </ul>
+            </div>
+
+            <div class="alert alert-success">
+              <strong>效果预期：</strong>采用优化后的工作流，团队开发效率可提升40-60%，代码质量显著改善，部署频率提高3倍以上。
+            </div>
+          </section>
+        </div>
+
+        <footer class="tutorial-footer">
+          <div class="tutorial-navigation">
+            <a href="claude-35-sonnet-features.html" class="nav-link prev">
+              ← 上一篇：Claude 3.5 Sonnet新特性
+            </a>
+            <a href="claude-code-security.html" class="nav-link next">
+              下一篇：Claude Code安全最佳实践 →
+            </a>
+          </div>
+
+          <div class="tutorial-tags">
+            <span class="tag">工作流</span>
+            <span class="tag">开发流程</span>
+            <span class="tag">团队协作</span>
+            <span class="tag">自动化</span>
+            <span class="tag">最佳实践</span>
+          </div>
+        </footer>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
+            <span>Claude Code Club</span>
+          </div>
+          <p>探索AI编程的无限可能</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>快速链接</h4>
+          <ul>
+            <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
+            <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
+            <li><a href="../community.html">加入社区</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>友情链接</h4>
+          <ul>
+            <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
+            <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

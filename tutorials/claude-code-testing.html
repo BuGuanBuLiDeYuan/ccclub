@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 测试策略与实践 - Claude Code Club</title>
+    <meta name="description" content="掌握Claude Code测试的最佳实践，包括单元测试、集成测试、E2E测试等">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-icon.svg">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../tutorials/claude-basics.html">教程</a></li>
+                    <li><a href="../examples/python-data-analysis.html">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article>
+                <header class="tutorial-header">
+                    <h1>Claude Code 测试策略与实践</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty intermediate">中级</span>
+                        <span class="duration">阅读时间: 14分钟</span>
+                        <span class="category">测试</span>
+                    </div>
+                    <p class="tutorial-description">
+                        构建完整的测试体系，从单元测试到端到端测试，确保代码质量和系统稳定性。
+                    </p>
+                </header>
+
+                <div class="tutorial-body">
+                    <section class="tutorial-section">
+                        <h2>测试金字塔</h2>
+                        <div class="test-pyramid">
+                            <div class="pyramid-level unit-tests">
+                                <h3>🔬 单元测试 (70%)</h3>
+                                <p>快速、独立、大量</p>
+                            </div>
+                            <div class="pyramid-level integration-tests">
+                                <h3>🔗 集成测试 (20%)</h3>
+                                <p>组件间交互测试</p>
+                            </div>
+                            <div class="pyramid-level e2e-tests">
+                                <h3>🎭 端到端测试 (10%)</h3>
+                                <p>完整用户流程测试</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>单元测试最佳实践</h2>
+                        <h3>测试驱动开发 (TDD)</h3>
+                        <pre><code>// 1. 先写测试
+describe('UserService', () => {
+    describe('createUser', () => {
+        it('should create user with valid data', async () => {
+            const userData = {
+                name: 'John Doe',
+                email: 'john@example.com',
+                password: 'securePassword123'
+            };
+            
+            const user = await userService.createUser(userData);
+            
+            expect(user.id).toBeDefined();
+            expect(user.name).toBe(userData.name);
+            expect(user.email).toBe(userData.email);
+            expect(user.password).not.toBe(userData.password); // 应该被加密
+        });
+        
+        it('should throw error for invalid email', async () => {
+            const userData = {
+                name: 'John Doe',
+                email: 'invalid-email',
+                password: 'securePassword123'
+            };
+            
+            await expect(userService.createUser(userData))
+                .rejects.toThrow('Invalid email format');
+        });
+    });
+});
+
+// 2. 实现功能
+class UserService {
+    async createUser(userData) {
+        // 验证邮箱格式
+        if (!this.isValidEmail(userData.email)) {
+            throw new Error('Invalid email format');
+        }
+        
+        // 加密密码
+        const hashedPassword = await bcrypt.hash(userData.password, 10);
+        
+        // 创建用户
+        const user = await this.userRepository.create({
+            ...userData,
+            password: hashedPassword,
+            id: generateId(),
+            createdAt: new Date()
+        });
+        
+        return user;
+    }
+    
+    isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+}</code></pre>
+
+                        <h3>Mock和Stub的使用</h3>
+                        <pre><code>// 依赖注入和Mock
+describe('OrderService', () => {
+    let orderService;
+    let mockUserService;
+    let mockPaymentService;
+    let mockInventoryService;
+    
+    beforeEach(() => {
+        mockUserService = {
+            findById: jest.fn(),
+            validateUser: jest.fn()
+        };
+        
+        mockPaymentService = {
+            processPayment: jest.fn()
+        };
+        
+        mockInventoryService = {
+            checkStock: jest.fn(),
+            reserveItems: jest.fn()
+        };
+        
+        orderService = new OrderService({
+            userService: mockUserService,
+            paymentService: mockPaymentService,
+            inventoryService: mockInventoryService
+        });
+    });
+    
+    it('should create order successfully', async () => {
+        // 设置Mock返回值
+        mockUserService.findById.mockResolvedValue({
+            id: 'user-1',
+            name: 'John Doe',
+            email: 'john@example.com'
+        });
+        
+        mockInventoryService.checkStock.mockResolvedValue(true);
+        mockInventoryService.reserveItems.mockResolvedValue(['item-1']);
+        mockPaymentService.processPayment.mockResolvedValue({
+            transactionId: 'tx-123',
+            status: 'success'
+        });
+        
+        const orderData = {
+            userId: 'user-1',
+            items: [{ id: 'item-1', quantity: 2 }],
+            totalAmount: 100
+        };
+        
+        const order = await orderService.createOrder(orderData);
+        
+        // 验证调用
+        expect(mockUserService.findById).toHaveBeenCalledWith('user-1');
+        expect(mockInventoryService.checkStock).toHaveBeenCalledWith(orderData.items);
+        expect(mockPaymentService.processPayment).toHaveBeenCalledWith({
+            amount: 100,
+            userId: 'user-1'
+        });
+        
+        // 验证结果
+        expect(order.id).toBeDefined();
+        expect(order.status).toBe('confirmed');
+    });
+});</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>集成测试策略</h2>
+                        <h3>API集成测试</h3>
+                        <pre><code>// API集成测试
+describe('User API Integration', () => {
+    let app;
+    let testDb;
+    
+    beforeAll(async () => {
+        // 设置测试数据库
+        testDb = await setupTestDatabase();
+        app = createApp({ database: testDb });
+    });
+    
+    afterAll(async () => {
+        await cleanupTestDatabase(testDb);
+    });
+    
+    beforeEach(async () => {
+        await testDb.clear();
+    });
+    
+    describe('POST /api/users', () => {
+        it('should create user and return 201', async () => {
+            const userData = {
+                name: 'John Doe',
+                email: 'john@example.com',
+                password: 'securePassword123'
+            };
+            
+            const response = await request(app)
+                .post('/api/users')
+                .send(userData)
+                .expect(201);
+            
+            expect(response.body.user.id).toBeDefined();
+            expect(response.body.user.name).toBe(userData.name);
+            expect(response.body.user.email).toBe(userData.email);
+            expect(response.body.user.password).toBeUndefined(); // 不应返回密码
+            
+            // 验证数据库中的数据
+            const userInDb = await testDb.users.findById(response.body.user.id);
+            expect(userInDb).toBeDefined();
+            expect(userInDb.password).not.toBe(userData.password); // 应该被加密
+        });
+        
+        it('should return 400 for duplicate email', async () => {
+            const userData = {
+                name: 'John Doe',
+                email: 'john@example.com',
+                password: 'securePassword123'
+            };
+            
+            // 先创建一个用户
+            await request(app)
+                .post('/api/users')
+                .send(userData)
+                .expect(201);
+            
+            // 尝试创建相同邮箱的用户
+            const response = await request(app)
+                .post('/api/users')
+                .send(userData)
+                .expect(400);
+            
+            expect(response.body.error).toContain('Email already exists');
+        });
+    });
+});</code></pre>
+
+                        <h3>数据库集成测试</h3>
+                        <pre><code>// 数据库集成测试
+describe('UserRepository Integration', () => {
+    let repository;
+    let testDb;
+    
+    beforeAll(async () => {
+        testDb = await createTestDatabase();
+        repository = new UserRepository(testDb);
+    });
+    
+    afterEach(async () => {
+        await testDb.users.deleteMany({});
+    });
+    
+    it('should handle concurrent user creation', async () => {
+        const users = Array.from({ length: 10 }, (_, i) => ({
+            name: `User ${i}`,
+            email: `user${i}@example.com`,
+            password: 'password123'
+        }));
+        
+        // 并发创建用户
+        const promises = users.map(user => repository.create(user));
+        const results = await Promise.all(promises);
+        
+        expect(results).toHaveLength(10);
+        results.forEach((user, index) => {
+            expect(user.id).toBeDefined();
+            expect(user.email).toBe(users[index].email);
+        });
+        
+        // 验证数据库中的数据
+        const allUsers = await repository.findAll();
+        expect(allUsers).toHaveLength(10);
+    });
+    
+    it('should maintain referential integrity', async () => {
+        // 创建用户
+        const user = await repository.create({
+            name: 'John Doe',
+            email: 'john@example.com',
+            password: 'password123'
+        });
+        
+        // 创建用户的订单
+        const order = await testDb.orders.create({
+            userId: user.id,
+            items: [{ name: 'Product 1', price: 100 }],
+            total: 100
+        });
+        
+        // 尝试删除有订单的用户应该失败
+        await expect(repository.delete(user.id))
+            .rejects.toThrow('Cannot delete user with existing orders');
+        
+        // 先删除订单，再删除用户应该成功
+        await testDb.orders.delete(order.id);
+        await expect(repository.delete(user.id)).resolves.toBeTruthy();
+    });
+});</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>端到端测试</h2>
+                        <h3>Playwright E2E测试</h3>
+                        <pre><code>// E2E测试示例
+import { test, expect } from '@playwright/test';
+
+test.describe('User Registration Flow', () => {
+    test('should complete user registration successfully', async ({ page }) => {
+        // 访问注册页面
+        await page.goto('/register');
+        
+        // 填写注册表单
+        await page.fill('[data-testid="name-input"]', 'John Doe');
+        await page.fill('[data-testid="email-input"]', 'john@example.com');
+        await page.fill('[data-testid="password-input"]', 'securePassword123');
+        await page.fill('[data-testid="confirm-password-input"]', 'securePassword123');
+        
+        // 提交表单
+        await page.click('[data-testid="register-button"]');
+        
+        // 验证成功消息
+        await expect(page.locator('[data-testid="success-message"]'))
+            .toContainText('Registration successful');
+        
+        // 验证重定向到登录页面
+        await expect(page).toHaveURL('/login');
+        
+        // 验证可以使用新账户登录
+        await page.fill('[data-testid="email-input"]', 'john@example.com');
+        await page.fill('[data-testid="password-input"]', 'securePassword123');
+        await page.click('[data-testid="login-button"]');
+        
+        // 验证登录成功
+        await expect(page).toHaveURL('/dashboard');
+        await expect(page.locator('[data-testid="user-name"]'))
+            .toContainText('John Doe');
+    });
+    
+    test('should show validation errors for invalid input', async ({ page }) => {
+        await page.goto('/register');
+        
+        // 提交空表单
+        await page.click('[data-testid="register-button"]');
+        
+        // 验证错误消息
+        await expect(page.locator('[data-testid="name-error"]'))
+            .toContainText('Name is required');
+        await expect(page.locator('[data-testid="email-error"]'))
+            .toContainText('Email is required');
+        await expect(page.locator('[data-testid="password-error"]'))
+            .toContainText('Password is required');
+        
+        // 填写无效邮箱
+        await page.fill('[data-testid="email-input"]', 'invalid-email');
+        await page.click('[data-testid="register-button"]');
+        
+        await expect(page.locator('[data-testid="email-error"]'))
+            .toContainText('Please enter a valid email');
+    });
+});</code></pre>
+
+                        <h3>性能测试</h3>
+                        <pre><code>// 性能测试
+import { test, expect } from '@playwright/test';
+
+test.describe('Performance Tests', () => {
+    test('should load dashboard within performance budget', async ({ page }) => {
+        // 开始性能监控
+        await page.goto('/dashboard');
+        
+        // 等待页面完全加载
+        await page.waitForLoadState('networkidle');
+        
+        // 获取性能指标
+        const performanceMetrics = await page.evaluate(() => {
+            const navigation = performance.getEntriesByType('navigation')[0];
+            return {
+                domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
+                loadComplete: navigation.loadEventEnd - navigation.loadEventStart,
+                firstPaint: performance.getEntriesByName('first-paint')[0]?.startTime,
+                firstContentfulPaint: performance.getEntriesByName('first-contentful-paint')[0]?.startTime
+            };
+        });
+        
+        // 验证性能指标
+        expect(performanceMetrics.domContentLoaded).toBeLessThan(2000); // 2秒内
+        expect(performanceMetrics.loadComplete).toBeLessThan(3000); // 3秒内
+        expect(performanceMetrics.firstContentfulPaint).toBeLessThan(1500); // 1.5秒内
+    });
+    
+    test('should handle concurrent users', async ({ browser }) => {
+        const contexts = await Promise.all(
+            Array.from({ length: 10 }, () => browser.newContext())
+        );
+        
+        const pages = await Promise.all(
+            contexts.map(context => context.newPage())
+        );
+        
+        // 并发访问
+        const startTime = Date.now();
+        await Promise.all(
+            pages.map(page => page.goto('/dashboard'))
+        );
+        const endTime = Date.now();
+        
+        // 验证所有页面都成功加载
+        for (const page of pages) {
+            await expect(page.locator('[data-testid="dashboard-title"]'))
+                .toBeVisible();
+        }
+        
+        // 验证响应时间
+        const totalTime = endTime - startTime;
+        expect(totalTime).toBeLessThan(5000); // 5秒内完成所有请求
+        
+        // 清理
+        await Promise.all(contexts.map(context => context.close()));
+    });
+});</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>测试自动化与CI/CD</h2>
+                        <h3>GitHub Actions配置</h3>
+                        <pre><code># .github/workflows/test.yml
+name: Test Suite
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run unit tests
+        run: npm run test:unit -- --coverage
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run integration tests
+        run: npm run test:integration
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      
+      - name: Start application
+        run: |
+          npm run build
+          npm run start &
+          npx wait-on http://localhost:3000
+      
+      - name: Run E2E tests
+        run: npm run test:e2e
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>测试最佳实践总结</h2>
+                        <div class="key-takeaways">
+                            <h4>测试策略要点：</h4>
+                            <ul>
+                                <li>✅ 遵循测试金字塔原则，重点关注单元测试</li>
+                                <li>✅ 使用TDD方法，先写测试再写代码</li>
+                                <li>✅ 保持测试独立性，避免测试间相互依赖</li>
+                                <li>✅ 使用有意义的测试名称和描述</li>
+                                <li>✅ 定期重构测试代码，保持可维护性</li>
+                                <li>✅ 集成CI/CD流程，自动化测试执行</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-success">
+                            <strong>目标指标：</strong>代码覆盖率 > 80%，测试执行时间 < 10分钟，E2E测试通过率> 95%
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="tutorial-footer">
+                    <div class="tutorial-navigation">
+                        <a href="claude-code-performance.html" class="nav-link prev">
+                            ← 上一篇：Claude Code性能优化
+                        </a>
+                        <a href="claude-code-deployment.html" class="nav-link next">
+                            下一篇：Claude Code部署指南 →
+                        </a>
+                    </div>
+
+                    <div class="tutorial-tags">
+                        <span class="tag">测试</span>
+                        <span class="tag">TDD</span>
+                        <span class="tag">自动化</span>
+                        <span class="tag">质量保证</span>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
+                        <span>Claude Code Club</span>
+                    </div>
+                    <p>探索AI编程的无限可能</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
+                        <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
+                        <li><a href="../community.html">加入社区</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>友情链接</h4>
+                    <ul>
+                        <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
+                        <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

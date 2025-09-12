@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 性能优化指南 - Claude Code Club</title>
+    <meta name="description" content="掌握Claude Code性能优化技巧，提升代码执行效率和系统响应速度">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-icon.svg">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../tutorials/claude-basics.html">教程</a></li>
+                    <li><a href="../examples/python-data-analysis.html">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article>
+                <header class="tutorial-header">
+                    <h1>Claude Code 性能优化指南</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty advanced">高级</span>
+                        <span class="duration">阅读时间: 16分钟</span>
+                        <span class="category">性能优化</span>
+                    </div>
+                    <p class="tutorial-description">
+                        深入了解Claude Code性能优化技巧，从算法优化到系统调优，全面提升应用性能。
+                    </p>
+                </header>
+
+                <div class="tutorial-body">
+                    <section class="tutorial-section">
+                        <h2>性能优化策略概览</h2>
+                        <div class="performance-pyramid">
+                            <div class="pyramid-level level-1">
+                                <h3>🏗️ 架构层优化</h3>
+                                <p>系统架构、数据库设计、缓存策略</p>
+                            </div>
+                            <div class="pyramid-level level-2">
+                                <h3>⚡ 算法层优化</h3>
+                                <p>算法复杂度、数据结构选择</p>
+                            </div>
+                            <div class="pyramid-level level-3">
+                                <h3>🔧 代码层优化</h3>
+                                <p>代码实现、内存管理</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>算法与数据结构优化</h2>
+                        <h3>时间复杂度优化</h3>
+                        <div class="code-comparison">
+                            <div class="before">
+                                <h4>❌ O(n²) 暴力解法</h4>
+                                <pre><code>// 查找数组中的重复元素
+function findDuplicates(arr) {
+    const duplicates = [];
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[i] === arr[j] && !duplicates.includes(arr[i])) {
+                duplicates.push(arr[i]);
+            }
+        }
+    }
+    return duplicates;
+}</code></pre>
+                            </div>
+                            <div class="after">
+                                <h4>✅ O(n) 优化解法</h4>
+                                <pre><code>// 使用Set优化查找
+function findDuplicates(arr) {
+    const seen = new Set();
+    const duplicates = new Set();
+    
+    for (const item of arr) {
+        if (seen.has(item)) {
+            duplicates.add(item);
+        } else {
+            seen.add(item);
+        }
+    }
+    
+    return Array.from(duplicates);
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3>内存优化技巧</h3>
+                        <pre><code>// 大数据处理的内存优化
+class DataProcessor {
+    // 使用生成器避免一次性加载大量数据
+    *processLargeDataset(filePath) {
+        const stream = fs.createReadStream(filePath, { encoding: 'utf8' });
+        let buffer = '';
+        
+        for await (const chunk of stream) {
+            buffer += chunk;
+            const lines = buffer.split('\n');
+            buffer = lines.pop(); // 保留不完整的行
+            
+            for (const line of lines) {
+                if (line.trim()) {
+                    yield this.processLine(line);
+                }
+            }
+        }
+        
+        // 处理最后一行
+        if (buffer.trim()) {
+            yield this.processLine(buffer);
+        }
+    }
+    
+    // 批量处理减少内存占用
+    async processBatch(items, batchSize = 1000) {
+        const results = [];
+        
+        for (let i = 0; i < items.length; i += batchSize) {
+            const batch = items.slice(i, i + batchSize);
+            const batchResults = await Promise.all(
+                batch.map(item => this.processItem(item))
+            );
+            results.push(...batchResults);
+            
+            // 强制垃圾回收（在Node.js中）
+            if (global.gc && i % (batchSize * 10) === 0) {
+                global.gc();
+            }
+        }
+        
+        return results;
+    }
+}</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>数据库性能优化</h2>
+                        <h3>查询优化</h3>
+                        <pre><code>// 数据库查询优化示例
+class UserService {
+    // 使用索引和限制查询字段
+    async getUsers(filters, pagination) {
+        const { page = 1, limit = 20 } = pagination;
+        const offset = (page - 1) * limit;
+        
+        // 只查询需要的字段
+        const query = `
+            SELECT id, name, email, created_at
+            FROM users 
+            WHERE status = ? 
+            AND created_at >= ?
+            ORDER BY created_at DESC
+            LIMIT ? OFFSET ?
+        `;
+        
+        return await db.query(query, [
+            filters.status,
+            filters.startDate,
+            limit,
+            offset
+        ]);
+    }
+    
+    // 批量操作优化
+    async createUsers(users) {
+        // 使用批量插入而不是逐个插入
+        const values = users.map(user => [
+            user.name,
+            user.email,
+            user.password,
+            new Date()
+        ]);
+        
+        const query = `
+            INSERT INTO users (name, email, password, created_at)
+            VALUES ?
+        `;
+        
+        return await db.query(query, [values]);
+    }
+    
+    // 连接查询优化
+    async getUsersWithProfiles() {
+        // 使用JOIN而不是N+1查询
+        const query = `
+            SELECT 
+                u.id, u.name, u.email,
+                p.bio, p.avatar, p.location
+            FROM users u
+            LEFT JOIN profiles p ON u.id = p.user_id
+            WHERE u.status = 'active'
+        `;
+        
+        return await db.query(query);
+    }
+}</code></pre>
+
+                        <h3>缓存策略</h3>
+                        <pre><code>// 多层缓存策略
+class CacheManager {
+    constructor() {
+        this.memoryCache = new Map();
+        this.redisClient = redis.createClient();
+    }
+    
+    async get(key) {
+        // L1: 内存缓存
+        if (this.memoryCache.has(key)) {
+            return this.memoryCache.get(key);
+        }
+        
+        // L2: Redis缓存
+        const redisValue = await this.redisClient.get(key);
+        if (redisValue) {
+            const parsed = JSON.parse(redisValue);
+            // 回填内存缓存
+            this.memoryCache.set(key, parsed);
+            return parsed;
+        }
+        
+        return null;
+    }
+    
+    async set(key, value, ttl = 3600) {
+        // 同时设置两层缓存
+        this.memoryCache.set(key, value);
+        await this.redisClient.setex(key, ttl, JSON.stringify(value));
+    }
+    
+    // 缓存预热
+    async warmupCache(keys) {
+        const pipeline = this.redisClient.pipeline();
+        
+        for (const key of keys) {
+            pipeline.get(key);
+        }
+        
+        const results = await pipeline.exec();
+        
+        results.forEach(([err, value], index) => {
+            if (!err && value) {
+                const key = keys[index];
+                this.memoryCache.set(key, JSON.parse(value));
+            }
+        });
+    }
+}</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>前端性能优化</h2>
+                        <h3>代码分割与懒加载</h3>
+                        <pre><code>// React代码分割示例
+import { lazy, Suspense } from 'react';
+
+// 懒加载组件
+const Dashboard = lazy(() => import('./Dashboard'));
+const UserProfile = lazy(() => import('./UserProfile'));
+const Analytics = lazy(() => import('./Analytics'));
+
+function App() {
+    return (
+        <Router>
+            <Suspense fallback={<LoadingSpinner />}>
+                <Routes>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/profile" element={<UserProfile />} />
+                    <Route path="/analytics" element={<Analytics />} />
+                </Routes>
+            </Suspense>
+        </Router>
+    );
+}
+
+// 预加载关键路由
+const preloadRoutes = () => {
+    import('./Dashboard');
+    import('./UserProfile');
+};
+
+// 在用户交互时预加载
+document.addEventListener('mouseover', (e) => {
+    if (e.target.matches('a[href="/dashboard"]')) {
+        import('./Dashboard');
+    }
+});</code></pre>
+
+                        <h3>虚拟滚动优化</h3>
+                        <pre><code>// 虚拟滚动实现
+class VirtualList {
+    constructor(container, items, itemHeight) {
+        this.container = container;
+        this.items = items;
+        this.itemHeight = itemHeight;
+        this.visibleCount = Math.ceil(container.clientHeight / itemHeight) + 2;
+        this.startIndex = 0;
+        
+        this.render();
+        this.bindEvents();
+    }
+    
+    render() {
+        const endIndex = Math.min(
+            this.startIndex + this.visibleCount,
+            this.items.length
+        );
+        
+        const visibleItems = this.items.slice(this.startIndex, endIndex);
+        const offsetY = this.startIndex * this.itemHeight;
+        
+        this.container.innerHTML = `
+            <div style="height: ${this.items.length * this.itemHeight}px; position: relative;">
+                <div style="transform: translateY(${offsetY}px);">
+                    ${visibleItems.map(item => `
+                        <div style="height: ${this.itemHeight}px;">
+                            ${this.renderItem(item)}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    bindEvents() {
+        this.container.addEventListener('scroll', () => {
+            const newStartIndex = Math.floor(
+                this.container.scrollTop / this.itemHeight
+            );
+            
+            if (newStartIndex !== this.startIndex) {
+                this.startIndex = newStartIndex;
+                this.render();
+            }
+        });
+    }
+}</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>网络性能优化</h2>
+                        <h3>请求优化</h3>
+                        <pre><code>// 请求合并和缓存
+class APIClient {
+    constructor() {
+        this.requestCache = new Map();
+        this.pendingRequests = new Map();
+    }
+    
+    async get(url, options = {}) {
+        const cacheKey = `${url}${JSON.stringify(options)}`;
+        
+        // 检查缓存
+        if (this.requestCache.has(cacheKey)) {
+            const cached = this.requestCache.get(cacheKey);
+            if (Date.now() - cached.timestamp < 60000) { // 1分钟缓存
+                return cached.data;
+            }
+        }
+        
+        // 检查是否有相同的请求正在进行
+        if (this.pendingRequests.has(cacheKey)) {
+            return this.pendingRequests.get(cacheKey);
+        }
+        
+        // 发起新请求
+        const promise = fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                // 缓存结果
+                this.requestCache.set(cacheKey, {
+                    data,
+                    timestamp: Date.now()
+                });
+                
+                // 清除pending状态
+                this.pendingRequests.delete(cacheKey);
+                
+                return data;
+            })
+            .catch(error => {
+                this.pendingRequests.delete(cacheKey);
+                throw error;
+            });
+        
+        this.pendingRequests.set(cacheKey, promise);
+        return promise;
+    }
+    
+    // 批量请求
+    async batchGet(urls) {
+        const requests = urls.map(url => this.get(url));
+        return Promise.all(requests);
+    }
+}</code></pre>
+
+                        <h3>资源压缩与CDN</h3>
+                        <pre><code>// Webpack优化配置
+module.exports = {
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+                common: {
+                    name: 'common',
+                    minChunks: 2,
+                    chunks: 'all',
+                    enforce: true
+                }
+            }
+        },
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    compress: {
+                        drop_console: true,
+                        drop_debugger: true
+                    }
+                }
+            }),
+            new CssMinimizerPlugin()
+        ]
+    },
+    plugins: [
+        new CompressionPlugin({
+            algorithm: 'gzip',
+            test: /\.(js|css|html|svg)$/,
+            threshold: 8192,
+            minRatio: 0.8
+        })
+    ]
+};</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>性能监控与分析</h2>
+                        <h3>性能指标收集</h3>
+                        <pre><code>// 性能监控工具
+class PerformanceMonitor {
+    constructor() {
+        this.metrics = new Map();
+        this.observers = [];
+    }
+    
+    // 监控API响应时间
+    measureAPICall(name, fn) {
+        return async (...args) => {
+            const start = performance.now();
+            
+            try {
+                const result = await fn(...args);
+                const duration = performance.now() - start;
+                
+                this.recordMetric(`api.${name}`, {
+                    duration,
+                    status: 'success',
+                    timestamp: Date.now()
+                });
+                
+                return result;
+            } catch (error) {
+                const duration = performance.now() - start;
+                
+                this.recordMetric(`api.${name}`, {
+                    duration,
+                    status: 'error',
+                    error: error.message,
+                    timestamp: Date.now()
+                });
+                
+                throw error;
+            }
+        };
+    }
+    
+    // 监控页面性能
+    measurePageLoad() {
+        if (typeof window !== 'undefined') {
+            window.addEventListener('load', () => {
+                const navigation = performance.getEntriesByType('navigation')[0];
+                
+                this.recordMetric('page.load', {
+                    domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
+                    loadComplete: navigation.loadEventEnd - navigation.loadEventStart,
+                    totalTime: navigation.loadEventEnd - navigation.fetchStart
+                });
+            });
+        }
+    }
+    
+    recordMetric(name, data) {
+        if (!this.metrics.has(name)) {
+            this.metrics.set(name, []);
+        }
+        
+        this.metrics.get(name).push(data);
+        
+        // 通知观察者
+        this.observers.forEach(observer => observer(name, data));
+    }
+    
+    getMetrics(name) {
+        return this.metrics.get(name) || [];
+    }
+    
+    getAverageMetric(name, field) {
+        const metrics = this.getMetrics(name);
+        if (metrics.length === 0) return 0;
+        
+        const sum = metrics.reduce((acc, metric) => acc + metric[field], 0);
+        return sum / metrics.length;
+    }
+}</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>性能优化最佳实践</h2>
+                        <div class="key-takeaways">
+                            <h4>优化策略优先级：</h4>
+                            <ul>
+                                <li>✅ 首先优化算法和数据结构（影响最大）</li>
+                                <li>✅ 实施有效的缓存策略</li>
+                                <li>✅ 优化数据库查询和索引</li>
+                                <li>✅ 减少网络请求次数和大小</li>
+                                <li>✅ 实施代码分割和懒加载</li>
+                                <li>✅ 持续监控和分析性能指标</li>
+                            </ul>
+                        </div>
+
+                        <div class="performance-metrics">
+                            <h4>性能目标参考：</h4>
+                            <ul>
+                                <li>页面加载时间: < 3秒</li>
+                                <li>API响应时间: < 200ms</li>
+                                <li>首屏渲染时间: < 1.5秒</li>
+                                <li>内存使用率: < 80%</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="tutorial-footer">
+                    <div class="tutorial-navigation">
+                        <a href="claude-code-security.html" class="nav-link prev">
+                            ← 上一篇：Claude Code安全最佳实践
+                        </a>
+                        <a href="claude-code-testing.html" class="nav-link next">
+                            下一篇：Claude Code测试策略 →
+                        </a>
+                    </div>
+
+                    <div class="tutorial-tags">
+                        <span class="tag">性能优化</span>
+                        <span class="tag">算法优化</span>
+                        <span class="tag">缓存策略</span>
+                        <span class="tag">监控分析</span>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
+                        <span>Claude Code Club</span>
+                    </div>
+                    <p>探索AI编程的无限可能</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
+                        <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
+                        <li><a href="../community.html">加入社区</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>友情链接</h4>
+                    <ul>
+                        <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
+                        <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

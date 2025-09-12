@@ -556,3 +556,435 @@ code {
         padding: 0.75rem 0.5rem;
     }
 }
+
+/ * Eight Honors Eight Shames Tutorial Styles */ .eight-principles {
+    margin: 2rem 0;
+}
+
+.principle-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+.shame,
+.honor {
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid;
+}
+
+.shame {
+    background-color: #fff5f5;
+    border-color: #fc8181;
+}
+
+.shame h3 {
+    color: #c53030;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.honor {
+    background-color: #f0fff4;
+    border-color: #68d391;
+}
+
+.honor h3 {
+    color: #2f855a;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.example-bad,
+.example-good {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+.example-bad {
+    background-color: rgba(252, 129, 129, 0.1);
+    border-left: 4px solid #fc8181;
+}
+
+.example-good {
+    background-color: rgba(104, 211, 145, 0.1);
+    border-left: 4px solid #68d391;
+}
+
+.example-bad h4,
+.example-good h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.example-bad h4 {
+    color: #c53030;
+}
+
+.example-good h4 {
+    color: #2f855a;
+}
+
+.example-bad pre,
+.example-good pre {
+    margin: 0.5rem 0 0 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+}
+
+.practice-guide {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.practice-item {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.practice-item h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #2d3748;
+    font-size: 1.1rem;
+}
+
+.practice-item ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.practice-item li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    color: #4a5568;
+}
+
+/* Mobile responsive for eight principles */
+@media (max-width: 768px) {
+    .principle-pair {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .practice-guide {
+        grid-template-columns: 1fr;
+    }
+
+    .example-bad pre,
+    .example-good pre {
+        font-size: 0.8rem;
+    }
+}
+
+/* Ad
+ditional styles for new tutorials */
+
+/* Feature highlights for Claude 3.5 Sonnet */
+.feature-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.feature-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Workflow diagram */
+.workflow-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+}
+
+.workflow-step {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    background: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    font-weight: bold;
+}
+
+.workflow-arrow {
+    font-size: 1.5rem;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Development cycle */
+.development-cycle {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.cycle-step {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.cycle-step h4 {
+    color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+/* Monitoring dashboard */
+.monitoring-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.metric-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card h4 {
+    margin-top: 0;
+    color: #2d3748;
+}
+
+/* Security threats */
+.security-threats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.threat-card {
+    padding: 2rem;
+    border-radius: 8px;
+    border: 2px solid;
+}
+
+.threat-card.high {
+    background-color: #fff5f5;
+    border-color: #fc8181;
+}
+
+.threat-card.medium {
+    background-color: #fffbeb;
+    border-color: #f6e05e;
+}
+
+.threat-card.low {
+    background-color: #f0fff4;
+    border-color: #68d391;
+}
+
+.threat-card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+/* Security checklist */
+.security-checklist {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.checklist-item input[type="checkbox"] {
+    margin-right: 1rem;
+    transform: scale(1.2);
+}
+
+.checklist-item label {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Performance pyramid */
+.performance-pyramid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.pyramid-level {
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    max-width: 600px;
+}
+
+.pyramid-level.level-1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    max-width: 500px;
+}
+
+.pyramid-level.level-2 {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    max-width: 400px;
+}
+
+.pyramid-level.level-3 {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    max-width: 300px;
+}
+
+/* Test pyramid */
+.test-pyramid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.unit-tests {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    max-width: 500px;
+}
+
+.integration-tests {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    max-width: 400px;
+}
+
+.e2e-tests {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    max-width: 300px;
+}
+
+/* Deployment strategies */
+.deployment-strategies {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.strategy-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.strategy-card h3 {
+    margin-top: 0;
+    color: #2d3748;
+}
+
+.strategy-card ul {
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+/* Deployment checklist */
+.deployment-checklist {
+    background: #f0fff4;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+    margin: 2rem 0;
+}
+
+.deployment-checklist h4 {
+    margin-top: 0;
+    color: #155724;
+}
+
+/* Mobile responsive for new elements */
+@media (max-width: 768px) {
+    .workflow-diagram {
+        flex-direction: column;
+    }
+
+    .workflow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .feature-highlights,
+    .security-threats,
+    .deployment-strategies {
+        grid-template-columns: 1fr;
+    }
+
+    .pyramid-level {
+        max-width: 100% !important;
+    }
+
+    .development-cycle {
+        grid-template-columns: 1fr;
+    }
+
+    .monitoring-dashboard {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 八荣八耻 - 开发者道德准则 - Claude Code Club</title>
+    <meta name="description" content="Claude Code开发者的八荣八耻，搞笑版本的开发道德准则，让你在欢声笑语中学会正确的AI编程姿势">
+    <meta name="keywords" content="Claude Code, 八荣八耻, 开发规范, AI编程, 搞笑教程">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ccclub.club/tutorials/claude-code-eight-honors-eight-shames.html">
+    <meta property="og:title" content="Claude Code 八荣八耻 - 开发者道德准则">
+    <meta property="og:description" content="Claude Code开发者的八荣八耻，搞笑版本的开发道德准则">
+    <meta property="og:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ccclub.club/tutorials/claude-code-eight-honors-eight-shames.html">
+    <meta property="twitter:title" content="Claude Code 八荣八耻 - 开发者道德准则">
+    <meta property="twitter:description" content="Claude Code开发者的八荣八耻，搞笑版本的开发道德准则">
+    <meta property="twitter:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <!-- WeChat -->
+    <meta name="wechat:title" content="Claude Code 八荣八耻 - 开发者道德准则">
+    <meta name="wechat:description" content="Claude Code开发者的八荣八耻，搞笑版本的开发道德准则">
+    <meta name="wechat:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-icon.svg">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../tutorials/claude-basics.html">教程</a></li>
+                    <li><a href="../examples/python-data-analysis.html">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article>
+                <header class="tutorial-header">
+                    <h1>Claude Code 八荣八耻</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty beginner">趣味</span>
+                        <span class="duration">阅读时间: 8分钟</span>
+                        <span class="category">开发规范</span>
+                    </div>
+                    <p class="tutorial-description">
+                        以瞎猜接口为耻，以认真查询为荣！Claude Code开发者的道德准则，让你在欢声笑语中学会正确的AI编程姿势。
+                    </p>
+                </header>
+
+                <div class="tutorial-body">
+                    <section class="tutorial-section">
+                        <h2>前言：为什么需要"八荣八耻"？</h2>
+                        <p>在AI编程的江湖中，总有一些开发者走火入魔，犯下种种"罪行"。为了拯救这些迷途的羔羊，我们特制定了Claude Code开发者的"八荣八耻"，让大家在哈哈大笑中学会正确的开发姿势。
+                        </p>
+
+                        <div class="alert alert-info">
+                            <strong>温馨提示：</strong>本文纯属娱乐，但道理都是真的。如有雷同，纯属你也是受害者。
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>Claude Code 八荣八耻全文</h2>
+
+                        <div class="eight-principles">
+                            <div class="principle-pair">
+                                <div class="shame">
+                                    <h3>❌ 以瞎猜接口为耻</h3>
+                                    <p>总有开发者觉得自己是API预言家，不看文档就开始猜接口参数。</p>
+                                    <div class="example-bad">
+                                        <h4>错误示例：</h4>
+                                        <pre><code>// 我猜这个API应该是这样的
+fetch('/api/user/getData', {
+    method: 'POST',
+    body: JSON.stringify({
+        userId: 123,
+        type: 'all' // 我猜的
+    })
+})</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="honor">
+                                    <h3>✅ 以认真查询为荣</h3>
+                                    <p>真正的高手会认真查阅API文档，确保每个参数都准确无误。</p>
+                                    <div class="example-good">
+                                        <h4>正确示例：</h4>
+                                        <pre><code>// 查阅文档后的正确调用
+fetch('/api/v1/users/profile', {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    }
+})</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="principle-pair">
+                                <div class="shame">
+                                    <h3>❌ 以模糊执行为耻</h3>
+                                    <p>"差不多就行了"是很多bug的根源，模糊的需求理解导致模糊的代码实现。</p>
+                                    <div class="example-bad">
+                                        <h4>错误示例：</h4>
+                                        <pre><code>// 大概是这个意思吧
+function processData(data) {
+    // 应该是要处理一下数据
+    return data.map(item => {
+        // 好像要转换格式？
+        return { ...item, processed: true };
+    });
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="honor">
+                                    <h3>✅ 以寻求确认为荣</h3>
+                                    <p>不确定的时候主动询问，确保理解准确后再动手编码。</p>
+                                    <div class="example-good">
+                                        <h4>正确示例：</h4>
+                                        <pre><code>// 确认需求后的精确实现
+function transformUserData(users, targetFormat) {
+    /**
+     * 根据产品需求文档 PRD-2024-001
+     * 将用户数据转换为前端展示格式
+     */
+    return users.map(user => ({
+        id: user.userId,
+        displayName: `${user.firstName} ${user.lastName}`,
+        avatar: user.profileImage || '/default-avatar.png',
+        lastActive: formatDate(user.lastLoginTime)
+    }));
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="principle-pair">
+                                <div class="shame">
+                                    <h3>❌ 以臆想业务为耻</h3>
+                                    <p>自以为懂业务，结果做出来的功能和需求南辕北辙。</p>
+                                    <div class="example-bad">
+                                        <h4>错误示例：</h4>
+                                        <pre><code>// 我觉得用户应该需要这个功能
+class UserManager {
+    autoSaveUserPreferences() {
+        // 我觉得应该自动保存用户偏好
+        // 结果用户根本不需要这个功能
+    }
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="honor">
+                                    <h3>✅ 以人类确认为荣</h3>
+                                    <p>主动与产品经理、设计师沟通，确保功能符合真实需求。</p>
+                                    <div class="example-good">
+                                        <h4>正确示例：</h4>
+                                        <pre><code>// 与产品确认后的实现
+class UserPreferences {
+    /**
+     * 根据用户研究报告，用户希望手动控制保存时机
+     * 产品需求：点击保存按钮时才保存偏好设置
+     */
+    savePreferences(preferences) {
+        return this.api.updateUserPreferences(preferences);
+    }
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="principle-pair">
+                                <div class="shame">
+                                    <h3>❌ 以创造接口为耻</h3>
+                                    <p>明明有现成的API不用，非要自己造轮子，结果bug一堆。</p>
+                                    <div class="example-bad">
+                                        <h4>错误示例：</h4>
+                                        <pre><code>// 重复造轮子
+function myCustomDateFormatter(date) {
+    // 自己实现日期格式化，bug无数
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${month}-${day}`; // 没考虑补零
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="honor">
+                                    <h3>✅ 以复用现有为荣</h3>
+                                    <p>善用现有的库和API，站在巨人的肩膀上编程。</p>
+                                    <div class="example-good">
+                                        <h4>正确示例：</h4>
+                                        <pre><code>// 使用成熟的库
+import { format } from 'date-fns';
+
+function formatDate(date) {
+    return format(date, 'yyyy-MM-dd');
+}
+
+// 或者使用原生API
+function formatDateNative(date) {
+    return date.toISOString().split('T')[0];
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="principle-pair">
+                                <div class="shame">
+                                    <h3>❌ 以跳过验证为耻</h3>
+                                    <p>"测试？那是什么？能吃吗？"——某位勇敢的开发者如是说。</p>
+                                    <div class="example-bad">
+                                        <h4>错误示例：</h4>
+                                        <pre><code>// 直接上线，祈祷不出bug
+function processPayment(amount, cardNumber) {
+    // 没有任何验证
+    return submitPayment(amount, cardNumber);
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="honor">
+                                    <h3>✅ 以主动测试为荣</h3>
+                                    <p>测试驱动开发，让bug无处遁形。</p>
+                                    <div class="example-good">
+                                        <h4>正确示例：</h4>
+                                        <pre><code>// 完善的验证和测试
+function processPayment(amount, cardNumber) {
+    // 输入验证
+    if (!amount || amount <= 0) {
+        throw new Error('Invalid amount');
+    }
+    
+    if (!isValidCardNumber(cardNumber)) {
+        throw new Error('Invalid card number');
+    }
+    
+    return submitPayment(amount, cardNumber);
+}
+
+// 对应的测试
+describe('processPayment', () => {
+    it('should throw error for invalid amount', () => {
+        expect(() => processPayment(0, '1234567890123456'))
+            .toThrow('Invalid amount');
+    });
+});</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="principle-pair">
+                                <div class="shame">
+                                    <h3>❌ 以破坏架构为耻</h3>
+                                    <p>为了快速实现功能，随意破坏项目架构，留下技术债务。</p>
+                                    <div class="example-bad">
+                                        <h4>错误示例：</h4>
+                                        <pre><code>// 在组件里直接写业务逻辑
+function UserProfile() {
+    const [user, setUser] = useState(null);
+    
+    useEffect(() => {
+        // 直接在组件里写API调用
+        fetch('/api/user')
+            .then(res => res.json())
+            .then(data => {
+                // 直接在这里处理业务逻辑
+                const processedData = data.map(/* 复杂处理 */);
+                setUser(processedData);
+            });
+    }, []);
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="honor">
+                                    <h3>✅ 以遵循规范为荣</h3>
+                                    <p>遵循项目架构规范，保持代码的可维护性。</p>
+                                    <div class="example-good">
+                                        <h4>正确示例：</h4>
+                                        <pre><code>// 遵循架构规范
+function UserProfile() {
+    const { user, loading, error } = useUser();
+    
+    if (loading) return <LoadingSpinner />;
+    if (error) return <ErrorMessage error={error} />;
+    
+    return <UserCard user={user} />;
+}
+
+// 业务逻辑在自定义Hook中
+function useUser() {
+    const [state, setState] = useState({
+        user: null,
+        loading: true,
+        error: null
+    });
+    
+    useEffect(() => {
+        userService.getCurrentUser()
+            .then(user => setState({ user, loading: false, error: null }))
+            .catch(error => setState({ user: null, loading: false, error }));
+    }, []);
+    
+    return state;
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="principle-pair">
+                                <div class="shame">
+                                    <h3>❌ 以假装理解为耻</h3>
+                                    <p>不懂装懂，结果写出来的代码连自己都看不懂。</p>
+                                    <div class="example-bad">
+                                        <h4>错误示例：</h4>
+                                        <pre><code>// 复制粘贴的代码，完全不理解
+function mysteryClosure() {
+    return (function(x) {
+        return function(y) {
+            return function(z) {
+                // 我也不知道这是干什么的
+                return x + y + z;
+            };
+        };
+    })(42);
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="honor">
+                                    <h3>✅ 以诚实无知为荣</h3>
+                                    <p>承认自己的不足，主动学习和请教。</p>
+                                    <div class="example-good">
+                                        <h4>正确示例：</h4>
+                                        <pre><code>// 诚实地承认不懂，然后学习
+function createAdder(initialValue) {
+    /**
+     * 这是一个柯里化函数的例子
+     * 我刚学会柯里化，这里是我的理解：
+     * 1. 外层函数接收初始值
+     * 2. 返回一个新函数，该函数可以接收另一个值
+     * 3. 最终返回两个值的和
+     */
+    return function(valueToAdd) {
+        return initialValue + valueToAdd;
+    };
+}
+
+const addFive = createAdder(5);
+const result = addFive(3); // 8</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="principle-pair">
+                                <div class="shame">
+                                    <h3>❌ 以盲目修改为耻</h3>
+                                    <p>看到代码就想改，不管三七二十一先重构再说。</p>
+                                    <div class="example-bad">
+                                        <h4>错误示例：</h4>
+                                        <pre><code>// 看到老代码就想重写
+// 原来的代码（虽然老但是稳定）
+function calculateTax(income) {
+    if (income <= 5000) return 0;
+    if (income <= 8000) return income * 0.03;
+    if (income <= 17000) return income * 0.1;
+    // ... 更多税率计算
+}
+
+// 盲目重构后（引入了bug）
+function calculateTax(income) {
+    const taxBrackets = [
+        { min: 0, max: 5000, rate: 0 },
+        { min: 5000, max: 8000, rate: 0.03 },
+        // 忘记了边界条件处理
+    ];
+    // 新的实现有bug但自己不知道
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="honor">
+                                    <h3>✅ 以谨慎重构为荣</h3>
+                                    <p>重构前先理解代码，确保有充分的测试覆盖。</p>
+                                    <div class="example-good">
+                                        <h4>正确示例：</h4>
+                                        <pre><code>// 谨慎的重构过程
+// 1. 先为原有代码添加测试
+describe('calculateTax', () => {
+    it('should return 0 for income <= 5000', () => {
+        expect(calculateTax(3000)).toBe(0);
+        expect(calculateTax(5000)).toBe(0);
+    });
+    
+    it('should calculate 3% for income 5001-8000', () => {
+        expect(calculateTax(6000)).toBe(180);
+    });
+    // ... 更多测试用例
+});
+
+// 2. 在测试保护下进行重构
+function calculateTax(income) {
+    const taxBrackets = [
+        { min: 0, max: 5000, rate: 0 },
+        { min: 5001, max: 8000, rate: 0.03 },
+        { min: 8001, max: 17000, rate: 0.1 },
+        // 仔细处理边界条件
+    ];
+    
+    for (const bracket of taxBrackets) {
+        if (income >= bracket.min && income <= bracket.max) {
+            return income * bracket.rate;
+        }
+    }
+    
+    // 处理超出最高税率的情况
+    return income * 0.45;
+}
+
+// 3. 运行测试确保重构正确</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>如何践行"八荣八耻"</h2>
+
+                        <div class="practice-guide">
+                            <div class="practice-item">
+                                <h3>🔍 建立查询习惯</h3>
+                                <ul>
+                                    <li>遇到不确定的API先查文档</li>
+                                    <li>使用IDE的智能提示功能</li>
+                                    <li>建立个人的API参考笔记</li>
+                                </ul>
+                            </div>
+
+                            <div class="practice-item">
+                                <h3>💬 加强沟通协作</h3>
+                                <ul>
+                                    <li>定期与产品经理对齐需求</li>
+                                    <li>代码review时主动提问</li>
+                                    <li>不懂就问，不要假装理解</li>
+                                </ul>
+                            </div>
+
+                            <div class="practice-item">
+                                <h3>🧪 重视测试质量</h3>
+                                <ul>
+                                    <li>为关键功能编写单元测试</li>
+                                    <li>使用测试驱动开发(TDD)</li>
+                                    <li>定期进行代码质量检查</li>
+                                </ul>
+                            </div>
+
+                            <div class="practice-item">
+                                <h3>📚 持续学习成长</h3>
+                                <ul>
+                                    <li>承认知识盲区，主动学习</li>
+                                    <li>关注技术社区和最佳实践</li>
+                                    <li>定期重构和优化代码</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>总结</h2>
+                        <p>Claude Code的"八荣八耻"虽然是以搞笑的形式呈现，但每一条都是血泪教训的总结。在AI编程的道路上，保持谦逊、严谨、负责的态度，才能写出高质量的代码。</p>
+
+                        <div class="key-takeaways">
+                            <h4>记住这八条准则：</h4>
+                            <ul>
+                                <li>✅ 以认真查询为荣，以瞎猜接口为耻</li>
+                                <li>✅ 以寻求确认为荣，以模糊执行为耻</li>
+                                <li>✅ 以人类确认为荣，以臆想业务为耻</li>
+                                <li>✅ 以复用现有为荣，以创造接口为耻</li>
+                                <li>✅ 以主动测试为荣，以跳过验证为耻</li>
+                                <li>✅ 以遵循规范为荣，以破坏架构为耻</li>
+                                <li>✅ 以诚实无知为荣，以假装理解为耻</li>
+                                <li>✅ 以谨慎重构为荣，以盲目修改为耻</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-success">
+                            <strong>最后的话：</strong>编程如做人，诚实、谦逊、负责任。愿每一位Claude Code开发者都能成为有道德、有技术、有担当的好程序员！
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="tutorial-footer">
+                    <div class="tutorial-navigation">
+                        <a href="claude-code-optimization.html" class="nav-link prev">
+                            ← 上一篇：Claude Code深度配置与优化
+                        </a>
+                        <a href="claude-basics.html" class="nav-link next">
+                            下一篇：Claude基础入门 →
+                        </a>
+                    </div>
+
+                    <div class="tutorial-tags">
+                        <span class="tag">Claude Code</span>
+                        <span class="tag">开发规范</span>
+                        <span class="tag">最佳实践</span>
+                        <span class="tag">搞笑教程</span>
+                        <span class="tag">八荣八耻</span>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
+                        <span>Claude Code Club</span>
+                    </div>
+                    <p>探索AI编程的无限可能</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
+                        <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
+                        <li><a href="../community.html">加入社区</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>友情链接</h4>
+                    <ul>
+                        <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
+                        <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

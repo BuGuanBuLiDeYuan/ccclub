@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code 部署指南 - Claude Code Club</title>
+  <meta name="description" content="全面的Claude Code项目部署指南，包括Docker、云平台、CI/CD等部署策略">
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/tutorial.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logo-icon.svg">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="nav-container">
+        <div class="logo">
+          <a href="../index.html">
+            <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
+          </a>
+        </div>
+        <ul class="nav-links">
+          <li><a href="../index.html">首页</a></li>
+          <li><a href="../tutorials/claude-basics.html">教程</a></li>
+          <li><a href="../examples/python-data-analysis.html">示例</a></li>
+          <li><a href="../community.html">社区</a></li>
+          <li><a href="../about.html">关于</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="tutorial-content">
+    <div class="container">
+      <article>
+        <header class="tutorial-header">
+          <h1>Claude Code 部署指南</h1>
+          <div class="tutorial-meta">
+            <span class="difficulty advanced">高级</span>
+            <span class="duration">阅读时间: 22分钟</span>
+            <span class="category">部署</span>
+          </div>
+          <p class="tutorial-description">
+            从开发到生产，掌握Claude Code项目的完整部署流程，包括容器化、云部署、监控等。
+          </p>
+        </header>
+
+        <div class="tutorial-body">
+          <section class="tutorial-section">
+            <h2>部署策略概览</h2>
+            <div class="deployment-strategies">
+              <div class="strategy-card">
+                <h3>🐳 容器化部署</h3>
+                <p>使用Docker进行应用打包和部署</p>
+                <ul>
+                  <li>环境一致性</li>
+                  <li>易于扩展</li>
+                  <li>版本管理</li>
+                </ul>
+              </div>
+              <div class="strategy-card">
+                <h3>☁️ 云平台部署</h3>
+                <p>利用云服务提供商的PaaS服务</p>
+                <ul>
+                  <li>自动扩缩容</li>
+                  <li>托管服务</li>
+                  <li>高可用性</li>
+                </ul>
+              </div>
+              <div class="strategy-card">
+                <h3>🚀 无服务器部署</h3>
+                <p>使用Serverless架构</p>
+                <ul>
+                  <li>按需付费</li>
+                  <li>自动扩展</li>
+                  <li>零运维</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>Docker容器化</h2>
+            <h3>多阶段构建Dockerfile</h3>
+            <pre><code># 多阶段构建优化镜像大小
+FROM node:18-alpine AS builder
+
+# 设置工作目录
+WORKDIR /app
+
+# 复制package文件
+COPY package*.json ./
+
+# 安装依赖
+RUN npm ci --only=production && npm cache clean --force
+
+# 复制源代码
+COPY . .
+
+# 构建应用
+RUN npm run build
+
+# 生产阶段
+FROM node:18-alpine AS production
+
+# 创建非root用户
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001
+
+# 设置工作目录
+WORKDIR /app
+
+# 从构建阶段复制文件
+COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
+
+# 切换到非root用户
+USER nextjs
+
+# 暴露端口
+EXPOSE 3000
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# 启动应用
+CMD ["npm", "start"]</code></pre>
+
+            <h3>Docker Compose配置</h3>
+            <pre><code># docker-compose.yml
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:password@db:5432/myapp
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_DB=myapp
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  app-network:
+    driver: bridge</code></pre>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>云平台部署</h2>
+            <h3>AWS部署配置</h3>
+            <pre><code># AWS ECS任务定义
+{
+  "family": "claude-code-app",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::account:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::account:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "app",
+      "image": "your-account.dkr.ecr.region.amazonaws.com/claude-code-app:latest",
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:secretsmanager:region:account:secret:database-url"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/claude-code-app",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      }
+    }
+  ]
+}</code></pre>
+
+            <h3>Kubernetes部署</h3>
+            <pre><code># k8s-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: claude-code-app
+  labels:
+    app: claude-code-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: claude-code-app
+  template:
+    metadata:
+      labels:
+        app: claude-code-app
+    spec:
+      containers:
+      - name: app
+        image: your-registry/claude-code-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: database-url
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: claude-code-service
+spec:
+  selector:
+    app: claude-code-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: claude-code-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+  - hosts:
+    - your-domain.com
+    secretName: claude-code-tls
+  rules:
+  - host: your-domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: claude-code-service
+            port:
+              number: 80</code></pre>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>CI/CD流水线</h2>
+            <h3>GitHub Actions部署流水线</h3>
+            <pre><code># .github/workflows/deploy.yml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Run security audit
+        run: npm audit --audit-level high
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.image.outputs.image }}
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Log in to Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      
+      - name: Output image
+        id: image
+        run: echo "image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" >> $GITHUB_OUTPUT
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      
+      - name: Deploy to ECS
+        run: |
+          # 更新ECS服务
+          aws ecs update-service \
+            --cluster production-cluster \
+            --service claude-code-service \
+            --task-definition claude-code-app:${{ github.run_number }} \
+            --force-new-deployment
+          
+          # 等待部署完成
+          aws ecs wait services-stable \
+            --cluster production-cluster \
+            --services claude-code-service
+      
+      - name: Run smoke tests
+        run: |
+          # 等待服务启动
+          sleep 30
+          
+          # 运行冒烟测试
+          curl -f https://your-domain.com/health || exit 1
+          curl -f https://your-domain.com/api/status || exit 1
+      
+      - name: Notify deployment
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: |
+            Deployment ${{ job.status }}!
+            Image: ${{ needs.build.outputs.image }}
+            Environment: Production
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}</code></pre>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>蓝绿部署策略</h2>
+            <h3>零停机部署</h3>
+            <pre><code># 蓝绿部署脚本
+#!/bin/bash
+
+set -e
+
+# 配置
+CLUSTER_NAME="production-cluster"
+SERVICE_NAME="claude-code-service"
+NEW_IMAGE="$1"
+
+if [ -z "$NEW_IMAGE" ]; then
+    echo "Usage: $0 <new-image>"
+    exit 1
+fi
+
+echo "Starting blue-green deployment..."
+
+# 获取当前任务定义
+CURRENT_TASK_DEF=$(aws ecs describe-services \
+    --cluster $CLUSTER_NAME \
+    --services $SERVICE_NAME \
+    --query 'services[0].taskDefinition' \
+    --output text)
+
+echo "Current task definition: $CURRENT_TASK_DEF"
+
+# 创建新的任务定义
+NEW_TASK_DEF=$(aws ecs describe-task-definition \
+    --task-definition $CURRENT_TASK_DEF \
+    --query 'taskDefinition' \
+    --output json | \
+    jq --arg IMAGE "$NEW_IMAGE" \
+    '.containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .placementConstraints, .compatibilities, .registeredAt, .registeredBy)')
+
+NEW_TASK_DEF_ARN=$(echo $NEW_TASK_DEF | aws ecs register-task-definition \
+    --cli-input-json file:///dev/stdin \
+    --query 'taskDefinition.taskDefinitionArn' \
+    --output text)
+
+echo "New task definition: $NEW_TASK_DEF_ARN"
+
+# 更新服务到新版本
+echo "Updating service to new version..."
+aws ecs update-service \
+    --cluster $CLUSTER_NAME \
+    --service $SERVICE_NAME \
+    --task-definition $NEW_TASK_DEF_ARN
+
+# 等待新版本稳定
+echo "Waiting for new version to be stable..."
+aws ecs wait services-stable \
+    --cluster $CLUSTER_NAME \
+    --services $SERVICE_NAME
+
+# 健康检查
+echo "Running health checks..."
+for i in {1..5}; do
+    if curl -f https://your-domain.com/health; then
+        echo "Health check $i passed"
+    else
+        echo "Health check $i failed, rolling back..."
+        
+        # 回滚到之前版本
+        aws ecs update-service \
+            --cluster $CLUSTER_NAME \
+            --service $SERVICE_NAME \
+            --task-definition $CURRENT_TASK_DEF
+        
+        exit 1
+    fi
+    sleep 10
+done
+
+echo "Blue-green deployment completed successfully!"</code></pre>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>监控与日志</h2>
+            <h3>应用监控配置</h3>
+            <pre><code>// 监控中间件
+const prometheus = require('prom-client');
+
+// 创建指标
+const httpRequestDuration = new prometheus.Histogram({
+    name: 'http_request_duration_seconds',
+    help: 'Duration of HTTP requests in seconds',
+    labelNames: ['method', 'route', 'status_code'],
+    buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10]
+});
+
+const httpRequestTotal = new prometheus.Counter({
+    name: 'http_requests_total',
+    help: 'Total number of HTTP requests',
+    labelNames: ['method', 'route', 'status_code']
+});
+
+const activeConnections = new prometheus.Gauge({
+    name: 'active_connections',
+    help: 'Number of active connections'
+});
+
+// 监控中间件
+function monitoringMiddleware(req, res, next) {
+    const start = Date.now();
+    
+    // 增加活跃连接数
+    activeConnections.inc();
+    
+    // 监听响应结束
+    res.on('finish', () => {
+        const duration = (Date.now() - start) / 1000;
+        const route = req.route ? req.route.path : req.path;
+        
+        // 记录指标
+        httpRequestDuration
+            .labels(req.method, route, res.statusCode)
+            .observe(duration);
+        
+        httpRequestTotal
+            .labels(req.method, route, res.statusCode)
+            .inc();
+        
+        // 减少活跃连接数
+        activeConnections.dec();
+    });
+    
+    next();
+}
+
+// 健康检查端点
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        memory: process.memoryUsage(),
+        version: process.env.npm_package_version
+    });
+});
+
+// 指标端点
+app.get('/metrics', (req, res) => {
+    res.set('Content-Type', prometheus.register.contentType);
+    res.end(prometheus.register.metrics());
+});</code></pre>
+
+            <h3>日志配置</h3>
+            <pre><code>// 结构化日志配置
+const winston = require('winston');
+
+const logger = winston.createLogger({
+    level: process.env.LOG_LEVEL || 'info',
+    format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.errors({ stack: true }),
+        winston.format.json()
+    ),
+    defaultMeta: {
+        service: 'claude-code-app',
+        version: process.env.npm_package_version,
+        environment: process.env.NODE_ENV
+    },
+    transports: [
+        new winston.transports.Console({
+            format: winston.format.combine(
+                winston.format.colorize(),
+                winston.format.simple()
+            )
+        })
+    ]
+});
+
+// 生产环境添加文件日志
+if (process.env.NODE_ENV === 'production') {
+    logger.add(new winston.transports.File({
+        filename: 'logs/error.log',
+        level: 'error'
+    }));
+    
+    logger.add(new winston.transports.File({
+        filename: 'logs/combined.log'
+    }));
+}
+
+// 请求日志中间件
+function requestLogger(req, res, next) {
+    const start = Date.now();
+    
+    res.on('finish', () => {
+        const duration = Date.now() - start;
+        
+        logger.info('HTTP Request', {
+            method: req.method,
+            url: req.url,
+            statusCode: res.statusCode,
+            duration,
+            userAgent: req.get('User-Agent'),
+            ip: req.ip,
+            userId: req.user?.id
+        });
+    });
+    
+    next();
+}</code></pre>
+          </section>
+
+          <section class="tutorial-section">
+            <h2>部署最佳实践</h2>
+            <div class="key-takeaways">
+              <h4>部署策略要点：</h4>
+              <ul>
+                <li>✅ 使用容器化确保环境一致性</li>
+                <li>✅ 实施自动化CI/CD流水线</li>
+                <li>✅ 采用蓝绿部署实现零停机更新</li>
+                <li>✅ 配置完善的监控和告警系统</li>
+                <li>✅ 实施安全扫描和漏洞检测</li>
+                <li>✅ 建立灾难恢复和备份策略</li>
+              </ul>
+            </div>
+
+            <div class="deployment-checklist">
+              <h4>部署前检查清单：</h4>
+              <div class="checklist-item">
+                <input type="checkbox" id="tests-pass">
+                <label for="tests-pass">所有测试通过</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="security-scan">
+                <label for="security-scan">安全扫描无高危漏洞</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="env-config">
+                <label for="env-config">环境配置正确</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="backup-ready">
+                <label for="backup-ready">备份和回滚方案就绪</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="monitoring-setup">
+                <label for="monitoring-setup">监控和告警配置完成</label>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer class="tutorial-footer">
+          <div class="tutorial-navigation">
+            <a href="claude-code-testing.html" class="nav-link prev">
+              ← 上一篇：Claude Code测试策略
+            </a>
+            <a href="claude-basics.html" class="nav-link next">
+              下一篇：Claude基础入门 →
+            </a>
+          </div>
+
+          <div class="tutorial-tags">
+            <span class="tag">部署</span>
+            <span class="tag">Docker</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">云平台</span>
+            <span class="tag">监控</span>
+          </div>
+        </footer>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
+            <span>Claude Code Club</span>
+          </div>
+          <p>探索AI编程的无限可能</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>快速链接</h4>
+          <ul>
+            <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
+            <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
+            <li><a href="../community.html">加入社区</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>友情链接</h4>
+          <ul>
+            <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
+            <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

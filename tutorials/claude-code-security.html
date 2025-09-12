@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 安全最佳实践 - Claude Code Club</title>
+    <meta name="description" content="掌握Claude Code开发中的安全最佳实践，包括代码安全、数据保护、权限管理等">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-icon.svg">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../tutorials/claude-basics.html">教程</a></li>
+                    <li><a href="../examples/python-data-analysis.html">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article>
+                <header class="tutorial-header">
+                    <h1>Claude Code 安全最佳实践</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty advanced">高级</span>
+                        <span class="duration">阅读时间: 20分钟</span>
+                        <span class="category">安全</span>
+                    </div>
+                    <p class="tutorial-description">
+                        全面掌握Claude Code开发中的安全最佳实践，保护你的代码、数据和系统安全。
+                    </p>
+                </header>
+
+                <div class="tutorial-body">
+                    <section class="tutorial-section">
+                        <h2>安全威胁概览</h2>
+                        <div class="security-threats">
+                            <div class="threat-card high">
+                                <h3>🔴 高风险威胁</h3>
+                                <ul>
+                                    <li>代码注入攻击</li>
+                                    <li>敏感信息泄露</li>
+                                    <li>权限提升攻击</li>
+                                </ul>
+                            </div>
+                            <div class="threat-card medium">
+                                <h3>🟡 中风险威胁</h3>
+                                <ul>
+                                    <li>依赖包漏洞</li>
+                                    <li>配置错误</li>
+                                    <li>日志信息泄露</li>
+                                </ul>
+                            </div>
+                            <div class="threat-card low">
+                                <h3>🟢 低风险威胁</h3>
+                                <ul>
+                                    <li>版本信息暴露</li>
+                                    <li>调试信息残留</li>
+                                    <li>错误处理不当</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>输入验证与防护</h2>
+                        <h3>SQL注入防护</h3>
+                        <div class="code-comparison">
+                            <div class="before">
+                                <h4>❌ 危险的做法</h4>
+                                <pre><code>// 直接拼接SQL，存在注入风险
+const query = `SELECT * FROM users WHERE id = ${userId}`;
+const result = await db.query(query);</code></pre>
+                            </div>
+                            <div class="after">
+                                <h4>✅ 安全的做法</h4>
+                                <pre><code>// 使用参数化查询
+const query = 'SELECT * FROM users WHERE id = ?';
+const result = await db.query(query, [userId]);
+
+// 或使用ORM
+const user = await User.findById(userId);</code></pre>
+                            </div>
+                        </div>
+
+                        <h3>XSS防护</h3>
+                        <pre><code>// 输入验证和输出编码
+import { escape } from 'html-escaper';
+import validator from 'validator';
+
+function sanitizeInput(input) {
+    // 验证输入格式
+    if (!validator.isLength(input, { min: 1, max: 1000 })) {
+        throw new Error('Invalid input length');
+    }
+    
+    // HTML编码
+    return escape(input);
+}
+
+// 使用CSP头部
+app.use((req, res, next) => {
+    res.setHeader(
+        'Content-Security-Policy',
+        "default-src 'self'; script-src 'self' 'unsafe-inline'"
+    );
+    next();
+});</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>敏感信息保护</h2>
+                        <h3>环境变量管理</h3>
+                        <pre><code># .env 文件管理
+DATABASE_URL=postgresql://user:password@localhost:5432/mydb
+JWT_SECRET=your-super-secret-key
+API_KEY=your-api-key
+
+# .gitignore 必须包含
+.env
+.env.local
+.env.production</code></pre>
+
+                        <h3>密钥轮换策略</h3>
+                        <pre><code>// 密钥管理服务
+class KeyManager {
+    constructor() {
+        this.keys = new Map();
+        this.rotationInterval = 24 * 60 * 60 * 1000; // 24小时
+    }
+    
+    async rotateKey(keyId) {
+        const newKey = await this.generateSecureKey();
+        const oldKey = this.keys.get(keyId);
+        
+        // 保留旧密钥一段时间以支持正在处理的请求
+        this.keys.set(keyId, newKey);
+        
+        setTimeout(() => {
+            this.keys.delete(`${keyId}_old`);
+        }, this.rotationInterval);
+        
+        if (oldKey) {
+            this.keys.set(`${keyId}_old`, oldKey);
+        }
+        
+        return newKey;
+    }
+}</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>身份认证与授权</h2>
+                        <h3>JWT安全实现</h3>
+                        <pre><code>// 安全的JWT实现
+class AuthService {
+    generateTokens(user) {
+        const accessToken = jwt.sign(
+            { userId: user.id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '15m' }
+        );
+        
+        const refreshToken = jwt.sign(
+            { userId: user.id, tokenVersion: user.tokenVersion },
+            process.env.REFRESH_SECRET,
+            { expiresIn: '7d' }
+        );
+        
+        return { accessToken, refreshToken };
+    }
+    
+    async validateToken(token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            
+            // 检查用户是否仍然有效
+            const user = await User.findById(decoded.userId);
+            if (!user || !user.isActive) {
+                throw new Error('User not found or inactive');
+            }
+            
+            return decoded;
+        } catch (error) {
+            throw new Error('Invalid token');
+        }
+    }
+}</code></pre>
+
+                        <h3>权限控制中间件</h3>
+                        <pre><code>// RBAC权限控制
+function requirePermission(permission) {
+    return async (req, res, next) => {
+        try {
+            const user = req.user;
+            const hasPermission = await checkUserPermission(user.id, permission);
+            
+            if (!hasPermission) {
+                return res.status(403).json({ 
+                    error: 'Insufficient permissions' 
+                });
+            }
+            
+            next();
+        } catch (error) {
+            res.status(401).json({ error: 'Authentication required' });
+        }
+    };
+}
+
+// 使用示例
+app.delete('/api/users/:id', 
+    authenticateToken,
+    requirePermission('user:delete'),
+    deleteUser
+);</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>安全编码规范</h2>
+                        <div class="security-checklist">
+                            <h3>代码审查清单</h3>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="input-validation">
+                                <label for="input-validation">所有用户输入都经过验证和清理</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="sql-injection">
+                                <label for="sql-injection">使用参数化查询防止SQL注入</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="xss-protection">
+                                <label for="xss-protection">输出内容经过适当编码防止XSS</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="auth-check">
+                                <label for="auth-check">所有敏感操作都需要身份验证</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="error-handling">
+                                <label for="error-handling">错误信息不泄露敏感信息</label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>安全测试与监控</h2>
+                        <h3>自动化安全测试</h3>
+                        <pre><code>// 安全测试用例
+describe('Security Tests', () => {
+    describe('SQL Injection Protection', () => {
+        it('should prevent SQL injection in user queries', async () => {
+            const maliciousInput = "1'; DROP TABLE users; --";
+            
+            const response = await request(app)
+                .get(`/api/users/${maliciousInput}`)
+                .expect(400);
+                
+            expect(response.body.error).toContain('Invalid input');
+        });
+    });
+    
+    describe('XSS Protection', () => {
+        it('should sanitize HTML in user content', async () => {
+            const xssPayload = '<script>alert("xss")</script>';
+            
+            const response = await request(app)
+                .post('/api/comments')
+                .send({ content: xssPayload })
+                .expect(201);
+                
+            expect(response.body.content).not.toContain('<script>');
+        });
+    });
+});</code ></pre >
+
+                        <h3>安全监控</h3>
+                        <pre><code>// 安全事件监控
+class SecurityMonitor {
+    constructor() {
+        this.suspiciousActivities = new Map();
+        this.rateLimiter = new Map();
+    }
+    
+    logSecurityEvent(event) {
+        const { type, userId, ip, details } = event;
+        
+        // 记录安全事件
+        console.log(`[SECURITY] ${type}: User ${userId} from ${ip}`, details);
+        
+        // 检查是否需要触发警报
+        if (this.isSuspiciousActivity(event)) {
+            this.triggerSecurityAlert(event);
+        }
+    }
+    
+    isSuspiciousActivity(event) {
+        const key = `${event.userId}_${event.type}`;
+        const count = this.suspiciousActivities.get(key) || 0;
+        
+        this.suspiciousActivities.set(key, count + 1);
+        
+        // 如果同一用户在短时间内多次触发安全事件
+        return count > 5;
+    }
+    
+    triggerSecurityAlert(event) {
+        // 发送警报通知
+        this.notificationService.sendAlert({
+            type: 'SECURITY_BREACH',
+            severity: 'HIGH',
+            details: event
+        });
+        
+        // 可能需要临时封禁用户
+        if (event.severity === 'CRITICAL') {
+            this.userService.temporaryBan(event.userId);
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>部署安全配置</h2>
+                        <h3>HTTPS配置</h3>
+                        <pre><code># nginx SSL配置
+server {
+    listen 443 ssl http2;
+    server_name yourdomain.com;
+    
+    ssl_certificate /path/to/certificate.crt;
+    ssl_certificate_key /path/to/private.key;
+    
+    # 安全头部
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Frame-Options DENY always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+    
+    # 隐藏服务器信息
+    server_tokens off;
+}</code></pre>
+
+                        <h3>Docker安全配置</h3>
+                        <pre><code># 安全的Dockerfile
+FROM node:18-alpine AS builder
+
+# 创建非root用户
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+# 设置工作目录
+WORKDIR /app
+
+# 复制依赖文件
+COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
+
+# 复制应用代码
+COPY . .
+RUN chown -R nextjs:nodejs /app
+
+# 切换到非root用户
+USER nextjs
+
+# 暴露端口
+EXPOSE 3000
+
+# 启动应用
+CMD ["npm", "start"]</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>安全最佳实践总结</h2>
+                        <div class="key-takeaways">
+                            <h4>核心安全原则：</h4>
+                            <ul>
+                                <li>✅ 永远不要信任用户输入，进行严格验证</li>
+                                <li>✅ 使用最小权限原则，只给必要的权限</li>
+                                <li>✅ 定期更新依赖包，修复已知漏洞</li>
+                                <li>✅ 实施深度防御，多层安全保护</li>
+                                <li>✅ 记录和监控所有安全相关事件</li>
+                                <li>✅ 定期进行安全审计和渗透测试</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <strong>重要提醒：</strong>安全是一个持续的过程，不是一次性的任务。需要定期评估和更新安全措施。
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="tutorial-footer">
+                    <div class="tutorial-navigation">
+                        <a href="claude-code-workflow.html" class="nav-link prev">
+                            ← 上一篇：Claude Code工作流优化
+                        </a>
+                        <a href="claude-code-performance.html" class="nav-link next">
+                            下一篇：Claude Code性能优化 →
+                        </a>
+                    </div>
+
+                    <div class="tutorial-tags">
+                        <span class="tag">安全</span>
+                        <span class="tag">最佳实践</span>
+                        <span class="tag">防护</span>
+                        <span class="tag">监控</span>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
+                        <span>Claude Code Club</span>
+                    </div>
+                    <p>探索AI编程的无限可能</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
+                        <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
+                        <li><a href="../community.html">加入社区</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>友情链接</h4>
+                    <ul>
+                        <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
+                        <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>
