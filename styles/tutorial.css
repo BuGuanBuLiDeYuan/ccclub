@@ -1298,3 +1298,809 @@ ENTS.md Guide Tutorial Styles */
         font-size: 0.8rem;
     }
 }
+
+/*
+ New tutorials styles - Computer Use, MCP, and AI Trends */
+
+/* Computer Use Tutorial Styles */
+.computer-use-capabilities {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.capability-card {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.capability-card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.capability-card ul {
+    text-align: left;
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.architecture-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+}
+
+.arch-layer {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 250px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.arch-arrow {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+.use-case {
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 2rem 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.case-description {
+    background: #007bff;
+    color: white;
+    padding: 1.5rem;
+}
+
+.case-implementation {
+    padding: 2rem;
+}
+
+.optimization-strategies {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.strategy-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.troubleshooting-guide {
+    margin: 2rem 0;
+}
+
+.problem-solution {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.problem-solution h4 {
+    background: rgba(255, 193, 7, 0.1);
+    padding: 1rem 1.5rem;
+    margin: 0;
+    color: #856404;
+}
+
+.solution {
+    padding: 1.5rem;
+}
+
+.solution h5 {
+    color: #155724;
+    margin-top: 0;
+}
+
+.future-applications {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.application-area {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.application-area h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.application-area ul {
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+/* MCP Integration Tutorial Styles */
+.mcp-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.benefit-card {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mcp-architecture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+}
+
+.arch-component {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 200px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.arch-component.client {
+    border-left: 4px solid #007bff;
+}
+
+.arch-component.protocol {
+    border-left: 4px solid #28a745;
+}
+
+.arch-component.server {
+    border-left: 4px solid #ffc107;
+}
+
+.core-concepts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.concept-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-top: 4px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.concept-item h4 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.security-guidelines {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.security-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #dc3545;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.security-item h4 {
+    margin-top: 0;
+    color: #dc3545;
+}
+
+.application-scenarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.scenario-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* AI Trends Tutorial Styles */
+.breakthrough-timeline {
+    position: relative;
+    margin: 2rem 0;
+    padding-left: 2rem;
+}
+
+.breakthrough-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #007bff;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #007bff;
+}
+
+.timeline-date {
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-content h3 {
+    margin-top: 0;
+    color: #2d3748;
+}
+
+.trend-analysis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.trend-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 250px;
+}
+
+.trend-arrow {
+    font-size: 2rem;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.agent-ecosystem {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.ecosystem-layer {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.protocol-importance {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.importance-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-top: 4px solid #28a745;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.protocol-benefits {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.benefit {
+    background: #e8f5e8;
+    color: #155724;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.comparison-matrix {
+    overflow-x: auto;
+    margin: 2rem 0;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.comparison-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.rating.excellent {
+    background: #d4edda;
+    color: #155724;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 500;
+}
+
+.rating.good {
+    background: #fff3cd;
+    color: #856404;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 500;
+}
+
+.rating.average {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 500;
+}
+
+.rating.poor {
+    background: #f5c6cb;
+    color: #721c24;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 500;
+}
+
+.maturity-assessment {
+    margin: 2rem 0;
+}
+
+.maturity-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.maturity-bar {
+    background: #e9ecef;
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.maturity-progress {
+    background: linear-gradient(90deg, #28a745, #20c997);
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.workflow-transformation {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.workflow-stage {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.workflow-stage h4 {
+    background: #007bff;
+    color: white;
+    padding: 1rem;
+    margin: 0;
+}
+
+.stage-content {
+    padding: 1.5rem;
+}
+
+.ai-tools {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.tool {
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.emerging-applications {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.application-area {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.impact-level {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.impact-level.high {
+    background: #d4edda;
+    color: #155724;
+}
+
+.impact-level.medium {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.challenges-solutions {
+    margin: 2rem 0;
+}
+
+.challenge-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.challenge {
+    background: #fff5f5;
+    padding: 2rem;
+    border-left: 4px solid #fc8181;
+}
+
+.solution {
+    background: #f0fff4;
+    padding: 2rem;
+    border-left: 4px solid #68d391;
+}
+
+.roadmap {
+    margin: 2rem 0;
+}
+
+.roadmap-phase {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.roadmap-phase h4 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.skill-transformation {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.skill-category {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.skill-items {
+    margin-top: 1rem;
+}
+
+.skill-item {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #007bff;
+}
+
+.skill-item h5 {
+    margin-top: 0;
+    color: #2d3748;
+}
+
+.priority {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.priority.high {
+    background: #d4edda;
+    color: #155724;
+}
+
+.priority.medium {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.learning-path {
+    margin: 2rem 0;
+}
+
+.path-stage {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid #28a745;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.path-stage h4 {
+    margin-top: 0;
+    color: #28a745;
+}
+
+.predictions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.prediction-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-top: 4px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confidence-level {
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.long-term-vision {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.vision-area {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.vision-timeline {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.developer-advice {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.advice-category {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.advice-category h4 {
+    margin-top: 0;
+    color: #28a745;
+}
+
+.action-plan {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.action-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.action-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-item.immediate {
+    border-left: 4px solid #dc3545;
+}
+
+.action-item.short-term {
+    border-left: 4px solid #ffc107;
+}
+
+.action-item.long-term {
+    border-left: 4px solid #28a745;
+}
+
+.action-item h5 {
+    margin-top: 0;
+}
+
+/* Mobile responsive for new tutorials */
+@media (max-width: 768px) {
+
+    .computer-use-capabilities,
+    .mcp-benefits,
+    .future-applications,
+    .application-scenarios,
+    .optimization-strategies,
+    .security-guidelines,
+    .protocol-importance,
+    .workflow-transformation,
+    .emerging-applications,
+    .skill-transformation,
+    .predictions,
+    .long-term-vision,
+    .developer-advice,
+    .action-items {
+        grid-template-columns: 1fr;
+    }
+
+    .trend-analysis {
+        flex-direction: column;
+    }
+
+    .trend-arrow {
+        transform: rotate(90deg);
+    }
+
+    .challenge-item {
+        grid-template-columns: 1fr;
+    }
+
+    .breakthrough-timeline {
+        padding-left: 1rem;
+    }
+
+    .timeline-item {
+        padding-left: 1.5rem;
+    }
+
+    .architecture-diagram,
+    .mcp-architecture {
+        padding: 1rem;
+    }
+
+    .comparison-table {
+        font-size: 0.8rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.5rem;
+    }
+}
