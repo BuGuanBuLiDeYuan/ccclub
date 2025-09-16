@@ -988,3 +988,313 @@ ditional styles for new tutorials */
         grid-template-columns: 1fr;
     }
 }
+
+/* AG
+ENTS.md Guide Tutorial Styles */
+.agents-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.overview-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.overview-card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.website-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.feature-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-item h4 {
+    margin-top: 0;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.feature-item ul {
+    margin: 1rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.feature-item li {
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+}
+
+.document-structure {
+    margin: 2rem 0;
+}
+
+.structure-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid #28a745;
+}
+
+.structure-section h3 {
+    margin-top: 0;
+    color: #155724;
+    margin-bottom: 1rem;
+}
+
+.structure-section pre {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0 0 0;
+    overflow-x: auto;
+}
+
+.case-study {
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 2rem 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.case-header {
+    background: #007bff;
+    color: white;
+    padding: 1.5rem;
+}
+
+.case-header h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.case-header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.case-content {
+    padding: 2rem;
+}
+
+.case-content h5 {
+    margin-top: 0;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.case-content pre {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0 0 0;
+    overflow-x: auto;
+}
+
+.version-strategy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.strategy-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.strategy-item h4 {
+    margin-top: 0;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.strategy-item ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.strategy-item pre {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0 0 0;
+    overflow-x: auto;
+    font-size: 0.9rem;
+}
+
+.testing-framework {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.test-type {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #17a2b8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.test-type h4 {
+    margin-top: 0;
+    color: #0c5460;
+    margin-bottom: 1rem;
+}
+
+.test-type pre {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0 0 0;
+    overflow-x: auto;
+    font-size: 0.85rem;
+}
+
+.contribution-guide {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.guide-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-top: 4px solid #28a745;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.guide-section h4 {
+    margin-top: 0;
+    color: #155724;
+    margin-bottom: 1rem;
+}
+
+.guide-section ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.guide-section li {
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+}
+
+.future-trends {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.trend-item {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.trend-item h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.trend-item p {
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.trend-item ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.trend-item li {
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.implementation-checklist {
+    background: #e8f5e8;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+    margin: 2rem 0;
+}
+
+.implementation-checklist h4 {
+    margin-top: 0;
+    color: #155724;
+    margin-bottom: 1rem;
+}
+
+/* Mobile responsive for AGENTS.md guide */
+@media (max-width: 768px) {
+
+    .agents-overview,
+    .website-features,
+    .version-strategy,
+    .testing-framework,
+    .contribution-guide,
+    .future-trends {
+        grid-template-columns: 1fr;
+    }
+
+    .case-header,
+    .case-content {
+        padding: 1.5rem;
+    }
+
+    .structure-section,
+    .feature-item,
+    .strategy-item,
+    .test-type,
+    .guide-section {
+        padding: 1.5rem;
+    }
+
+    .trend-item {
+        padding: 1.5rem;
+    }
+
+    .case-content pre,
+    .structure-section pre,
+    .strategy-item pre,
+    .test-type pre {
+        font-size: 0.8rem;
+    }
+}

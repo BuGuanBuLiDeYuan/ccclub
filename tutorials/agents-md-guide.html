@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGENTS.md 完全指南：AI Agent 项目文档标准 - Claude Code Club</title>
+    <meta name="description" content="深入了解AGENTS.md文档标准，掌握AI Agent项目的最佳文档实践，提升项目可维护性和协作效率">
+    <meta name="keywords" content="AGENTS.md, AI Agent, 项目文档, 文档标准, agents.md网站">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ccclub.club/tutorials/agents-md-guide.html">
+    <meta property="og:title" content="AGENTS.md 完全指南：AI Agent 项目文档标准">
+    <meta property="og:description" content="深入了解AGENTS.md文档标准，掌握AI Agent项目的最佳文档实践">
+    <meta property="og:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ccclub.club/tutorials/agents-md-guide.html">
+    <meta property="twitter:title" content="AGENTS.md 完全指南：AI Agent 项目文档标准">
+    <meta property="twitter:description" content="深入了解AGENTS.md文档标准，掌握AI Agent项目的最佳文档实践">
+    <meta property="twitter:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <!-- WeChat -->
+    <meta name="wechat:title" content="AGENTS.md 完全指南：AI Agent 项目文档标准">
+    <meta name="wechat:description" content="深入了解AGENTS.md文档标准，掌握AI Agent项目的最佳文档实践">
+    <meta name="wechat:image" content="https://ccclub.club/assets/logo-origin.svg">
+
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-icon.svg">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../tutorials/claude-basics.html">教程</a></li>
+                    <li><a href="../examples/python-data-analysis.html">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article>
+                <header class="tutorial-header">
+                    <h1>AGENTS.md 完全指南：AI Agent 项目文档标准</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty intermediate">中级</span>
+                        <span class="duration">阅读时间: 25分钟</span>
+                        <span class="category">文档标准</span>
+                    </div>
+                    <p class="tutorial-description">
+                        深入了解AGENTS.md文档标准和agents.md网站，掌握AI Agent项目的最佳文档实践，提升项目可维护性和团队协作效率。
+                    </p>
+                </header>
+
+                <div class="tutorial-body">
+                    <section class="tutorial-section">
+                        <h2>什么是 AGENTS.md？</h2>
+                        <p>AGENTS.md 是一个专门为 AI Agent 项目设计的文档标准，类似于传统软件项目中的 README.md，但专门针对 AI Agent 的特殊需求进行了优化。</p>
+
+                        <div class="agents-overview">
+                            <div class="overview-card">
+                                <h3>🤖 专为 AI Agent 设计</h3>
+                                <p>针对 AI Agent 项目的特殊需求，包括模型配置、提示词管理、行为定义等</p>
+                            </div>
+                            <div class="overview-card">
+                                <h3>📋 标准化文档格式</h3>
+                                <p>提供统一的文档结构，让团队成员快速理解项目架构和配置</p>
+                            </div>
+                            <div class="overview-card">
+                                <h3>🔧 易于维护和扩展</h3>
+                                <p>结构化的文档格式，便于版本控制和持续更新</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>agents.md 网站介绍</h2>
+                        <p><a href="https://agents.md/" target="_blank" rel="noopener">agents.md</a> 是一个专门展示和管理 AI Agent
+                            项目文档的平台，为开发者提供了标准化的文档模板和最佳实践指南。</p>
+
+                        <h3>网站核心功能</h3>
+                        <div class="website-features">
+                            <div class="feature-item">
+                                <h4>📚 文档模板库</h4>
+                                <p>提供多种类型的 AGENTS.md 模板，适用于不同类型的 AI Agent 项目</p>
+                                <ul>
+                                    <li>聊天机器人 Agent</li>
+                                    <li>任务自动化 Agent</li>
+                                    <li>数据分析 Agent</li>
+                                    <li>代码生成 Agent</li>
+                                </ul>
+                            </div>
+
+                            <div class="feature-item">
+                                <h4>🎯 最佳实践指南</h4>
+                                <p>详细的文档编写指南和行业最佳实践</p>
+                                <ul>
+                                    <li>文档结构设计原则</li>
+                                    <li>提示词文档化方法</li>
+                                    <li>配置管理策略</li>
+                                    <li>版本控制建议</li>
+                                </ul>
+                            </div>
+
+                            <div class="feature-item">
+                                <h4>🌐 社区展示平台</h4>
+                                <p>展示优秀的 AI Agent 项目和文档案例</p>
+                                <ul>
+                                    <li>项目案例展示</li>
+                                    <li>文档质量评估</li>
+                                    <li>社区反馈机制</li>
+                                    <li>经验分享平台</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>AGENTS.md 标准文档结构</h2>
+                        <p>一个完整的 AGENTS.md 文档应该包含以下核心部分：</p>
+
+                        <div class="document-structure">
+                            <div class="structure-section">
+                                <h3>1. Agent 基本信息</h3>
+                                <pre><code># Agent Name
+
+## 基本信息
+- **Agent 类型**: 聊天助手/任务自动化/数据分析/代码生成
+- **版本**: v1.0.0
+- **创建日期**: 2024-01-15
+- **最后更新**: 2024-01-20
+- **维护者**: 开发团队名称
+- **许可证**: MIT/Apache 2.0/其他
+
+## 简介
+简要描述 Agent 的功能、用途和主要特性。</code></pre>
+                            </div>
+
+                            <div class="structure-section">
+                                <h3>2. 功能描述</h3>
+                                <pre><code>## 功能特性
+
+### 核心功能
+- 🎯 **主要功能1**: 详细描述
+- 🔧 **主要功能2**: 详细描述
+- 📊 **主要功能3**: 详细描述
+
+### 支持的操作
+- [ ] 文本处理
+- [ ] 数据分析
+- [ ] 代码生成
+- [ ] 图像处理
+- [ ] 文件操作
+
+### 限制和约束
+- 不支持的操作类型
+- 性能限制说明
+- 安全限制说明</code></pre>
+                            </div>
+
+                            <div class="structure-section">
+                                <h3>3. 配置说明</h3>
+                                <pre><code>## 配置
+
+### 环境要求
+- Python 3.8+
+- Node.js 16+
+- 其他依赖
+
+### 模型配置
+```yaml
+model:
+  name: "claude-3-sonnet"
+  temperature: 0.7
+  max_tokens: 4000
+  top_p: 0.9
+
+agent:
+  name: "MyAgent"
+  description: "Agent description"
+  version: "1.0.0"
+```
+
+### 环境变量
+```bash
+OPENAI_API_KEY=your_api_key
+CLAUDE_API_KEY=your_claude_key
+AGENT_DEBUG=true
+```</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>提示词文档化最佳实践</h2>
+                        <p>AGENTS.md 的一个重要特色是对提示词的标准化文档管理：</p>
+
+                        <h3>系统提示词文档</h3>
+                        <pre><code>## 系统提示词
+
+### 主提示词
+```
+你是一个专业的代码审查助手。你的任务是：
+
+1. 分析代码质量和潜在问题
+2. 提供具体的改进建议
+3. 确保代码符合最佳实践
+
+请始终保持：
+- 客观和建设性的反馈
+- 详细的解释和示例
+- 友好和专业的语调
+```
+
+### 角色定义
+- **身份**: 代码审查专家
+- **专业领域**: 软件开发、代码质量
+- **交互风格**: 专业、友好、详细
+- **输出格式**: 结构化反馈</code></pre>
+
+                        <h3>功能提示词模板</h3>
+                        <pre><code>## 功能提示词
+
+### 代码审查功能
+```
+请审查以下代码：
+
+{code_input}
+
+请从以下维度进行分析：
+1. 代码逻辑正确性
+2. 性能优化建议
+3. 安全性考虑
+4. 可维护性评估
+5. 最佳实践符合度
+
+输出格式：
+- 问题等级：高/中/低
+- 具体问题描述
+- 改进建议
+- 示例代码（如适用）
+```
+
+### 参数说明
+- `{code_input}`: 待审查的代码内容
+- `review_level`: 审查严格程度 (strict/normal/lenient)
+- `focus_areas`: 重点关注领域数组</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>实际项目案例分析</h2>
+
+                        <h3>案例1：代码审查 Agent</h3>
+                        <div class="case-study">
+                            <div class="case-header">
+                                <h4>📋 项目概述</h4>
+                                <p>一个专门用于代码审查的 AI Agent，支持多种编程语言的代码质量分析。</p>
+                            </div>
+
+                            <div class="case-content">
+                                <h5>AGENTS.md 关键部分：</h5>
+                                <pre><code># Code Review Agent
+
+## Agent 配置
+```yaml
+agent:
+  name: "CodeReviewAgent"
+  type: "code_analysis"
+  model: "claude-3-sonnet"
+  
+capabilities:
+  - code_quality_analysis
+  - security_vulnerability_detection
+  - performance_optimization_suggestions
+  - best_practices_validation
+
+supported_languages:
+  - python
+  - javascript
+  - typescript
+  - java
+  - go
+```
+
+## 使用示例
+```python
+from code_review_agent import CodeReviewAgent
+
+agent = CodeReviewAgent()
+result = agent.review_code(
+    code=code_content,
+    language="python",
+    focus_areas=["security", "performance"]
+)
+```</code></pre>
+                            </div>
+                        </div>
+
+                        <h3>案例2：数据分析 Agent</h3>
+                        <div class="case-study">
+                            <div class="case-header">
+                                <h4>📊 项目概述</h4>
+                                <p>专门处理数据分析任务的 Agent，支持数据清洗、可视化和报告生成。</p>
+                            </div>
+
+                            <div class="case-content">
+                                <h5>AGENTS.md 关键部分：</h5>
+                                <pre><code># Data Analysis Agent
+
+## 数据处理能力
+- 📈 **统计分析**: 描述性统计、相关性分析
+- 🧹 **数据清洗**: 缺失值处理、异常值检测
+- 📊 **可视化**: 图表生成、交互式仪表板
+- 📝 **报告生成**: 自动化分析报告
+
+## 工作流程
+1. 数据接入和验证
+2. 数据质量评估
+3. 探索性数据分析
+4. 统计建模（如需要）
+5. 结果可视化
+6. 报告生成和导出
+
+## 输入格式支持
+- CSV, JSON, Excel
+- 数据库连接 (PostgreSQL, MySQL)
+- API 数据源
+- 实时数据流</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>版本控制和协作</h2>
+
+                        <h3>Git 集成最佳实践</h3>
+                        <pre><code># .gitignore 示例
+# Agent 配置文件中的敏感信息
+.env
+config/secrets.yaml
+*.key
+
+# 模型缓存文件
+models/cache/
+*.model
+*.pkl
+
+# 日志文件
+logs/
+*.log
+
+# 临时文件
+temp/
+.tmp/</code></pre>
+
+                        <h3>版本管理策略</h3>
+                        <div class="version-strategy">
+                            <div class="strategy-item">
+                                <h4>🏷️ 语义化版本控制</h4>
+                                <ul>
+                                    <li><strong>主版本号</strong>: 不兼容的 API 修改</li>
+                                    <li><strong>次版本号</strong>: 向下兼容的功能性新增</li>
+                                    <li><strong>修订号</strong>: 向下兼容的问题修正</li>
+                                </ul>
+                                <pre><code># 版本示例
+v1.0.0 - 初始发布版本
+v1.1.0 - 新增数据导出功能
+v1.1.1 - 修复数据处理bug
+v2.0.0 - 重构提示词系统（破坏性更新）</code></pre>
+                            </div>
+
+                            <div class="strategy-item">
+                                <h4>📝 变更日志管理</h4>
+                                <pre><code># CHANGELOG.md
+## [1.2.0] - 2024-01-20
+
+### Added
+- 新增多语言支持功能
+- 添加批量处理模式
+- 集成新的数据可视化组件
+
+### Changed
+- 优化提示词响应速度
+- 更新模型配置参数
+- 改进错误处理机制
+
+### Fixed
+- 修复数据导出格式问题
+- 解决并发处理时的内存泄漏
+- 修正配置文件解析错误</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>测试和质量保证</h2>
+
+                        <h3>Agent 测试策略</h3>
+                        <div class="testing-framework">
+                            <div class="test-type">
+                                <h4>🧪 单元测试</h4>
+                                <pre><code># tests/test_agent_core.py
+import pytest
+from my_agent import CodeReviewAgent
+
+class TestCodeReviewAgent:
+    def setup_method(self):
+        self.agent = CodeReviewAgent()
+    
+    def test_code_analysis_basic(self):
+        code = "def hello(): print('Hello World')"
+        result = self.agent.analyze_code(code, language="python")
+        
+        assert result.status == "success"
+        assert len(result.suggestions) >= 0
+        assert result.quality_score is not None
+    
+    def test_security_vulnerability_detection(self):
+        vulnerable_code = "eval(user_input)"
+        result = self.agent.analyze_code(vulnerable_code, language="python")
+        
+        assert any("security" in issue.category for issue in result.issues)
+        assert result.security_score < 0.5</code></pre>
+                            </div>
+
+                            <div class="test-type">
+                                <h4>🔗 集成测试</h4>
+                                <pre><code># tests/test_integration.py
+import pytest
+from my_agent import CodeReviewAgent
+from unittest.mock import patch
+
+class TestAgentIntegration:
+    @patch('my_agent.openai_client')
+    def test_full_review_workflow(self, mock_client):
+        # 模拟 API 响应
+        mock_client.chat.completions.create.return_value = mock_response
+        
+        agent = CodeReviewAgent()
+        result = agent.full_review(
+            code_file="sample_code.py",
+            review_type="comprehensive"
+        )
+        
+        assert result.review_completed
+        assert len(result.recommendations) > 0
+        assert result.execution_time < 30  # 30秒内完成</code></pre>
+                            </div>
+                        </div>
+
+                        <h3>性能基准测试</h3>
+                        <pre><code># benchmarks/performance_test.py
+import time
+import statistics
+from my_agent import CodeReviewAgent
+
+def benchmark_agent_performance():
+    agent = CodeReviewAgent()
+    test_cases = load_test_cases()
+    
+    execution_times = []
+    
+    for test_case in test_cases:
+        start_time = time.time()
+        result = agent.analyze_code(test_case.code)
+        end_time = time.time()
+        
+        execution_times.append(end_time - start_time)
+    
+    return {
+        "avg_time": statistics.mean(execution_times),
+        "median_time": statistics.median(execution_times),
+        "max_time": max(execution_times),
+        "min_time": min(execution_times)
+    }</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>部署和监控</h2>
+
+                        <h3>容器化部署</h3>
+                        <pre><code># Dockerfile
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# 安装依赖
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# 复制 Agent 代码
+COPY src/ ./src/
+COPY AGENTS.md ./
+COPY config/ ./config/
+
+# 设置环境变量
+ENV PYTHONPATH=/app/src
+ENV AGENT_ENV=production
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "from src.health_check import check_agent_health; check_agent_health()"
+
+# 启动 Agent
+CMD ["python", "src/main.py"]</code></pre>
+
+                        <h3>监控和日志</h3>
+                        <pre><code># monitoring/agent_monitor.py
+import logging
+import time
+from prometheus_client import Counter, Histogram, Gauge
+
+# 定义监控指标
+agent_requests_total = Counter('agent_requests_total', 'Total agent requests')
+agent_request_duration = Histogram('agent_request_duration_seconds', 'Agent request duration')
+agent_active_sessions = Gauge('agent_active_sessions', 'Active agent sessions')
+
+class AgentMonitor:
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+    
+    def log_request(self, request_type, duration, status):
+        agent_requests_total.inc()
+        agent_request_duration.observe(duration)
+        
+        self.logger.info(f"Agent request completed", extra={
+            "request_type": request_type,
+            "duration": duration,
+            "status": status,
+            "timestamp": time.time()
+        })</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>社区贡献和开源实践</h2>
+
+                        <h3>贡献指南</h3>
+                        <div class="contribution-guide">
+                            <div class="guide-section">
+                                <h4>📝 文档贡献</h4>
+                                <ul>
+                                    <li>改进 AGENTS.md 文档质量</li>
+                                    <li>添加使用示例和案例研究</li>
+                                    <li>翻译文档到其他语言</li>
+                                    <li>修正文档中的错误和不准确信息</li>
+                                </ul>
+                            </div>
+
+                            <div class="guide-section">
+                                <h4>🔧 代码贡献</h4>
+                                <ul>
+                                    <li>修复 bug 和性能问题</li>
+                                    <li>添加新功能和改进</li>
+                                    <li>优化算法和数据结构</li>
+                                    <li>增强测试覆盖率</li>
+                                </ul>
+                            </div>
+
+                            <div class="guide-section">
+                                <h4>🎯 模板贡献</h4>
+                                <ul>
+                                    <li>创建新的 AGENTS.md 模板</li>
+                                    <li>分享最佳实践案例</li>
+                                    <li>提供行业特定的模板</li>
+                                    <li>改进现有模板的可用性</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>开源许可和合规</h3>
+                        <pre><code># LICENSE 文件示例
+MIT License
+
+Copyright (c) 2024 Your Agent Project
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+[标准 MIT 许可证条款]</code></pre>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>未来发展趋势</h2>
+
+                        <div class="future-trends">
+                            <div class="trend-item">
+                                <h3>🤖 多模态 Agent 支持</h3>
+                                <p>随着多模态 AI 模型的发展，AGENTS.md 标准将扩展支持：</p>
+                                <ul>
+                                    <li>图像处理 Agent 文档规范</li>
+                                    <li>音频处理 Agent 配置</li>
+                                    <li>视频分析 Agent 描述</li>
+                                    <li>跨模态交互文档化</li>
+                                </ul>
+                            </div>
+
+                            <div class="trend-item">
+                                <h3>🔗 Agent 编排和协作</h3>
+                                <p>多 Agent 系统的文档标准化需求：</p>
+                                <ul>
+                                    <li>Agent 间通信协议文档</li>
+                                    <li>工作流编排配置</li>
+                                    <li>依赖关系管理</li>
+                                    <li>协作模式定义</li>
+                                </ul>
+                            </div>
+
+                            <div class="trend-item">
+                                <h3>📊 智能化文档生成</h3>
+                                <p>AI 辅助的文档生成和维护：</p>
+                                <ul>
+                                    <li>自动生成 AGENTS.md 模板</li>
+                                    <li>智能文档更新建议</li>
+                                    <li>文档质量自动评估</li>
+                                    <li>多语言文档自动翻译</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutorial-section">
+                        <h2>实践建议和总结</h2>
+
+                        <div class="key-takeaways">
+                            <h4>AGENTS.md 最佳实践要点：</h4>
+                            <ul>
+                                <li>✅ 保持文档结构清晰和一致性</li>
+                                <li>✅ 详细记录提示词和配置参数</li>
+                                <li>✅ 提供完整的使用示例和案例</li>
+                                <li>✅ 建立版本控制和变更管理流程</li>
+                                <li>✅ 实施全面的测试和质量保证</li>
+                                <li>✅ 定期更新文档以反映最新变化</li>
+                                <li>✅ 鼓励社区参与和贡献</li>
+                            </ul>
+                        </div>
+
+                        <div class="implementation-checklist">
+                            <h4>实施检查清单：</h4>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="basic-info">
+                                <label for="basic-info">完成 Agent 基本信息部分</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="functionality">
+                                <label for="functionality">详细描述功能特性和限制</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="configuration">
+                                <label for="configuration">提供完整的配置说明</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="prompts">
+                                <label for="prompts">文档化所有提示词和模板</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="examples">
+                                <label for="examples">包含实际使用示例</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="testing">
+                                <label for="testing">建立测试和质量保证流程</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="deployment">
+                                <label for="deployment">提供部署和监控指南</label>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-success">
+                            <strong>总结：</strong>AGENTS.md 标准为 AI Agent
+                            项目提供了统一的文档框架，通过标准化的文档实践，可以显著提升项目的可维护性、协作效率和知识传承。随着 AI Agent
+                            技术的不断发展，这一标准也将持续演进，为开发者提供更好的文档化工具和实践指南。
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="tutorial-footer">
+                    <div class="tutorial-navigation">
+                        <a href="claude-code-deployment.html" class="nav-link prev">
+                            ← 上一篇：Claude Code部署指南
+                        </a>
+                        <a href="claude-basics.html" class="nav-link next">
+                            下一篇：Claude基础入门 →
+                        </a>
+                    </div>
+
+                    <div class="tutorial-tags">
+                        <span class="tag">AGENTS.md</span>
+                        <span class="tag">AI Agent</span>
+                        <span class="tag">项目文档</span>
+                        <span class="tag">文档标准</span>
+                        <span class="tag">最佳实践</span>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
+                        <span>Claude Code Club</span>
+                    </div>
+                    <p>探索AI编程的无限可能</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
+                        <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
+                        <li><a href="../community.html">加入社区</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>友情链接</h4>
+                    <ul>
+                        <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
+                        <li><a href="https://agents.md" target="_blank">agents.md</a></li>
+                        <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>
