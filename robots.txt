@@ -1,12 +1,43 @@
+# Claude Code中文社区 - Claude Code论坛 - Claude Code中国
+# https://ccclub.club - 中国最专业的Claude Code开发者社区
+
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://ccclub.club/sitemap.xml
+# 优先抓取重要页面
+Allow: /tutorials/
+Allow: /examples/
+Allow: /community.html
+Allow: /about.html
 
-# Crawl-delay for respectful crawling
+# 百度爬虫优化
+User-agent: Baiduspider
+Allow: /
 Crawl-delay: 1
 
-# Disallow admin or private areas (if any in future)
-# Disallow: /admin/
-# Disallow: /private/
+# 谷歌爬虫优化
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# 搜狗爬虫优化
+User-agent: Sogou web spider
+Allow: /
+Crawl-delay: 2
+
+# 360爬虫优化
+User-agent: 360Spider
+Allow: /
+Crawl-delay: 2
+
+# Sitemap位置
+Sitemap: https://ccclub.club/sitemap.xml
+
+# 禁止抓取的目录
+Disallow: /assets/temp/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /.vscode/
+
+# 爬虫延迟设置
+Crawl-delay: 1

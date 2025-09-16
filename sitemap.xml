@@ -1,75 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <!-- 主页 - Claude Code中文社区 -->
     <url>
         <loc>https://ccclub.club/</loc>
-        <lastmod>2024-08-29</lastmod>
-        <changefreq>weekly</changefreq>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>daily</changefreq>
         <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ccclub.club/" />
     </url>
-    <url>
-        <loc>https://ccclub.club/tutorials/claude-basics.html</loc>
-        <lastmod>2024-08-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://ccclub.club/tutorials/prompt-engineering.html</loc>
-        <lastmod>2024-08-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://ccclub.club/tutorials/code-generation.html</loc>
-        <lastmod>2024-08-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://ccclub.club/examples/python-data-analysis.html</loc>
-        <lastmod>2024-08-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://ccclub.club/examples/web-development.html</loc>
-        <lastmod>2024-08-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
+    
+    <!-- 关于页面 - Claude Code论坛介绍 -->
     <url>
         <loc>https://ccclub.club/about.html</loc>
-        <lastmod>2024-08-29</lastmod>
+        <lastmod>2024-12-16</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ccclub.club/about.html" />
     </url>
+    
+    <!-- 社区页面 - Claude Code中国开发者交流 -->
     <url>
         <loc>https://ccclub.club/community.html</loc>
-        <lastmod>2024-08-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://ccclub.club/community.html" />
     </url>
+    
+    <!-- 基础教程 -->
     <url>
-        <loc>https://ccclub.club/tutorials/claude-code-installation.html</loc>
-        <lastmod>2025-09-01</lastmod>
+        <loc>https://ccclub.club/tutorials/claude-basics.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- 提示词工程教程 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/prompt-engineering.html</loc>
+        <lastmod>2024-12-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
+    
+    <!-- 代码生成教程 -->
     <url>
-        <loc>https://ccclub.club/tutorials/claude-code-quickstart.html</loc>
-        <lastmod>2025-09-01</lastmod>
+        <loc>https://ccclub.club/tutorials/code-generation.html</loc>
+        <lastmod>2024-12-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
+    
+    <!-- Claude Code优化指南 -->
     <url>
-        <loc>https://ccclub.club/tutorials/claude-code-best-practices.html</loc>
-        <lastmod>2025-09-01</lastmod>
+        <loc>https://ccclub.club/tutorials/claude-code-optimization.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- Claude Code八荣八耻 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-code-eight-honors-eight-shames.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Claude 3.5 Sonnet新特性 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-35-sonnet-features.html</loc>
+        <lastmod>2024-12-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
+    
+    <!-- Claude Code工作流优化 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-code-workflow.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Claude Code安全最佳实践 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-code-security.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Claude Code性能优化 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-code-performance.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Claude Code测试策略 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-code-testing.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Claude Code部署指南 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-code-deployment.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- AGENTS.md指南 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/agents-md-guide.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Claude Computer Use功能 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-computer-use.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- Claude MCP集成指南 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/claude-mcp-integration.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- 2024 AI编程趋势分析 -->
+    <url>
+        <loc>https://ccclub.club/tutorials/ai-coding-trends-2024.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- 高级Claude技巧 -->
     <url>
         <loc>https://ccclub.club/tutorials/advanced-claude-techniques.html</loc>
-        <lastmod>2024-08-29</lastmod>
+        <lastmod>2024-12-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
+    </url>
+    
+    <!-- Python数据分析示例 -->
+    <url>
+        <loc>https://ccclub.club/examples/python-data-analysis.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Web开发示例 -->
+    <url>
+        <loc>https://ccclub.club/examples/web-development.html</loc>
+        <lastmod>2024-12-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>
 </urlset>

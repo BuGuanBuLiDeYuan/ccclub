@@ -495,3 +495,105 @@ Active navigation link */
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
+/* S
+EO优化的Footer样式 */
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-nav h4,
+.footer-community h4,
+.footer-keywords h4 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.footer-nav ul,
+.footer-community ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-nav li,
+.footer-community li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav a,
+.footer-community a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-nav a:hover,
+.footer-community a:hover {
+    color: #007bff;
+}
+
+.keyword-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.keyword-tags span {
+    background: #f8f9fa;
+    color: #495057;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid #e9ecef;
+}
+
+.footer-bottom {
+    border-top: 1px solid #e9ecef;
+    padding-top: 1.5rem;
+    text-align: center;
+}
+
+.footer-bottom p {
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: #007bff;
+}
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .keyword-tags {
+        justify-content: center;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
