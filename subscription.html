@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Claude Code 会员订阅 - 解锁更多强大功能，提升开发效率，选择最适合您的订阅方案">
+    <meta name="keywords"
+        content="Claude Code订阅, Claude会员, AI编程工具, Claude付费版, 开发工具订阅">
+    <meta name="author" content="Claude Code Club">
+    <meta property="og:title" content="会员订阅 - Claude Code Club">
+    <meta property="og:description" content="选择最适合您的Claude Code订阅方案，解锁更多强大功能">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ccclub.club/subscription.html">
+    <meta property="og:image" content="https://ccclub.club/assets/og-image.png">
+
+    <title>会员订阅 - Claude Code Club | 选择您的订阅方案</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/subscription.css">
+    <link rel="icon" type="image/png" href="assets/logo-icon.png">
+    <link rel="canonical" href="https://ccclub.club/subscription.html">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="logo">
+                    <img src="assets/logo-simple.png" alt="Claude Code Club" class="logo-img">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="/#home">首页</a></li>
+                    <li><a href="/#tutorials">教程</a></li>
+                    <li><a href="/#examples">示例</a></li>
+                    <li><a href="community.html">社区</a></li>
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="subscription.html" class="active">订阅</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="subscription-page">
+        <section class="subscription-hero">
+            <div class="container">
+                <div class="hero-header">
+                    <div class="hero-text">
+                        <h1>选择适合您的订阅方案</h1>
+                        <p class="subtitle">解锁强大的AI编程能力，提升开发效率</p>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                        <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="billing-toggle">
+                    <button class="toggle-btn active" data-period="monthly">按月付</button>
+                    <button class="toggle-btn" data-period="yearly">按年付</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing-section">
+            <div class="container">
+                <div class="pricing-grid">
+                    <!-- Pro Plan -->
+                    <div class="pricing-card pro-plan">
+                        <div class="plan-header">
+                            <h3 class="plan-name">Professional</h3>
+                            <div class="price-wrapper">
+                                <span class="price">¥278</span>
+                            </div>
+                        </div>
+
+                        <div class="plan-features">
+                            <div class="feature-group">
+                                <div class="feature-item">
+                                    <span class="feature-label">体验额度：</span>
+                                    <span class="feature-value">每天4-5小时中度使用</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">使用限制：</span>
+                                    <span class="feature-value">50次额度/5小时</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">有效期限：</span>
+                                    <span class="feature-value">全天可用</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">官方套餐：</span>
+                                    <span class="feature-value">Pro（¥304/月）</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">对比节省：</span>
+                                    <span class="feature-value">¥26/月（~9%）</span>
+                                </div>
+                            </div>
+
+                            <div class="model-support">
+                                <div class="model-item available">
+                                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Claude 4.5 Sonnet 可用</span>
+                                </div>
+                                <div class="model-item unavailable">
+                                    <svg class="cross-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Claude 4.1 Opus 不可用</span>
+                                </div>
+                                <div class="model-item available">
+                                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>独享API密钥 & 高速通道</span>
+                                </div>
+                            </div>
+
+                            <div class="support-level">
+                                <span class="support-label">技术支持：</span>
+                                <span class="support-value">工单优先处理</span>
+                            </div>
+                        </div>
+
+                        <button class="subscribe-btn pro-btn">立即购买</button>
+                    </div>
+
+                    <!-- Premium Plan (Recommended) -->
+                    <div class="pricing-card premium-plan recommended">
+                        <div class="recommended-badge">推荐</div>
+                        <div class="plan-header">
+                            <h3 class="plan-name">Premium</h3>
+                            <div class="price-wrapper">
+                                <span class="original-price">¥1198/月</span>
+                                <span class="price">¥1038</span>
+                            </div>
+                        </div>
+
+                        <div class="plan-features">
+                            <div class="feature-group">
+                                <div class="feature-item">
+                                    <span class="feature-label">体验额度：</span>
+                                    <span class="feature-value">每天10小时高强度使用</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">使用限制：</span>
+                                    <span class="feature-value">235次额度/5小时</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">有效期限：</span>
+                                    <span class="feature-value">全天可用</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">官方套餐：</span>
+                                    <span class="feature-value">Premium 5X（¥1480/月）</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">对比节省：</span>
+                                    <span class="feature-value">¥442/月（~30%）</span>
+                                </div>
+                            </div>
+
+                            <div class="model-support">
+                                <div class="model-item available">
+                                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Claude 4.5 Sonnet 可用</span>
+                                </div>
+                                <div class="model-item available">
+                                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Claude 4.1 Opus 可用</span>
+                                </div>
+                                <div class="model-item available">
+                                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>独享API密钥 & 高速通道</span>
+                                </div>
+                            </div>
+
+                            <div class="support-level">
+                                <span class="support-label">技术支持：</span>
+                                <span class="support-value">企业微信快速响应</span>
+                            </div>
+                        </div>
+
+                        <button class="subscribe-btn premium-btn">立即购买</button>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="pricing-card enterprise-plan">
+                        <div class="top-tier-badge">顶级</div>
+                        <div class="plan-header">
+                            <h3 class="plan-name">Enterprise</h3>
+                            <div class="price-wrapper">
+                                <span class="price">¥3598</span>
+                            </div>
+                        </div>
+
+                        <div class="plan-features">
+                            <div class="feature-group">
+                                <div class="feature-item">
+                                    <span class="feature-label">体验额度：</span>
+                                    <span class="feature-value">极致无忧的高强度使用</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">使用限制：</span>
+                                    <span class="feature-value">950+次额度/5小时</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">有效期限：</span>
+                                    <span class="feature-value">全天可用</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">官方套餐：</span>
+                                    <span class="feature-value">Premium 20X（¥2960/月）</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-label">对比节省：</span>
+                                    <span class="feature-value">-</span>
+                                </div>
+                            </div>
+
+                            <div class="model-support">
+                                <div class="model-item available highlight">
+                                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Claude 4.5 Sonnet 可用+更高优先级</span>
+                                </div>
+                                <div class="model-item available highlight">
+                                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Claude 4.1 Opus 可用+专属加速</span>
+                                </div>
+                                <div class="model-item available">
+                                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>独享API密钥 & 高速通道</span>
+                                </div>
+                            </div>
+
+                            <div class="support-level">
+                                <span class="support-label">技术支持：</span>
+                                <span class="support-value">架构师专属1对1</span>
+                            </div>
+                        </div>
+
+                        <button class="subscribe-btn enterprise-btn">立即购买</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container">
+                <h2>常见问题</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>如何选择适合我的订阅方案？</h3>
+                        <p>建议根据您的日常使用频率选择：Professional 方案适合每日开发需求；Premium 方案（推荐）适合高强度专业开发，性价比最高；Enterprise 方案适合团队或企业深度使用，享受顶级服务。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>订阅后可以随时取消吗？</h3>
+                        <p>是的，您可以随时取消订阅。取消后，您的会员权益将持续到当前计费周期结束。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>支持哪些支付方式？</h3>
+                        <p>我们支持支付宝、微信支付、银联卡等多种支付方式，企业用户还可以选择对公转账。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>是否提供发票？</h3>
+                        <p>是的，所有付费订阅都可以开具正规发票，包括增值税普通发票和专用发票。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="scripts/load-footer.js"></script>
+    <script src="scripts/wechat-share.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/subscription.js"></script>
+</body>
+
+</html>
