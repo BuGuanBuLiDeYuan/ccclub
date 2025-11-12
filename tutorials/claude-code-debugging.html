@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Claude Code调试技巧完全指南 - 学习如何高效使用Claude Code进行代码调试和问题排查">
+    <meta name="keywords" content="Claude Code, 调试技巧, Debug, 代码调试, AI调试, Claude编程">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Claude Code 调试技巧完全指南 - Claude Code Club">
+    <meta property="og:description" content="掌握Claude Code的调试技巧，让bug无处藏身">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ccclub.club/tutorials/claude-code-debugging.html">
+    <meta property="og:image" content="https://ccclub.club/assets/og-image.png">
+    <meta property="og:site_name" content="Claude Code Club">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Claude Code 调试技巧完全指南">
+    <meta name="twitter:description" content="掌握Claude Code的调试技巧，让bug无处藏身">
+    <meta name="twitter:image" content="https://ccclub.club/assets/og-image.png">
+
+    <!-- 微信分享优化 -->
+    <meta itemprop="name" content="Claude Code 调试技巧完全指南">
+    <meta itemprop="description" content="掌握Claude Code的调试技巧，让bug无处藏身">
+    <meta itemprop="image" content="https://ccclub.club/assets/og-image.png">
+
+    <title>Claude Code 调试技巧完全指南 - Claude Code Club</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="canonical" href="https://ccclub.club/tutorials/claude-code-debugging.html">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="../" class="logo">
+                    <img src="../assets/logo-simple.png" alt="Claude Code Club" class="logo-img">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../#home">首页</a></li>
+                    <li><a href="../#tutorials">教程</a></li>
+                    <li><a href="../#examples">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                    <li><a href="../subscription.html">订阅</a></li>
+                </ul>
+                            <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article class="tutorial-article">
+                <header class="tutorial-header">
+                    <h1>Claude Code 调试技巧完全指南</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty">中级</span>
+                        <span class="duration">30分钟</span>
+                        <span class="updated">更新时间: 2024年11月</span>
+                    </div>
+                </header>
+
+                <div class="tutorial-toc">
+                    <h3>目录</h3>
+                    <ul>
+                        <li><a href="#introduction">调试的重要性</a></li>
+                        <li><a href="#basic-debugging">基础调试技巧</a></li>
+                        <li><a href="#advanced-techniques">高级调试方法</a></li>
+                        <li><a href="#common-issues">常见问题排查</a></li>
+                        <li><a href="#best-practices">调试最佳实践</a></li>
+                    </ul>
+                </div>
+
+                <section id="introduction">
+                    <h2>🎯 调试的重要性</h2>
+                    <p>调试是软件开发中不可或缺的技能。使用 Claude Code 进行调试，可以：</p>
+                    <ul>
+                        <li><strong>快速定位问题</strong>：通过AI分析快速找到bug根源</li>
+                        <li><strong>理解代码逻辑</strong>：让AI帮你解释复杂的代码流程</li>
+                        <li><strong>优化性能</strong>：发现并修复性能瓶颈</li>
+                        <li><strong>预防错误</strong>：在编码时就发现潜在问题</li>
+                    </ul>
+                </section>
+
+                <section id="basic-debugging">
+                    <h2>🔍 基础调试技巧</h2>
+
+                    <h3>1. 让 Claude 分析错误信息</h3>
+                    <div class="code-block">
+                        <h4>示例对话：</h4>
+                        <pre>
+你：我的Python代码抛出了这个错误：
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+Claude：这是一个类型错误。你尝试将整数和字符串相加。
+请检查你的代码，找到涉及加法操作的地方，确保两边的数据类型一致。
+
+常见解决方案：
+1. 使用 str() 将整数转换为字符串
+2. 使用 int() 将字符串转换为整数
+3. 检查变量赋值是否正确</pre>
+                    </div>
+
+                    <h3>2. 使用 Claude 添加调试日志</h3>
+                    <div class="code-block">
+                        <h4>让 Claude 帮你添加日志：</h4>
+                        <pre>
+你：请在这段代码中添加适当的调试日志
+
+def process_data(items):
+    result = []
+    for item in items:
+        if item['valid']:
+            result.append(item['value'])
+    return result
+
+Claude 会添加：
+import logging
+
+def process_data(items):
+    logging.debug(f"Processing {len(items)} items")
+    result = []
+    for i, item in enumerate(items):
+        logging.debug(f"Item {i}: {item}")
+        if item['valid']:
+            logging.debug(f"Item {i} is valid, adding value: {item['value']}")
+            result.append(item['value'])
+        else:
+            logging.debug(f"Item {i} is invalid, skipping")
+    logging.debug(f"Final result has {len(result)} items")
+    return result</pre>
+                    </div>
+
+                    <h3>3. 请求代码审查</h3>
+                    <div class="code-block">
+                        <h4>示例：</h4>
+                        <pre>
+你：请审查这段代码，找出可能的bug
+
+Claude 会检查：
+- 边界条件
+- 空值处理
+- 类型错误
+- 逻辑漏洞
+- 潜在的性能问题</pre>
+                    </div>
+                </section>
+
+                <section id="advanced-techniques">
+                    <h2>⚡ 高级调试方法</h2>
+
+                    <h3>1. 使用断点调试策略</h3>
+                    <div class="warning-box">
+                        <h4>让 Claude 建议断点位置：</h4>
+                        <pre>
+你：在这段代码中，应该在哪里设置断点来调试这个问题？
+
+Claude 会分析代码流程，建议关键位置：
+- 函数入口点
+- 循环开始处
+- 条件分支
+- 异常可能发生的位置
+- 返回语句前</pre>
+                    </div>
+
+                    <h3>2. 性能调试</h3>
+                    <div class="code-block">
+                        <h4>分析性能瓶颈：</h4>
+                        <pre>
+你：这段代码运行很慢，帮我找出性能瓶颈
+
+def slow_function(data):
+    result = []
+    for i in range(len(data)):
+        for j in range(len(data)):
+            if data[i] == data[j]:
+                result.append(data[i])
+    return result
+
+Claude 的分析：
+这是一个 O(n²) 的算法，性能瓶颈在嵌套循环。
+
+优化建议：
+1. 使用集合去重：set(data)
+2. 使用字典统计：Counter(data)
+3. 避免重复遍历
+
+优化后的代码：
+from collections import Counter
+
+def fast_function(data):
+    counter = Counter(data)
+    return [item for item, count in counter.items() if count > 1]</pre>
+                    </div>
+
+                    <h3>3. 内存调试</h3>
+                    <div class="code-block">
+                        <h4>检测内存泄漏：</h4>
+                        <pre>
+你：这个应用占用的内存越来越多，可能有内存泄漏
+
+Claude 会帮你检查：
+- 未关闭的文件句柄
+- 循环引用
+- 全局变量积累
+- 未清理的缓存
+- 事件监听器未移除</pre>
+                    </div>
+                </section>
+
+                <section id="common-issues">
+                    <h2>🐛 常见问题排查</h2>
+
+                    <h3>1. 空指针/None 错误</h3>
+                    <div class="example-box">
+                        <h4>处理方法：</h4>
+                        <pre>
+# 问题代码
+user = get_user(user_id)
+print(user.name)  # 如果 user 是 None 会出错
+
+# Claude 建议的安全代码
+user = get_user(user_id)
+if user is not None:
+    print(user.name)
+else:
+    print("User not found")
+
+# 或使用 Optional Chaining (Python 3.10+)
+print(user.name if user else "User not found")</pre>
+                    </div>
+
+                    <h3>2. 异步代码调试</h3>
+                    <div class="code-block">
+                        <h4>调试 async/await：</h4>
+                        <pre>
+你：我的异步代码没有按预期执行
+
+import asyncio
+
+async def debug_async():
+    print("Start")
+    await asyncio.sleep(1)
+    print("End")
+
+# Claude 帮你添加调试
+import asyncio
+import logging
+
+async def debug_async():
+    logging.info("Async function started")
+    try:
+        logging.info("Before sleep")
+        await asyncio.sleep(1)
+        logging.info("After sleep")
+        return "Success"
+    except Exception as e:
+        logging.error(f"Error in async function: {e}")
+        raise
+    finally:
+        logging.info("Async function completed")</pre>
+                    </div>
+
+                    <h3>3. 并发问题</h3>
+                    <div class="warning-box">
+                        <h4>竞态条件调试：</h4>
+                        <pre>
+你：多线程代码有时会出现奇怪的结果
+
+Claude 会检查：
+- 共享资源的访问
+- 锁的使用
+- 线程安全的数据结构
+- 死锁可能性
+
+并建议解决方案：
+- 使用 threading.Lock()
+- 使用 queue.Queue() 进行线程间通信
+- 考虑使用 asyncio 替代多线程</pre>
+                    </div>
+                </section>
+
+                <section id="best-practices">
+                    <h2>✨ 调试最佳实践</h2>
+
+                    <div class="tip-box">
+                        <h3>1. 提供完整的上下文</h3>
+                        <p>向 Claude 提供调试信息时，包括：</p>
+                        <ul>
+                            <li>完整的错误堆栈</li>
+                            <li>相关的代码片段</li>
+                            <li>环境信息（Python版本、操作系统等）</li>
+                            <li>重现步骤</li>
+                            <li>预期行为 vs 实际行为</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <h3>2. 逐步调试</h3>
+                        <p>不要一次处理所有问题：</p>
+                        <ul>
+                            <li>先修复最明显的错误</li>
+                            <li>逐个测试修复效果</li>
+                            <li>记录每次修改</li>
+                            <li>保持代码版本控制</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <h3>3. 写测试用例</h3>
+                        <p>让 Claude 帮你编写测试：</p>
+                        <pre>
+你：为这个函数编写单元测试
+
+def add(a, b):
+    return a + b
+
+Claude 生成：
+import unittest
+
+class TestAdd(unittest.TestCase):
+    def test_add_positive_numbers(self):
+        self.assertEqual(add(2, 3), 5)
+
+    def test_add_negative_numbers(self):
+        self.assertEqual(add(-2, -3), -5)
+
+    def test_add_mixed_numbers(self):
+        self.assertEqual(add(-2, 3), 1)
+
+    def test_add_zero(self):
+        self.assertEqual(add(0, 5), 5)
+        self.assertEqual(add(5, 0), 5)
+
+if __name__ == '__main__':
+    unittest.main()</pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <h3>4. 使用调试工具</h3>
+                        <p>让 Claude 教你使用调试工具：</p>
+                        <ul>
+                            <li><strong>pdb</strong>：Python内置调试器</li>
+                            <li><strong>ipdb</strong>：增强版pdb</li>
+                            <li><strong>IDE调试器</strong>：VS Code、PyCharm等</li>
+                            <li><strong>日志工具</strong>：logging模块</li>
+                            <li><strong>性能分析</strong>：cProfile、line_profiler</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <h3>5. 保持代码整洁</h3>
+                        <p>好的代码更容易调试：</p>
+                        <ul>
+                            <li>使用有意义的变量名</li>
+                            <li>保持函数简短</li>
+                            <li>添加适当的注释</li>
+                            <li>遵循代码规范</li>
+                            <li>及时重构复杂代码</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="next-steps">
+                    <h2>🚀 下一步</h2>
+                    <p>继续学习 Claude Code 的其他功能：</p>
+                    <ul>
+                        <li><a href="claude-code-testing.html">测试驱动开发实战</a></li>
+                        <li><a href="claude-code-performance.html">性能优化指南</a></li>
+                        <li><a href="claude-code-best-practices.html">最佳实践</a></li>
+                    </ul>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../scripts/load-footer.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

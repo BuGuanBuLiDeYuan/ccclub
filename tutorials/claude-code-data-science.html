@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Claude Code数据科学实战 - 用AI辅助进行数据分析、机器学习和可视化">
+    <meta name="keywords" content="Claude Code, 数据科学, 机器学习, 数据分析, Python, Pandas, NumPy, AI编程">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Claude Code 数据科学实战指南 - Claude Code Club">
+    <meta property="og:description" content="学习如何用Claude Code进行数据分析和机器学习">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ccclub.club/tutorials/claude-code-data-science.html">
+    <meta property="og:image" content="https://ccclub.club/assets/og-image.png">
+    <meta property="og:site_name" content="Claude Code Club">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Claude Code 数据科学实战指南">
+    <meta name="twitter:description" content="学习如何用Claude Code进行数据分析和机器学习">
+    <meta name="twitter:image" content="https://ccclub.club/assets/og-image.png">
+
+    <!-- 微信分享优化 -->
+    <meta itemprop="name" content="Claude Code 数据科学实战指南">
+    <meta itemprop="description" content="学习如何用Claude Code进行数据分析和机器学习">
+    <meta itemprop="image" content="https://ccclub.club/assets/og-image.png">
+
+    <title>Claude Code 数据科学实战指南 - Claude Code Club</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="canonical" href="https://ccclub.club/tutorials/claude-code-data-science.html">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="../" class="logo">
+                    <img src="../assets/logo-simple.png" alt="Claude Code Club" class="logo-img">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../#home">首页</a></li>
+                    <li><a href="../#tutorials">教程</a></li>
+                    <li><a href="../#examples">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                    <li><a href="../subscription.html">订阅</a></li>
+                </ul>
+                            <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article class="tutorial-article">
+                <header class="tutorial-header">
+                    <h1>Claude Code 数据科学实战指南</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty">中级</span>
+                        <span class="duration">45分钟</span>
+                        <span class="updated">更新时间: 2024年11月</span>
+                    </div>
+                </header>
+
+                <div class="tutorial-toc">
+                    <h3>目录</h3>
+                    <ul>
+                        <li><a href="#introduction">数据科学与AI结合</a></li>
+                        <li><a href="#data-cleaning">数据清洗</a></li>
+                        <li><a href="#data-analysis">数据分析</a></li>
+                        <li><a href="#visualization">数据可视化</a></li>
+                        <li><a href="#machine-learning">机器学习入门</a></li>
+                        <li><a href="#advanced-ml">高级ML应用</a></li>
+                        <li><a href="#best-practices">最佳实践</a></li>
+                    </ul>
+                </div>
+
+                <section id="introduction">
+                    <h2>🎯 数据科学与AI结合</h2>
+                    <p>Claude Code 让数据科学工作更高效：</p>
+                    <ul>
+                        <li><strong>代码生成</strong>：快速生成数据处理和分析代码</li>
+                        <li><strong>错误修复</strong>：AI帮你诊断和修复数据问题</li>
+                        <li><strong>最佳实践</strong>：遵循数据科学标准流程</li>
+                        <li><strong>文档生成</strong>：自动生成分析报告和注释</li>
+                        <li><strong>学习辅助</strong>：解释复杂的算法和概念</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4>必备工具包：</h4>
+                        <ul>
+                            <li><strong>NumPy</strong>：数值计算</li>
+                            <li><strong>Pandas</strong>：数据处理</li>
+                            <li><strong>Matplotlib/Seaborn</strong>：数据可视化</li>
+                            <li><strong>Scikit-learn</strong>：机器学习</li>
+                            <li><strong>Jupyter</strong>：交互式开发环境</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="data-cleaning">
+                    <h2>🧹 数据清洗</h2>
+
+                    <h3>1. 处理缺失值</h3>
+                    <div class="code-block">
+                        <h4>让 Claude 帮你清洗数据：</h4>
+                        <pre>
+你：我有一个包含缺失值的数据集，帮我处理一下
+
+import pandas as pd
+import numpy as np
+
+# 读取数据
+df = pd.read_csv('data.csv')
+
+# 检查缺失值
+print("缺失值统计：")
+print(df.isnull().sum())
+print(f"\n缺失值百分比：")
+print(df.isnull().sum() / len(df) * 100)
+
+# Claude 建议的处理策略：
+
+# 策略1：删除缺失值过多的列（>50%）
+threshold = 0.5
+df = df.loc[:, df.isnull().mean() < threshold]
+
+# 策略2：数值列用中位数填充
+numeric_columns = df.select_dtypes(include=[np.number]).columns
+df[numeric_columns] = df[numeric_columns].fillna(df[numeric_columns].median())
+
+# 策略3：类别列用众数填充
+categorical_columns = df.select_dtypes(include=['object']).columns
+for col in categorical_columns:
+    df[col] = df[col].fillna(df[col].mode()[0])
+
+# 策略4：时间相关的可以用前向填充
+# df['date_column'] = df['date_column'].fillna(method='ffill')
+
+print("\n处理后的数据：")
+print(df.info())</pre>
+                    </div>
+
+                    <h3>2. 处理异常值</h3>
+                    <div class="code-block">
+                        <h4>识别和处理异常值：</h4>
+                        <pre>
+你：帮我检测和处理数据中的异常值
+
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+def detect_outliers(df, column, method='iqr'):
+    """检测异常值"""
+
+    if method == 'iqr':
+        # IQR方法（四分位距）
+        Q1 = df[column].quantile(0.25)
+        Q3 = df[column].quantile(0.75)
+        IQR = Q3 - Q1
+        lower_bound = Q1 - 1.5 * IQR
+        upper_bound = Q3 + 1.5 * IQR
+
+    elif method == 'zscore':
+        # Z-score方法
+        z_scores = np.abs(stats.zscore(df[column]))
+        threshold = 3
+        outliers = z_scores > threshold
+        return df[outliers]
+
+    # 返回异常值
+    outliers = df[(df[column] < lower_bound) | (df[column] > upper_bound)]
+    print(f"{column} 列发现 {len(outliers)} 个异常值")
+    return outliers
+
+# 处理异常值
+def handle_outliers(df, column, method='cap'):
+    """处理异常值"""
+
+    Q1 = df[column].quantile(0.25)
+    Q3 = df[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    if method == 'cap':
+        # 盖帽法：将异常值限制在边界
+        df[column] = df[column].clip(lower_bound, upper_bound)
+    elif method == 'remove':
+        # 删除法：直接删除异常值行
+        df = df[(df[column] >= lower_bound) & (df[column] <= upper_bound)]
+
+    return df
+
+# 使用示例
+df = handle_outliers(df, 'age', method='cap')
+df = handle_outliers(df, 'income', method='cap')</pre>
+                    </div>
+
+                    <h3>3. 数据类型转换</h3>
+                    <div class="code-block">
+                        <h4>优化数据类型：</h4>
+                        <pre>
+你：优化数据框的内存使用
+
+def optimize_dtypes(df):
+    """优化数据类型以减少内存使用"""
+
+    # 记录原始内存使用
+    start_mem = df.memory_usage().sum() / 1024**2
+    print(f'初始内存使用: {start_mem:.2f} MB')
+
+    # 优化整数列
+    for col in df.select_dtypes(include=['int']).columns:
+        df[col] = pd.to_numeric(df[col], downcast='integer')
+
+    # 优化浮点数列
+    for col in df.select_dtypes(include=['float']).columns:
+        df[col] = pd.to_numeric(df[col], downcast='float')
+
+    # 将重复性高的字符串列转换为category
+    for col in df.select_dtypes(include=['object']).columns:
+        num_unique = df[col].nunique()
+        num_total = len(df[col])
+        if num_unique / num_total < 0.5:  # 如果唯一值<50%
+            df[col] = df[col].astype('category')
+
+    # 显示优化后的内存使用
+    end_mem = df.memory_usage().sum() / 1024**2
+    print(f'优化后内存使用: {end_mem:.2f} MB')
+    print(f'减少了 {100 * (start_mem - end_mem) / start_mem:.1f}%')
+
+    return df
+
+df = optimize_dtypes(df)</pre>
+                    </div>
+                </section>
+
+                <section id="data-analysis">
+                    <h2>📊 数据分析</h2>
+
+                    <h3>1. 探索性数据分析（EDA）</h3>
+                    <div class="code-block">
+                        <h4>让 Claude 生成EDA代码：</h4>
+                        <pre>
+你：对这个数据集进行全面的探索性分析
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+def perform_eda(df):
+    """执行完整的探索性数据分析"""
+
+    print("="*50)
+    print("数据集基本信息")
+    print("="*50)
+    print(f"数据集形状: {df.shape}")
+    print(f"总行数: {len(df)}")
+    print(f"总列数: {len(df.columns)}")
+    print("\n列信息:")
+    print(df.info())
+
+    print("\n" + "="*50)
+    print("数值型特征统计")
+    print("="*50)
+    print(df.describe())
+
+    print("\n" + "="*50)
+    print("类别型特征统计")
+    print("="*50)
+    categorical_columns = df.select_dtypes(include=['object', 'category']).columns
+    for col in categorical_columns:
+        print(f"\n{col} 的值分布:")
+        print(df[col].value_counts())
+
+    print("\n" + "="*50)
+    print("缺失值分析")
+    print("="*50)
+    missing = df.isnull().sum()
+    missing_pct = 100 * df.isnull().sum() / len(df)
+    missing_table = pd.concat([missing, missing_pct], axis=1)
+    missing_table.columns = ['缺失数量', '缺失百分比']
+    print(missing_table[missing_table['缺失数量'] > 0].sort_values(
+        '缺失百分比', ascending=False))
+
+    print("\n" + "="*50)
+    print("相关性分析")
+    print("="*50)
+    numeric_df = df.select_dtypes(include=[np.number])
+    correlation_matrix = numeric_df.corr()
+
+    # 可视化相关性矩阵
+    plt.figure(figsize=(12, 10))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm',
+                center=0, fmt='.2f', square=True)
+    plt.title('特征相关性热力图')
+    plt.tight_layout()
+    plt.savefig('correlation_matrix.png')
+    plt.show()
+
+    return correlation_matrix
+
+# 执行EDA
+correlation_matrix = perform_eda(df)</pre>
+                    </div>
+
+                    <h3>2. 特征工程</h3>
+                    <div class="code-block">
+                        <h4>创建新特征：</h4>
+                        <pre>
+你：帮我对这些特征进行工程处理
+
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.feature_selection import SelectKBest, f_classif
+
+# 1. 标准化数值特征
+scaler = StandardScaler()
+numeric_columns = df.select_dtypes(include=[np.number]).columns
+df[numeric_columns] = scaler.fit_transform(df[numeric_columns])
+
+# 2. 编码类别特征
+label_encoders = {}
+for col in df.select_dtypes(include=['object']).columns:
+    le = LabelEncoder()
+    df[col] = le.fit_transform(df[col].astype(str))
+    label_encoders[col] = le
+
+# 3. 创建交互特征
+df['age_income_ratio'] = df['age'] / (df['income'] + 1)
+df['feature_product'] = df['feature1'] * df['feature2']
+
+# 4. 特征选择
+X = df.drop('target', axis=1)
+y = df['target']
+
+selector = SelectKBest(score_func=f_classif, k=10)
+X_selected = selector.fit_transform(X, y)
+
+# 获取被选中的特征名
+selected_features = X.columns[selector.get_support()].tolist()
+print(f"选中的特征: {selected_features}")</pre>
+                    </div>
+                </section>
+
+                <section id="visualization">
+                    <h2>📈 数据可视化</h2>
+
+                    <div class="code-block">
+                        <h4>让 Claude 创建美观的可视化：</h4>
+                        <pre>
+你：创建一套完整的数据可视化
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 设置样式
+sns.set_style("whitegrid")
+plt.rcParams['figure.figsize'] = (12, 8)
+plt.rcParams['font.size'] = 10
+
+def create_visualizations(df):
+    """创建完整的可视化套件"""
+
+    # 1. 分布图
+    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+
+    # 直方图
+    df['age'].hist(bins=30, ax=axes[0, 0], edgecolor='black')
+    axes[0, 0].set_title('年龄分布')
+    axes[0, 0].set_xlabel('年龄')
+    axes[0, 0].set_ylabel('频数')
+
+    # 箱线图
+    df.boxplot(column='income', by='category', ax=axes[0, 1])
+    axes[0, 1].set_title('各类别收入分布')
+    axes[0, 1].set_xlabel('类别')
+    axes[0, 1].set_ylabel('收入')
+
+    # 散点图
+    axes[1, 0].scatter(df['age'], df['income'], alpha=0.5)
+    axes[1, 0].set_title('年龄vs收入')
+    axes[1, 0].set_xlabel('年龄')
+    axes[1, 0].set_ylabel('收入')
+
+    # 饼图
+    category_counts = df['category'].value_counts()
+    axes[1, 1].pie(category_counts, labels=category_counts.index,
+                   autopct='%1.1f%%', startangle=90)
+    axes[1, 1].set_title('类别分布')
+
+    plt.tight_layout()
+    plt.savefig('data_visualizations.png', dpi=300)
+    plt.show()
+
+    # 2. 高级可视化：小提琴图
+    plt.figure(figsize=(12, 6))
+    sns.violinplot(data=df, x='category', y='income', hue='gender')
+    plt.title('收入分布（按类别和性别）')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('violin_plot.png', dpi=300)
+    plt.show()
+
+    # 3. 时间序列图（如果有日期列）
+    if 'date' in df.columns:
+        plt.figure(figsize=(15, 6))
+        df.groupby('date')['value'].mean().plot()
+        plt.title('时间序列趋势')
+        plt.xlabel('日期')
+        plt.ylabel('平均值')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig('timeseries.png', dpi=300)
+        plt.show()
+
+create_visualizations(df)</pre>
+                    </div>
+                </section>
+
+                <section id="machine-learning">
+                    <h2>🤖 机器学习入门</h2>
+
+                    <h3>1. 分类模型</h3>
+                    <div class="code-block">
+                        <h4>让 Claude 构建分类模型：</h4>
+                        <pre>
+你：帮我构建一个完整的分类模型管道
+
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+import seaborn as sns
+
+# 准备数据
+X = df.drop('target', axis=1)
+y = df['target']
+
+# 分割数据集
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+# 训练模型
+model = RandomForestClassifier(
+    n_estimators=100,
+    max_depth=10,
+    random_state=42,
+    n_jobs=-1
+)
+
+print("训练模型中...")
+model.fit(X_train, y_train)
+
+# 交叉验证
+cv_scores = cross_val_score(model, X_train, y_train, cv=5)
+print(f"\n交叉验证分数: {cv_scores}")
+print(f"平均CV分数: {cv_scores.mean():.4f} (+/- {cv_scores.std() * 2:.4f})")
+
+# 预测
+y_pred = model.predict(X_test)
+
+# 评估
+print("\n分类报告:")
+print(classification_report(y_test, y_pred))
+
+# 混淆矩阵
+cm = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.title('混淆矩阵')
+plt.ylabel('真实标签')
+plt.xlabel('预测标签')
+plt.savefig('confusion_matrix.png')
+plt.show()
+
+# 特征重要性
+feature_importance = pd.DataFrame({
+    'feature': X.columns,
+    'importance': model.feature_importances_
+}).sort_values('importance', ascending=False)
+
+plt.figure(figsize=(10, 6))
+sns.barplot(data=feature_importance.head(10), x='importance', y='feature')
+plt.title('前10个最重要的特征')
+plt.tight_layout()
+plt.savefig('feature_importance.png')
+plt.show()</pre>
+                    </div>
+
+                    <h3>2. 回归模型</h3>
+                    <div class="code-block">
+                        <h4>构建回归模型：</h4>
+                        <pre>
+你：创建一个回归模型来预测数值
+
+from sklearn.linear_model import Ridge
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+import numpy as np
+
+# 准备数据
+X = df.drop('target_value', axis=1)
+y = df['target_value']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# 尝试多个模型
+models = {
+    'Ridge': Ridge(alpha=1.0),
+    'GradientBoosting': GradientBoostingRegressor(
+        n_estimators=100,
+        learning_rate=0.1,
+        max_depth=3,
+        random_state=42
+    )
+}
+
+results = {}
+for name, model in models.items():
+    print(f"\n训练 {name} 模型...")
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+
+    # 评估
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+    mae = mean_absolute_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+
+    results[name] = {
+        'MSE': mse,
+        'RMSE': rmse,
+        'MAE': mae,
+        'R²': r2
+    }
+
+    print(f"均方误差 (MSE): {mse:.4f}")
+    print(f"均方根误差 (RMSE): {rmse:.4f}")
+    print(f"平均绝对误差 (MAE): {mae:.4f}")
+    print(f"R² 分数: {r2:.4f}")
+
+# 可视化预测结果
+best_model = models['GradientBoosting']
+y_pred = best_model.predict(X_test)
+
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, y_pred, alpha=0.5)
+plt.plot([y_test.min(), y_test.max()],
+         [y_test.min(), y_test.max()], 'r--', lw=2)
+plt.xlabel('真实值')
+plt.ylabel('预测值')
+plt.title('预测值 vs 真实值')
+plt.tight_layout()
+plt.savefig('prediction_vs_actual.png')
+plt.show()</pre>
+                    </div>
+                </section>
+
+                <section id="advanced-ml">
+                    <h2>🚀 高级ML应用</h2>
+
+                    <div class="code-block">
+                        <h4>超参数调优：</h4>
+                        <pre>
+你：帮我优化模型的超参数
+
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from sklearn.ensemble import RandomForestClassifier
+
+# 定义参数网格
+param_grid = {
+    'n_estimators': [100, 200, 300],
+    'max_depth': [5, 10, 15, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4],
+    'max_features': ['sqrt', 'log2', None]
+}
+
+# 创建基础模型
+rf = RandomForestClassifier(random_state=42)
+
+# 网格搜索
+grid_search = GridSearchCV(
+    estimator=rf,
+    param_grid=param_grid,
+    cv=5,
+    n_jobs=-1,
+    verbose=2,
+    scoring='accuracy'
+)
+
+print("开始超参数搜索...")
+grid_search.fit(X_train, y_train)
+
+print(f"\n最佳参数: {grid_search.best_params_}")
+print(f"最佳分数: {grid_search.best_score_:.4f}")
+
+# 使用最佳模型
+best_model = grid_search.best_estimator_
+y_pred = best_model.predict(X_test)
+
+print("\n优化后的模型性能:")
+print(classification_report(y_test, y_pred))</pre>
+                    </div>
+                </section>
+
+                <section id="best-practices">
+                    <h2>✨ 最佳实践</h2>
+
+                    <div class="tip-box">
+                        <h3>1. 数据科学工作流</h3>
+                        <ul>
+                            <li>问题定义 → 数据收集 → 数据清洗 → EDA</li>
+                            <li>特征工程 → 模型选择 → 训练评估 → 优化</li>
+                            <li>部署监控 → 持续改进</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <h3>2. 代码组织</h3>
+                        <ul>
+                            <li>使用 Jupyter Notebook 进行探索</li>
+                            <li>将稳定代码转移到 .py 文件</li>
+                            <li>创建可复用的函数和类</li>
+                            <li>版本控制（Git）管理代码</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <h3>3. 性能优化</h3>
+                        <ul>
+                            <li>使用向量化操作替代循环</li>
+                            <li>合理使用数据类型减少内存</li>
+                            <li>并行处理大数据集</li>
+                            <li>使用 Dask 处理超大数据</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="next-steps">
+                    <h2>🚀 下一步</h2>
+                    <p>继续深入学习：</p>
+                    <ul>
+                        <li><a href="claude-code-performance.html">性能优化技巧</a></li>
+                        <li><a href="claude-code-testing.html">测试驱动开发</a></li>
+                        <li><a href="../examples/python-data-analysis.html">更多数据分析示例</a></li>
+                    </ul>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../scripts/load-footer.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

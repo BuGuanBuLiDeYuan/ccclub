@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="使用Claude Code构建RESTful API完全指南 - 从零开始用AI辅助开发高质量的API">
+    <meta name="keywords" content="Claude Code, REST API, API开发, FastAPI, Flask, Web开发, AI编程">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="使用 Claude Code 构建 RESTful API - Claude Code Club">
+    <meta property="og:description" content="学习如何用Claude Code高效开发RESTful API">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ccclub.club/tutorials/claude-code-rest-api.html">
+    <meta property="og:image" content="https://ccclub.club/assets/og-image.png">
+    <meta property="og:site_name" content="Claude Code Club">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="使用 Claude Code 构建 RESTful API">
+    <meta name="twitter:description" content="学习如何用Claude Code高效开发RESTful API">
+    <meta name="twitter:image" content="https://ccclub.club/assets/og-image.png">
+
+    <!-- 微信分享优化 -->
+    <meta itemprop="name" content="使用 Claude Code 构建 RESTful API">
+    <meta itemprop="description" content="学习如何用Claude Code高效开发RESTful API">
+    <meta itemprop="image" content="https://ccclub.club/assets/og-image.png">
+
+    <title>使用 Claude Code 构建 RESTful API - Claude Code Club</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/tutorial.css">
+    <link rel="canonical" href="https://ccclub.club/tutorials/claude-code-rest-api.html">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="../" class="logo">
+                    <img src="../assets/logo-simple.png" alt="Claude Code Club" class="logo-img">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../#home">首页</a></li>
+                    <li><a href="../#tutorials">教程</a></li>
+                    <li><a href="../#examples">示例</a></li>
+                    <li><a href="../community.html">社区</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                    <li><a href="../subscription.html">订阅</a></li>
+                </ul>
+                            <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="tutorial-content">
+        <div class="container">
+            <article class="tutorial-article">
+                <header class="tutorial-header">
+                    <h1>使用 Claude Code 构建 RESTful API</h1>
+                    <div class="tutorial-meta">
+                        <span class="difficulty">中级</span>
+                        <span class="duration">50分钟</span>
+                        <span class="updated">更新时间: 2024年11月</span>
+                    </div>
+                </header>
+
+                <div class="tutorial-toc">
+                    <h3>目录</h3>
+                    <ul>
+                        <li><a href="#introduction">RESTful API 基础</a></li>
+                        <li><a href="#framework-choice">选择合适的框架</a></li>
+                        <li><a href="#project-setup">项目初始化</a></li>
+                        <li><a href="#build-api">构建 API 端点</a></li>
+                        <li><a href="#authentication">身份验证</a></li>
+                        <li><a href="#testing">API 测试</a></li>
+                        <li><a href="#deployment">部署上线</a></li>
+                    </ul>
+                </div>
+
+                <section id="introduction">
+                    <h2>🎯 RESTful API 基础</h2>
+                    <p>RESTful API 是现代Web应用的核心。使用 Claude Code，你可以：</p>
+                    <ul>
+                        <li><strong>快速生成代码</strong>：自动生成路由、控制器、模型</li>
+                        <li><strong>遵循最佳实践</strong>：代码符合REST规范和安全标准</li>
+                        <li><strong>自动化文档</strong>：生成API文档和测试用例</li>
+                        <li><strong>错误处理</strong>：完善的异常处理和错误响应</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4>RESTful API 核心原则：</h4>
+                        <ul>
+                            <li><strong>资源导向</strong>：一切皆资源（用户、文章、商品等）</li>
+                            <li><strong>HTTP 方法</strong>：GET（获取）、POST（创建）、PUT（更新）、DELETE（删除）</li>
+                            <li><strong>无状态</strong>：每个请求包含所有必要信息</li>
+                            <li><strong>统一接口</strong>：一致的URL结构和响应格式</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="framework-choice">
+                    <h2>🛠️ 选择合适的框架</h2>
+
+                    <h3>Python 框架对比</h3>
+                    <div class="code-block">
+                        <h4>让 Claude 帮你选择框架：</h4>
+                        <pre>
+你：我要开发一个用户管理API，应该选择哪个Python框架？
+
+Claude 的建议：
+
+1. **FastAPI** (推荐)
+   优点：
+   - 现代化、性能优异
+   - 自动生成API文档（Swagger UI）
+   - 类型提示和数据验证
+   - 异步支持
+
+   适用场景：新项目、高性能需求、需要自动文档
+
+2. **Flask**
+   优点：
+   - 轻量级、灵活
+   - 生态系统成熟
+   - 学习曲线平缓
+
+   适用场景：简单API、快速原型、完全控制
+
+3. **Django REST Framework**
+   优点：
+   - 功能全面
+   - 内置ORM和管理后台
+   - 企业级特性
+
+   适用场景：大型项目、需要管理后台、数据库操作多
+
+本教程使用 FastAPI 演示</pre>
+                    </div>
+                </section>
+
+                <section id="project-setup">
+                    <h2>🚀 项目初始化</h2>
+
+                    <h3>1. 让 Claude 创建项目结构</h3>
+                    <div class="code-block">
+                        <h4>提示词：</h4>
+                        <pre>
+你：帮我创建一个FastAPI项目结构，用于用户管理系统
+
+Claude 生成：
+project/
+├── app/
+│   ├── __init__.py
+│   ├── main.py          # 应用入口
+│   ├── models.py        # 数据模型
+│   ├── schemas.py       # Pydantic模式
+│   ├── crud.py          # 数据库操作
+│   ├── database.py      # 数据库配置
+│   └── routers/
+│       ├── __init__.py
+│       └── users.py     # 用户路由
+├── tests/
+│   ├── __init__.py
+│   └── test_users.py
+├── requirements.txt
+├── .env
+└── README.md</pre>
+                    </div>
+
+                    <h3>2. 安装依赖</h3>
+                    <div class="code-block">
+                        <h4>requirements.txt：</h4>
+                        <pre>
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+sqlalchemy==2.0.23
+pydantic==2.5.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+pytest==7.4.3
+httpx==0.25.2</pre>
+                    </div>
+                </section>
+
+                <section id="build-api">
+                    <h2>📝 构建 API 端点</h2>
+
+                    <h3>1. 定义数据模型</h3>
+                    <div class="code-block">
+                        <h4>让 Claude 生成模型代码：</h4>
+                        <pre>
+你：创建用户模型，包含ID、用户名、邮箱、密码哈希、创建时间
+
+# models.py
+from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.sql import func
+from .database import Base
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())</pre>
+                    </div>
+
+                    <h3>2. 创建 Pydantic Schema</h3>
+                    <div class="code-block">
+                        <h4>schemas.py：</h4>
+                        <pre>
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+from typing import Optional
+
+class UserBase(BaseModel):
+    username: str
+    email: EmailStr
+
+class UserCreate(UserBase):
+    password: str
+
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
+
+class UserResponse(UserBase):
+    id: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True</pre>
+                    </div>
+
+                    <h3>3. 实现 CRUD 操作</h3>
+                    <div class="code-block">
+                        <h4>让 Claude 生成 CRUD 函数：</h4>
+                        <pre>
+# crud.py
+from sqlalchemy.orm import Session
+from . import models, schemas
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def get_user(db: Session, user_id: int):
+    return db.query(models.User).filter(models.User.id == user_id).first()
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first()
+
+def get_users(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.User).offset(skip).limit(limit).all()
+
+def create_user(db: Session, user: schemas.UserCreate):
+    hashed_password = pwd_context.hash(user.password)
+    db_user = models.User(
+        username=user.username,
+        email=user.email,
+        hashed_password=hashed_password
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def update_user(db: Session, user_id: int, user: schemas.UserUpdate):
+    db_user = get_user(db, user_id)
+    if not db_user:
+        return None
+
+    update_data = user.model_dump(exclude_unset=True)
+    if "password" in update_data:
+        update_data["hashed_password"] = pwd_context.hash(update_data.pop("password"))
+
+    for field, value in update_data.items():
+        setattr(db_user, field, value)
+
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def delete_user(db: Session, user_id: int):
+    db_user = get_user(db, user_id)
+    if db_user:
+        db.delete(db_user)
+        db.commit()
+        return True
+    return False</pre>
+                    </div>
+
+                    <h3>4. 创建 API 路由</h3>
+                    <div class="code-block">
+                        <h4>routers/users.py：</h4>
+                        <pre>
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from typing import List
+from .. import crud, schemas
+from ..database import get_db
+
+router = APIRouter(prefix="/users", tags=["users"])
+
+@router.post("/", response_model=schemas.UserResponse, status_code=status.HTTP_201_CREATED)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    """创建新用户"""
+    db_user = crud.get_user_by_email(db, email=user.email)
+    if db_user:
+        raise HTTPException(
+            status_code=400,
+            detail="Email already registered"
+        )
+    return crud.create_user(db=db, user=user)
+
+@router.get("/", response_model=List[schemas.UserResponse])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """获取用户列表"""
+    users = crud.get_users(db, skip=skip, limit=limit)
+    return users
+
+@router.get("/{user_id}", response_model=schemas.UserResponse)
+def read_user(user_id: int, db: Session = Depends(get_db)):
+    """获取单个用户"""
+    db_user = crud.get_user(db, user_id=user_id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
+
+@router.put("/{user_id}", response_model=schemas.UserResponse)
+def update_user(user_id: int, user: schemas.UserUpdate, db: Session = Depends(get_db)):
+    """更新用户信息"""
+    db_user = crud.update_user(db, user_id=user_id, user=user)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
+
+@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    """删除用户"""
+    success = crud.delete_user(db, user_id=user_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="User not found")
+    return None</pre>
+                    </div>
+                </section>
+
+                <section id="authentication">
+                    <h2>🔐 身份验证</h2>
+
+                    <h3>实现 JWT 认证</h3>
+                    <div class="code-block">
+                        <h4>让 Claude 添加认证功能：</h4>
+                        <pre>
+你：为API添加JWT认证
+
+# auth.py
+from datetime import datetime, timedelta
+from jose import JWTError, jwt
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.orm import Session
+
+SECRET_KEY = "your-secret-key-here"  # 应该从环境变量读取
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: int = payload.get("sub")
+        if user_id is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+
+    user = crud.get_user(db, user_id=user_id)
+    if user is None:
+        raise credentials_exception
+    return user</pre>
+                    </div>
+                </section>
+
+                <section id="testing">
+                    <h2>🧪 API 测试</h2>
+
+                    <div class="code-block">
+                        <h4>让 Claude 生成测试用例：</h4>
+                        <pre>
+# tests/test_users.py
+from fastapi.testclient import TestClient
+from app.main import app
+
+client = TestClient(app)
+
+def test_create_user():
+    response = client.post(
+        "/users/",
+        json={
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "testpass123"
+        }
+    )
+    assert response.status_code == 201
+    data = response.json()
+    assert data["username"] == "testuser"
+    assert data["email"] == "test@example.com"
+    assert "id" in data
+
+def test_read_users():
+    response = client.get("/users/")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+
+def test_read_user():
+    # 先创建用户
+    create_response = client.post(
+        "/users/",
+        json={
+            "username": "testuser2",
+            "email": "test2@example.com",
+            "password": "testpass123"
+        }
+    )
+    user_id = create_response.json()["id"]
+
+    # 读取用户
+    response = client.get(f"/users/{user_id}")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == user_id
+
+def test_user_not_found():
+    response = client.get("/users/99999")
+    assert response.status_code == 404</pre>
+                    </div>
+                </section>
+
+                <section id="deployment">
+                    <h2>🚀 部署上线</h2>
+
+                    <div class="tip-box">
+                        <h4>部署选项：</h4>
+                        <ul>
+                            <li><strong>Docker</strong>：容器化部署，一致的运行环境</li>
+                            <li><strong>云平台</strong>：AWS, Azure, Google Cloud</li>
+                            <li><strong>Vercel/Railway</strong>：快速部署Python应用</li>
+                            <li><strong>自建服务器</strong>：使用Nginx + Gunicorn/Uvicorn</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-block">
+                        <h4>Dockerfile 示例：</h4>
+                        <pre>
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]</pre>
+                    </div>
+                </section>
+
+                <section class="next-steps">
+                    <h2>🚀 下一步</h2>
+                    <p>继续深入学习：</p>
+                    <ul>
+                        <li><a href="claude-code-testing.html">API自动化测试</a></li>
+                        <li><a href="claude-code-security.html">API安全最佳实践</a></li>
+                        <li><a href="claude-code-performance.html">API性能优化</a></li>
+                    </ul>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../scripts/load-footer.js"></script>
+    <script src="../scripts/wechat-share.js"></script>
+</body>
+
+</html>

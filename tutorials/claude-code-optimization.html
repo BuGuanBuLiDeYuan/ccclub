@@ -33,22 +33,25 @@
 </head>
 
 <body>
-    <header>
-        <nav>
+        <header class="header">
+        <nav class="nav">
             <div class="nav-container">
-                <div class="logo">
-                    <a href="../index.html">
-                        <img src="../assets/logo.svg" alt="Claude Code Club" class="logo-img">
-                    </a>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="../index.html">首页</a></li>
-                    <li><a href="../tutorials/claude-basics.html">教程</a></li>
-                    <li><a href="../examples/python-data-analysis.html">示例</a></li>
+                <a href="../" class="logo">
+                    <img src="../assets/logo-simple.png" alt="Claude Code Club" class="logo-img">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../#home">首页</a></li>
+                    <li><a href="../#tutorials">教程</a></li>
+                    <li><a href="../#examples">示例</a></li>
                     <li><a href="../community.html">社区</a></li>
                     <li><a href="../about.html">关于</a></li>
-                <li><a href="../subscription.html">订阅</a></li>
+                    <li><a href="../subscription.html">订阅</a></li>
                 </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </nav>
     </header>
@@ -322,43 +325,9 @@ alias claude='claude --dangerously-skip-permissions'</code></pre>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="../assets/logo-simple.svg" alt="Claude Code Club" class="footer-logo-img">
-                        <span>Claude Code Club</span>
-                    </div>
-                    <p>探索AI编程的无限可能</p>
-                </div>
+        <div id="footer-placeholder"></div>
 
-                <div class="footer-section">
-                    <h4>快速链接</h4>
-                    <ul>
-                        <li><a href="../tutorials/claude-basics.html">基础教程</a></li>
-                        <li><a href="../examples/python-data-analysis.html">代码示例</a></li>
-                        <li><a href="../community.html">加入社区</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>友情链接</h4>
-                    <ul>
-                        <li><a href="https://claude.ai" target="_blank">Claude官网</a></li>
-                        <li><a href="https://github.com/anthropics" target="_blank">Anthropic GitHub</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2024 Claude Code Club. 保留所有权利。</p>
-            </div>
-        </div>
-    </footer>
     <script src="../scripts/load-footer.js"></script>
-
-    <script src="../scripts/main.js"></script>
     <script src="../scripts/wechat-share.js"></script>
 </body>
 
